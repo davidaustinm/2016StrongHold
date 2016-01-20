@@ -1,0 +1,41 @@
+package org.usfirst.frc.team4003.robot.io;
+
+import edu.wpi.first.wpilibj.buttons.Button;
+
+
+public class XboxButton extends Button {
+    public static final int BUTTONA = 0;
+    public static final int BUTTONB = 1;
+    public static final int BUTTONX = 2;
+    public static final int BUTTONY = 3;
+    public static final int BUTTONBACK = 4;
+    public static final int BUTTONSTART = 5;
+    public static final int BUTTONRB = 6;
+    public static final int BUTTONLB = 7;
+    public static final int BUTTONLS = 8;
+    public static final int BUTTONRS = 9;
+    
+    Xbox xbox;
+    int button;
+    public XboxButton(Xbox xb, int b) {
+        xbox = xb;
+        button = b;
+    }
+    
+    public boolean get() {
+        switch(button) {
+            case BUTTONA: return xbox.getButtonA();
+            case BUTTONB: return xbox.getButtonB();
+            case BUTTONX: return xbox.getButtonX();
+            case BUTTONY: return xbox.getButtonY();
+            case BUTTONBACK: return xbox.getButtonBack();
+            case BUTTONSTART: return xbox.getButtonStart();
+            case BUTTONLB: return xbox.getButtonLB();
+            case BUTTONRB: return xbox.getButtonRB();
+            case BUTTONLS: return xbox.getButtonLS();
+            case BUTTONRS: return xbox.getButtonRS();
+        }
+        return false;
+    }
+    
+}
