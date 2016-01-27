@@ -2,12 +2,22 @@
 package org.usfirst.frc.team4003.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.Timer;
 
+import org.opencv.core.*;
+import org.opencv.imgproc.*;
+import org.opencv.highgui.*;
+
+import java.util.*;
+
+import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
+
 import org.usfirst.frc.team4003.robot.commands.ExampleCommand;
 import org.usfirst.frc.team4003.robot.subsystems.*;
+
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
@@ -26,7 +36,13 @@ public class Robot extends IterativeRobot {
 
     Command autonomousCommand;
     SendableChooser chooser;
-
+    CameraServer server;
+    VideoCapture vcap;
+    
+    static {
+    	 System.load("/usr/local/lib/lib_OpenCV/java/libopencv_java2410.so");
+    }
+    
     /**
      * This function is run when the robot is first started up and should be
      * used for any initialization code.
@@ -34,9 +50,18 @@ public class Robot extends IterativeRobot {
     public void robotInit() {
 		oi = new OI();
         chooser = new SendableChooser();
-        chooser.addDefault("Default Auto", new ExampleCommand());
+        //chooser.addDefault("Default Auto", new ExampleCommand());
 //        chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
+        vcap = new VideoCapture();
+        vcap.open(0);
+        Timer.delay(2);
+        /*
+        server = CameraServer.getInstance();
+        server.setQuality(50);
+        server.startAutomaticCapture("cam0");
+        */
+
     }
 	
 	/**
@@ -99,6 +124,28 @@ public class Robot extends IterativeRobot {
      */
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        long start = System.currentTimeMillis();
+        Mat img = new Mat();
+        vcap.read(img);
+        
+        Mat imghsv = new Mat();
+        Imgproc.cvtColor(img, imghsv, Imgproc.COLOR_BGR2HSV);
+        Scalar lowerHSV = new Scalar(70, 64, 96);
+        Scalar upperHSV = new Scalar(94, 255, 255);
+        Mat mask = new Mat();
+        Core.inRange(imghsv, lowerHSV, upperHSV, mask);
+        List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
+        Mat hierarchy = new Mat();
+        Imgproc.findContours(mask, contours, hierarchy, Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
+        List<MatOfPoint> bigContours = new ArrayList<MatOfPoint>();
+        for (int c = 0; c<contours.size(); c++) {
+        	MatOfPoint cont = contours.get(c);
+        	if (Imgproc.contourArea(cont)>50) {
+        		bigContours.add(cont);
+        	}
+        }
+        SmartDashboard.putNumber("Contour Count", bigContours.size());
+        SmartDashboard.putNumber("Time", System.currentTimeMillis()-start);
     }
     
     /**
