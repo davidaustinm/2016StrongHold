@@ -20,8 +20,8 @@ public class DriveTrainCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.driveTrain.setPower(Robot.oi.driver.getLeftJoyY(),
-    			Robot.oi.driver.getRightJoyY());
+    	Robot.driveTrain.setPower(-Robot.oi.driver.getLeftJoyY(),
+    			-Robot.oi.driver.getRightJoyY());
     }
 
     // Make this return true when this Command no longer needs to run execute()
