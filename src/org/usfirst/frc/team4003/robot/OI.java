@@ -9,9 +9,12 @@ import org.usfirst.frc.team4003.robot.io.*;
  */
 public class OI {
 	public Xbox driver = new Xbox(0);
-	public XboxButton align = new XboxButton(driver,XboxButton.BUTTONA);
+	public Xbox operator = new Xbox(1);
+	public XboxButton shiftHigh = new XboxButton(driver, XboxButton.BUTTONRB);
+	public XboxButton shiftLow = new XboxButton(driver, XboxButton.BUTTONLB);
 	public OI() {
-		align.whenPressed(new AlignRobotToGoal(0.8));
+		shiftHigh.whenPressed(new ShifterCommand(false));
+		shiftLow.whenPressed(new ShifterCommand(true));
 	}
     //// CREATING BUTTONS
     // One type of button is a joystick button which is any button on a joystick.

@@ -26,6 +26,13 @@ public class Robot extends IterativeRobot {
 
 	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
 	public static final DriveTrainSubsystem driveTrain = new DriveTrainSubsystem();
+	public static final StrongHoldDrive strongHoldDrive = new StrongHoldDrive();
+	public static final IntakeRun intakeRun = new IntakeRun();
+	public static final IntakeUpDown intakeUpDown = new IntakeUpDown();
+	public static final Shifter shifter = new Shifter();
+	public static final TurretSpin turretSpin = new TurretSpin();
+	public static final TurretTilt turretTilt = new TurretTilt();
+	public static final BoulderConveyor boulderConveyor = new BoulderConveyor();
 	public static OI oi;
 
     Command autonomousCommand;
