@@ -2,10 +2,12 @@ package org.usfirst.frc.team4003.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
 import edu.wpi.first.wpilibj.*;
+
+import org.usfirst.frc.team4003.robot.RobotMap;
 import org.usfirst.frc.team4003.robot.commands.*;
 public class IntakeRun extends Subsystem {
-    Talon intake0 = new Talon(0);
-    Talon intake1 = new Talon(1);
+    Talon intake0 = new Talon(RobotMap.INTAKEMOTOR0);
+    Talon intake1 = new Talon(RobotMap.INTAKEMOTOR1);
     
     public IntakeRun() {
     	intake1.setInverted(true);

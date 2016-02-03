@@ -1,18 +1,17 @@
-
 package org.usfirst.frc.team4003.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
+import org.usfirst.frc.team4003.robot.io.Sensors;
 
-import org.usfirst.frc.team4003.robot.Robot;
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ExampleCommand extends Command {
-
-    public ExampleCommand() {
+public class WaitForIntakeSwitch extends Command {
+	Sensors sensors = Sensors.getInstance();
+    public WaitForIntakeSwitch() {
         // Use requires() here to declare subsystem dependencies
-        //requires(Robot.exampleSubsystem);
+        // eg. requires(chassis);
     }
 
     // Called just before this Command runs the first time
@@ -25,7 +24,7 @@ public class ExampleCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return sensors.getIntakeSwitch();
     }
 
     // Called once after isFinished returns true

@@ -1,17 +1,20 @@
 package org.usfirst.frc.team4003.robot.subsystems;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+
+import org.usfirst.frc.team4003.robot.RobotMap;
 import org.usfirst.frc.team4003.robot.commands.*;
+
 import edu.wpi.first.wpilibj.*;
 
 /**
  *
  */
 public class StrongHoldDrive extends Subsystem {
-    TalonSRX leftFront = new TalonSRX(1);
-    TalonSRX leftBack = new TalonSRX(2);
-    TalonSRX rightFront = new TalonSRX(3);
-    TalonSRX rightBack = new TalonSRX(4);
+    TalonSRX leftFront = new TalonSRX(RobotMap.LEFTFRONTDRIVEMOTOR);
+    TalonSRX leftBack = new TalonSRX(RobotMap.LEFTBACKDRIVEMOTOR);
+    TalonSRX rightFront = new TalonSRX(RobotMap.RIGHTFRONTDRIVEMOTOR);
+    TalonSRX rightBack = new TalonSRX(RobotMap.RIGHTBACKDRIVEMOTOR);
     
     public StrongHoldDrive() {
     	leftFront.setInverted(true);

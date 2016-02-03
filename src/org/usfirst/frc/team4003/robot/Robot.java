@@ -23,16 +23,14 @@ import edu.wpi.first.wpilibj.vision.*;
  * directory.
  */
 public class Robot extends IterativeRobot {
-
-	public static final ExampleSubsystem exampleSubsystem = new ExampleSubsystem();
-	public static final DriveTrainSubsystem driveTrain = new DriveTrainSubsystem();
-	public static final StrongHoldDrive strongHoldDrive = new StrongHoldDrive();
-	public static final IntakeRun intakeRun = new IntakeRun();
-	public static final IntakeUpDown intakeUpDown = new IntakeUpDown();
-	public static final Shifter shifter = new Shifter();
-	public static final TurretSpin turretSpin = new TurretSpin();
-	public static final TurretTilt turretTilt = new TurretTilt();
-	public static final BoulderConveyor boulderConveyor = new BoulderConveyor();
+	public static DriveTrainSubsystem driveTrain;
+	public static StrongHoldDrive strongHoldDrive;
+	public static IntakeRun intakeRun;
+	public static IntakeUpDown intakeUpDown;
+	public static Shifter shifter;
+	public static TurretSpin turretSpin;
+	public static TurretTilt turretTilt;
+	public static BoulderConveyor boulderConveyor;
 	public static OI oi;
 
     Command autonomousCommand;
@@ -42,6 +40,15 @@ public class Robot extends IterativeRobot {
     
     static {
     	 System.load("/usr/local/lib/lib_OpenCV/java/libopencv_java2410.so");
+    	 if (SubsystemLoad.DRIVETRAIN) driveTrain = new DriveTrainSubsystem();
+    	 if (SubsystemLoad.STRONGHOLDDRIVE) strongHoldDrive = new StrongHoldDrive();
+    	 if (SubsystemLoad.INTAKERUN) intakeRun = new IntakeRun();
+    	 if (SubsystemLoad.INTAKEUPDOWN) intakeUpDown = new IntakeUpDown();
+    	 if (SubsystemLoad.SHIFTER) shifter = new Shifter();
+    	 if (SubsystemLoad.TURRETSPIN) turretSpin = new TurretSpin();
+    	 if (SubsystemLoad.TURRETTILT) turretTilt = new TurretTilt();
+    	 if (SubsystemLoad.BOULDERCONVEYOR) boulderConveyor = new BoulderConveyor();
+    	 
     }
     
     /**
@@ -90,19 +97,6 @@ public class Robot extends IterativeRobot {
 	 */
     public void autonomousInit() {
         autonomousCommand = (Command) chooser.getSelected();
-        
-		/* String autoSelected = SmartDashboard.getString("Auto Selector", "Default");
-		switch(autoSelected) {
-		case "My Auto":
-			autonomousCommand = new MyAutoCommand();
-			break;
-		case "Default Auto":
-		default:
-			autonomousCommand = new ExampleCommand();
-			break;
-		} */
-    	
-    	// schedule the autonomous command (example)
         if (autonomousCommand != null) autonomousCommand.start();
     }
 
