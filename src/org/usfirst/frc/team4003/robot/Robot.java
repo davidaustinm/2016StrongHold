@@ -36,7 +36,8 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     SendableChooser chooser;
     public static Camera camera;
-    Thread targetThread;
+    protected Thread targetThread;
+    protected Thread cameraServerThread;
     
     static {
     	 System.load("/usr/local/lib/lib_OpenCV/java/libopencv_java2410.so");
@@ -60,17 +61,13 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
         chooser = new SendableChooser();
         //chooser.addDefault("Default Auto", new ExampleCommand());
-//        chooser.addObject("My Auto", new MyAutoCommand());
+        //chooser.addObject("My Auto", new MyAutoCommand());
         SmartDashboard.putData("Auto mode", chooser);
         camera = new Camera();
         targetThread = new Thread(camera);
         targetThread.start();
-        USBCamera webcam = new USBCamera("cam1");
-        webcam.setFPS(10);
-        webcam.setSize(320, 240);
-        CameraServer cameraServer = CameraServer.getInstance();
-        cameraServer.setQuality(50);
-        cameraServer.startAutomaticCapture(webcam);
+        cameraServerThread = new Thread(new TSCameraServer());
+        cameraServerThread.start();
     }
 	
 	/**
