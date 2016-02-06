@@ -3,15 +3,21 @@ package org.usfirst.frc.team4003.robot;
 import edu.wpi.first.wpilibj.buttons.Button;
 import org.usfirst.frc.team4003.robot.commands.*;
 import org.usfirst.frc.team4003.robot.io.*;
+import org.usfirst.frc.team4003.robot.commands.actions.*;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
  */
 public class OI {
 	public Xbox driver = new Xbox(0);
-	public XboxButton align = new XboxButton(driver,XboxButton.BUTTONA);
+	public Xbox operator = new Xbox(1);
+	public XboxButton shiftHigh = new XboxButton(driver, XboxButton.BUTTONRB);
+	public XboxButton shiftLow = new XboxButton(driver, XboxButton.BUTTONLB);
+	public XboxButton loadBoulder = new XboxButton(operator,XboxButton.BUTTONB);
 	public OI() {
-		align.whenPressed(new AlignRobotToGoal(0.8));
+		shiftHigh.whenPressed(new ShifterCommand(false));
+		shiftLow.whenPressed(new ShifterCommand(true));
+		loadBoulder.whenPressed(new LoadBoulderIntoConveyor());
 	}
     //// CREATING BUTTONS
     // One type of button is a joystick button which is any button on a joystick.

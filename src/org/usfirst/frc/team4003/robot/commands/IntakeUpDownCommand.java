@@ -1,18 +1,17 @@
-
 package org.usfirst.frc.team4003.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-
-import org.usfirst.frc.team4003.robot.Robot;
+import org.usfirst.frc.team4003.robot.*;
 
 /**
  *
  */
-public class ExampleCommand extends Command {
+public class IntakeUpDownCommand extends Command {
 
-    public ExampleCommand() {
+    public IntakeUpDownCommand() {
         // Use requires() here to declare subsystem dependencies
-        //requires(Robot.exampleSubsystem);
+        // eg. requires(chassis);
+    	requires(Robot.intakeUpDown);
     }
 
     // Called just before this Command runs the first time
@@ -21,6 +20,7 @@ public class ExampleCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.intakeUpDown.down(Robot.oi.driver.getRightTrigger()>.5);
     }
 
     // Make this return true when this Command no longer needs to run execute()

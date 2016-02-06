@@ -1,18 +1,17 @@
-
 package org.usfirst.frc.team4003.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
-
-import org.usfirst.frc.team4003.robot.Robot;
+import org.usfirst.frc.team4003.robot.*;
 
 /**
  *
  */
-public class ExampleCommand extends Command {
+public class BoulderConveyorCommand extends Command {
 
-    public ExampleCommand() {
+    public BoulderConveyorCommand() {
         // Use requires() here to declare subsystem dependencies
-        //requires(Robot.exampleSubsystem);
+        // eg. requires(chassis);
+    	requires(Robot.boulderConveyor);
     }
 
     // Called just before this Command runs the first time

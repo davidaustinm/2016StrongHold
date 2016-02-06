@@ -1,22 +1,25 @@
-
 package org.usfirst.frc.team4003.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-
 import org.usfirst.frc.team4003.robot.Robot;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ExampleCommand extends Command {
-
-    public ExampleCommand() {
+public class IntakeRaiseLower extends Command {
+	boolean lower;
+    public IntakeRaiseLower(boolean lower) {
         // Use requires() here to declare subsystem dependencies
-        //requires(Robot.exampleSubsystem);
+        // eg. requires(chassis);
+    	this.lower = lower;
     }
-
+    public void canInterrupt(boolean b) {
+    	setInterruptible(b);
+    }
     // Called just before this Command runs the first time
     protected void initialize() {
+    	Robot.intakeUpDown.down(lower);
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -25,7 +28,7 @@ public class ExampleCommand extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

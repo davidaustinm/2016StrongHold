@@ -1,18 +1,18 @@
-
 package org.usfirst.frc.team4003.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-
 import org.usfirst.frc.team4003.robot.Robot;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ExampleCommand extends Command {
+public class StrongHoldTank extends Command {
 
-    public ExampleCommand() {
+    public StrongHoldTank() {
         // Use requires() here to declare subsystem dependencies
-        //requires(Robot.exampleSubsystem);
+        // eg. requires(chassis);
+    	requires(Robot.strongHoldDrive);
     }
 
     // Called just before this Command runs the first time
@@ -21,6 +21,8 @@ public class ExampleCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.strongHoldDrive.setPower(-Robot.oi.driver.getLeftJoyY(),
+    			-Robot.oi.driver.getRightJoyY());
     }
 
     // Make this return true when this Command no longer needs to run execute()

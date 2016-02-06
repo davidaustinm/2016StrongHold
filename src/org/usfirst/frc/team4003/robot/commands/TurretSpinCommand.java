@@ -1,18 +1,18 @@
-
 package org.usfirst.frc.team4003.robot.commands;
 
-import edu.wpi.first.wpilibj.command.Command;
-
 import org.usfirst.frc.team4003.robot.Robot;
+
+import edu.wpi.first.wpilibj.command.Command;
 
 /**
  *
  */
-public class ExampleCommand extends Command {
+public class TurretSpinCommand extends Command {
 
-    public ExampleCommand() {
+    public TurretSpinCommand() {
         // Use requires() here to declare subsystem dependencies
-        //requires(Robot.exampleSubsystem);
+        // eg. requires(chassis);
+    	requires(Robot.turretSpin); 
     }
 
     // Called just before this Command runs the first time
@@ -21,6 +21,7 @@ public class ExampleCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	Robot.turretSpin.setPower(Robot.oi.operator.getLeftJoyX());
     }
 
     // Make this return true when this Command no longer needs to run execute()
