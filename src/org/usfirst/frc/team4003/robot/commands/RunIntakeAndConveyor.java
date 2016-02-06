@@ -10,11 +10,13 @@ import edu.wpi.first.wpilibj.command.Command;
  */
 public class RunIntakeAndConveyor extends Command {
 	Sensors sensors = Sensors.getInstance();
-    public RunIntakeAndConveyor() {
+	boolean in;
+    public RunIntakeAndConveyor(boolean in) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.boulderConveyor);
     	requires(Robot.intakeRun);
+    	this.in = in;
     }
 
     // Called just before this Command runs the first time
@@ -23,13 +25,16 @@ public class RunIntakeAndConveyor extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.intakeRun.setPower(1);
-    	Robot.boulderConveyor.setPower(1);
+    	double power = 1;
+    	if (in == false) power *= -1;
+    	Robot.intakeRun.setPower(power);
+    	Robot.boulderConveyor.setPower(power);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return sensors.getConveyorSwitch();
+    	if (in) return sensors.getConveyorSwitch();
+    	return sensors.getIntakeSwitch();
     }
 
     // Called once after isFinished returns true

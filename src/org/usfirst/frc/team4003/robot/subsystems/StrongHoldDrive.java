@@ -11,10 +11,10 @@ import edu.wpi.first.wpilibj.*;
  *
  */
 public class StrongHoldDrive extends Subsystem {
-    TalonSRX leftFront = new TalonSRX(RobotMap.LEFTFRONTDRIVEMOTOR);
-    TalonSRX leftBack = new TalonSRX(RobotMap.LEFTBACKDRIVEMOTOR);
-    TalonSRX rightFront = new TalonSRX(RobotMap.RIGHTFRONTDRIVEMOTOR);
-    TalonSRX rightBack = new TalonSRX(RobotMap.RIGHTBACKDRIVEMOTOR);
+    CANTalon leftFront = new CANTalon(RobotMap.LEFTFRONTDRIVEMOTOR);
+    CANTalon leftBack = new CANTalon(RobotMap.LEFTBACKDRIVEMOTOR);
+    CANTalon rightFront = new CANTalon(RobotMap.RIGHTFRONTDRIVEMOTOR);
+    CANTalon rightBack = new CANTalon(RobotMap.RIGHTBACKDRIVEMOTOR);
     
     public StrongHoldDrive() {
     	leftFront.setInverted(true);
@@ -24,10 +24,11 @@ public class StrongHoldDrive extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new StrongHoldTank());
+    	setDefaultCommand(new StrongHoldArcade());
     }
     
     public void setPower(double leftPower, double rightPower) {
+    	//System.out.println("drive: " + leftPower + " " + rightPower);
     	leftFront.set(leftPower);
     	leftBack.set(leftPower);
     	rightFront.set(rightPower);

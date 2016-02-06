@@ -13,9 +13,8 @@ public class LoadBoulderIntoConveyor extends CommandGroup {
     	requires(Robot.intakeUpDown);
     	setInterruptible(false);
     	IntakeRaiseLower raiseIntake = new IntakeRaiseLower(false);
-    	raiseIntake.canInterrupt(false);
     	addSequential(raiseIntake);
     	addSequential(new WaitForIntakeSwitch());
-    	addSequential(new RunIntakeAndConveyor());
+    	addSequential(new RunIntakeAndConveyor(true));
     }
 }

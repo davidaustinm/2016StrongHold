@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.livewindow.LiveWindow;
 
 import org.usfirst.frc.team4003.robot.subsystems.*;
+import org.usfirst.frc.team4003.robot.commands.*;
+import org.usfirst.frc.team4003.robot.auton.*;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -32,6 +34,8 @@ public class Robot extends IterativeRobot {
 	public static TurretTilt turretTilt;
 	public static BoulderConveyor boulderConveyor;
 	public static OI oi;
+	
+	Sensors sensors;
 
     Command autonomousCommand;
     SendableChooser chooser;
@@ -47,8 +51,7 @@ public class Robot extends IterativeRobot {
     	 if (SubsystemLoad.SHIFTER) shifter = new Shifter();
     	 if (SubsystemLoad.TURRETSPIN) turretSpin = new TurretSpin();
     	 if (SubsystemLoad.TURRETTILT) turretTilt = new TurretTilt();
-    	 if (SubsystemLoad.BOULDERCONVEYOR) boulderConveyor = new BoulderConveyor();
-    	 
+    	 if (SubsystemLoad.BOULDERCONVEYOR) boulderConveyor = new BoulderConveyor(); 
     }
     
     /**
@@ -58,6 +61,8 @@ public class Robot extends IterativeRobot {
 
     public void robotInit() {
 		oi = new OI();
+		sensors = Sensors.getInstance();
+		
         chooser = new SendableChooser();
         //chooser.addDefault("Default Auto", new ExampleCommand());
 //        chooser.addObject("My Auto", new MyAutoCommand());
@@ -97,6 +102,10 @@ public class Robot extends IterativeRobot {
 	 */
     public void autonomousInit() {
         autonomousCommand = (Command) chooser.getSelected();
+        sensors.resetYaw();
+        sensors.resetEncoders();
+        sensors.setBaseLines();
+        autonomousCommand = new DefenseAuton(DefenseAuton.ROCKWALL);
         if (autonomousCommand != null) autonomousCommand.start();
     }
 
@@ -104,11 +113,12 @@ public class Robot extends IterativeRobot {
      * This function is called periodically during autonomous
      */
     public void autonomousPeriodic() {
+    	sensors.updatePosition();
         Scheduler.getInstance().run();
-        Double targetAngle =Sensors.getInstance().getTargetAngle();
+        /*Double targetAngle = sensors.getTargetAngle();
         if (targetAngle == null) return;
-        SmartDashboard.putNumber("targetAngle", targetAngle.doubleValue());
-        SmartDashboard.putNumber("yaw", Sensors.getInstance().getAngle());
+        SmartDashboard.putNumber("targetAngle", targetAngle.doubleValue());*/
+        SmartDashboard.putNumber("yaw", Sensors.getInstance().getYaw());
     }
 
     public void teleopInit() {
@@ -117,7 +127,8 @@ public class Robot extends IterativeRobot {
         // continue until interrupted by another command, remove
         // this line or comment it out.
         if (autonomousCommand != null) autonomousCommand.cancel();
-        Sensors.getInstance().resetYaw();
+        //Sensors.getInstance().resetYaw();
+        sensors.resetEncoders();
     }
 
     /**
@@ -127,6 +138,10 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
         SmartDashboard.putNumber("yaw", Sensors.getInstance().getYaw());
+        SmartDashboard.putNumber("roll", Sensors.getInstance().getRoll());
+        SmartDashboard.putNumber("pitch", Sensors.getInstance().getPitch());
+        SmartDashboard.putNumber("left Encoder:", sensors.getLeftDriveEncoder());
+        SmartDashboard.putNumber("right Encoder:", sensors.getRightDriveEncoder());
     }
     
     /**

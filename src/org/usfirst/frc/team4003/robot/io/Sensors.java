@@ -18,7 +18,7 @@ public class Sensors {
 	DigitalInput turretResetSwitch;
 	AnalogInput turretTiltPot;
 	
-	public static final double ENCODERCOUNTSPERINCH = 80;
+	public static final double ENCODERCOUNTSPERINCH = 135;
 	
 	int lastLeftEncoder = 0;
 	int lastRightEncoder = 0;
@@ -29,6 +29,8 @@ public class Sensors {
 	double shooter1Speed = 0;
 	double robotX = 0;
 	double robotY = 0;
+	double rollBaseLine = 0;
+	double pitchBaseLine = 0;
 	
 	static Sensors sensors = null;
 	public Sensors(){
@@ -40,6 +42,7 @@ public class Sensors {
 		
 		leftDriveEncoder = new Encoder(RobotMap.LEFTDRIVEENCODERA, RobotMap.LEFTDRIVEENCODERB);
 		rightDriveEncoder = new Encoder(RobotMap.RIGHTDRIVEENCODERA, RobotMap.RIGHTDRIVEENCODERB);
+		/*
 		shooter0Encoder = new Encoder(RobotMap.SHOOTER0ENCODERA, RobotMap.SHOOTER0ENCODERB);
 		shooter1Encoder = new Encoder(RobotMap.SHOOTER1ENCODERA, RobotMap.SHOOTER1ENCODERB);
 		turretEncoder = new Encoder(RobotMap.TURRETENCODERA, RobotMap.TURRETENCODERB);
@@ -47,6 +50,7 @@ public class Sensors {
 		intakeSwitch = new DigitalInput(RobotMap.INTAKESWITCH);
 		turretResetSwitch = new DigitalInput(RobotMap.TURRETRESETSWITCH);
 		turretTiltPot = new AnalogInput(RobotMap.TURRETTILT);
+		*/
 	}
 	
 	public static Sensors getInstance(){
@@ -69,6 +73,16 @@ public class Sensors {
 	public void resetYaw(){
 		ahrs.zeroYaw();
 	}
+	public void setBaseLines() {
+		rollBaseLine = getRoll();
+		pitchBaseLine = getPitch();
+	}
+	public double getRollBaseLine() {
+		return rollBaseLine;
+	}
+	public double getPitchBaseLine() {
+		return pitchBaseLine;
+	}
 	public double getAngle() {
 		return -ahrs.getAngle();
 	}
@@ -78,6 +92,10 @@ public class Sensors {
 		double W =20.0 /target.width *(target.centerX -80);
 		double angle =Math.atan(W /target.distance) *180 /Math.PI;
 		return new Double(getYaw() -angle);
+	}
+	public void resetEncoders() {
+		leftDriveEncoder.reset();
+		rightDriveEncoder.reset();
 	}
 	public int getLeftDriveEncoder() {
 		return -leftDriveEncoder.get();
@@ -103,8 +121,12 @@ public class Sensors {
 		lastRightEncoder = current;
 		return change;
 	}
+	public void resetPosition() {
+		robotX = 0;
+		robotY = 0;
+	}
 	public void updatePosition() {
-		double heading = Math.toRadians(ahrs.getYaw());
+		double heading = Math.toRadians(getYaw());
 		double distance = (changeInLeftEncoder() + changeInRightEncoder())/2.0;
 		robotX += distance * Math.cos(heading);
 		robotY += distance * Math.sin(heading);

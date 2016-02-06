@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4003.robot.commands;
 
 import org.usfirst.frc.team4003.robot.Robot;
+import org.usfirst.frc.team4003.robot.io.*;
 
 import edu.wpi.first.wpilibj.command.Command;
 
@@ -8,11 +9,12 @@ import edu.wpi.first.wpilibj.command.Command;
  *
  */
 public class IntakeRunCommand extends Command {
-
+	Sensors sensors;
     public IntakeRunCommand() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.intakeRun);
+    	sensors = Sensors.getInstance();
     }
 
     // Called just before this Command runs the first time
@@ -24,6 +26,8 @@ public class IntakeRunCommand extends Command {
     	double power = Robot.oi.driver.getLeftTrigger();
     	if (Robot.oi.driver.getButtonY()) {
     		power = power*-1;
+    	} else {
+    		if (sensors.getIntakeSwitch()) power = 0;
     	}
     	Robot.intakeRun.setPower(power);
     }

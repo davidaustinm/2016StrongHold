@@ -20,9 +20,15 @@ public class StrongHoldTank extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    double deadBand = 0.1;
+    protected double deadBand(double x) {
+    	if (Math.abs(x) < deadBand) return 0;
+    	return x;
+    }
     protected void execute() {
-    	Robot.strongHoldDrive.setPower(-Robot.oi.driver.getLeftJoyY(),
-    			-Robot.oi.driver.getRightJoyY());
+    	double left = deadBand(-Robot.oi.driver.getLeftJoyY());
+    	double right = deadBand(-Robot.oi.driver.getRightJoyY());
+    	Robot.strongHoldDrive.setPower(left, right);
     }
 
     // Make this return true when this Command no longer needs to run execute()

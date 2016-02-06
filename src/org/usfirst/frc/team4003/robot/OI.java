@@ -14,11 +14,13 @@ public class OI {
 	public XboxButton shiftHigh = new XboxButton(driver, XboxButton.BUTTONRB);
 	public XboxButton shiftLow = new XboxButton(driver, XboxButton.BUTTONLB);
 	public XboxButton loadBoulder = new XboxButton(operator,XboxButton.BUTTONB);
+	/*
 	public OI() {
 		shiftHigh.whenPressed(new ShifterCommand(false));
 		shiftLow.whenPressed(new ShifterCommand(true));
 		loadBoulder.whenPressed(new LoadBoulderIntoConveyor());
 	}
+	*/
     //// CREATING BUTTONS
     // One type of button is a joystick button which is any button on a joystick.
     // You create one by telling it which joystick it's on and which button
