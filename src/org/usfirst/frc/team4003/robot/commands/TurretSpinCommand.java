@@ -21,7 +21,9 @@ public class TurretSpinCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.turretSpin.setPower(Robot.oi.operator.getLeftJoyX());
+    	double power = Robot.oi.operator.getLeftJoyX();
+    	if (Math.abs(power) < 0.1) power = 0;
+    	Robot.turretSpin.setPower(power);
     }
 
     // Make this return true when this Command no longer needs to run execute()

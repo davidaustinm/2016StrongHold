@@ -1,4 +1,3 @@
-
 package org.usfirst.frc.team4003.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
@@ -33,6 +32,7 @@ public class Robot extends IterativeRobot {
 	public static TurretSpin turretSpin;
 	public static TurretTilt turretTilt;
 	public static BoulderConveyor boulderConveyor;
+	public static ShooterSubsystem shooter;
 	public static OI oi;
 	
 	Sensors sensors;
@@ -40,7 +40,8 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     SendableChooser chooser;
     public static Camera camera;
-    Thread targetThread;
+    protected Thread targetThread;
+    protected Thread cameraServerThread;
     
     static {
     	 System.load("/usr/local/lib/lib_OpenCV/java/libopencv_java2410.so");
@@ -52,6 +53,7 @@ public class Robot extends IterativeRobot {
     	 if (SubsystemLoad.TURRETSPIN) turretSpin = new TurretSpin();
     	 if (SubsystemLoad.TURRETTILT) turretTilt = new TurretTilt();
     	 if (SubsystemLoad.BOULDERCONVEYOR) boulderConveyor = new BoulderConveyor(); 
+    	 if (SubsystemLoad.SHOOTER) shooter = new ShooterSubsystem();
     }
     
     /**
@@ -63,21 +65,16 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		sensors = Sensors.getInstance();
 		
-        chooser = new SendableChooser();
+        //chooser = new SendableChooser();
         //chooser.addDefault("Default Auto", new ExampleCommand());
-//        chooser.addObject("My Auto", new MyAutoCommand());
-        SmartDashboard.putData("Auto mode", chooser);
+        //chooser.addObject("My Auto", new MyAutoCommand());
         camera = new Camera();
         targetThread = new Thread(camera);
         targetThread.start();
-        USBCamera webcam = new USBCamera("cam1");
-        webcam.setFPS(10);
-        webcam.setSize(320, 240);
-        CameraServer cameraServer = CameraServer.getInstance();
-        cameraServer.setQuality(50);
-        cameraServer.startAutomaticCapture(webcam);
+        cameraServerThread = new Thread(new TSCameraServer());
+        //cameraServerThread.start();
     }
-	
+    
 	/**
      * This function is called once each time the robot enters Disabled mode.
      * You can use it to reset any subsystem information you want to clear when
@@ -101,11 +98,19 @@ public class Robot extends IterativeRobot {
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
     public void autonomousInit() {
-        autonomousCommand = (Command) chooser.getSelected();
+        //autonomousCommand = (Command) chooser.getSelected();
+    	Robot.turretTilt.resetPosition();
+        Robot.turretSpin.resetPosition();
         sensors.resetYaw();
         sensors.resetEncoders();
         sensors.setBaseLines();
-        autonomousCommand = new DefenseAuton(DefenseAuton.ROCKWALL);
+        int defense = sensors.getDefense();
+        int position = sensors.getPosition();
+        if (position == Sensors.SPYBOT) {
+        	autonomousCommand = new SpyBotAuton();
+        } else {
+         autonomousCommand = new DefenseAuton(defense);
+        }
         if (autonomousCommand != null) autonomousCommand.start();
     }
 
@@ -131,11 +136,19 @@ public class Robot extends IterativeRobot {
     
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        /*
         SmartDashboard.putNumber("yaw", Sensors.getInstance().getYaw());
         SmartDashboard.putNumber("roll", Sensors.getInstance().getRoll());
         SmartDashboard.putNumber("pitch", Sensors.getInstance().getPitch());
         SmartDashboard.putNumber("left Encoder:", sensors.getLeftDriveEncoder());
         SmartDashboard.putNumber("right Encoder:", sensors.getRightDriveEncoder());
+        */
+        //shooter.setPower(-oi.operator.getLeftJoyY());
+        //SmartDashboard.putNumber("Shooter Speed", shooter.getShooter0Speed());
+        //SmartDashboard.putNumber("TurretPosition", turretSpin.getPosition());
+        //SmartDashboard.putNumber("TurretTilt", turretTilt.getPosition());
+        //SmartDashboard.putNumber("Stick", -oi.operator.getLeftJoyY());
+        //SmartDashboard.putBoolean("Shifter", shifter.getStatus());
     }
     
     /**

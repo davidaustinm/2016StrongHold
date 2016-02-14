@@ -1,48 +1,46 @@
-package org.usfirst.frc.team4003.robot.commands;
+package org.usfirst.frc.team4003.robot.auton;
+
+import org.usfirst.frc.team4003.robot.Robot;
+import org.usfirst.frc.team4003.robot.commands.TrisonicsPID;
+import org.usfirst.frc.team4003.robot.io.Sensors;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.*;
-import org.usfirst.frc.team4003.robot.*;
-import org.usfirst.frc.team4003.robot.io.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
  */
-public class DriveToPoint extends Command {
-	double targetX, targetY;
+public class DriveOnHeading extends Command {
+	double encoderTarget, driveDistance;
 	double speed;
 	double heading;
 	Sensors sensors;
-	TrisonicsPID angle, distance, coordinate;
+	TrisonicsPID angle, distance;
 	long stopTime;
-	boolean reset = false;
 	boolean coast = false;
-	public DriveToPoint(double x, double y, double speed, double heading,boolean reset, boolean coast) {
-		this(x,y , speed, heading);
-		this.reset = reset;
+	public DriveOnHeading(double heading, double driveDistance, double speed, boolean coast) {
+		this(heading, driveDistance, speed);
 		this.coast = coast;
 	}
 
-    public DriveToPoint(double x, double y, double speed, double heading) {
+    public DriveOnHeading(double heading, double driveDistance, double speed) {
         // Use requires() here to declare subsystem dependencies
         requires(Robot.strongHoldDrive);
-        targetX = x;
-        targetY = y;
         this.speed = speed;
         this.heading = heading;
         angle = new TrisonicsPID(0.02, 0, 0);
         angle.setTarget(heading);
-        distance = new TrisonicsPID(0.2, 0, 0);
-        distance.setTarget(targetX);
-        coordinate = new TrisonicsPID(0.05, 0, 0);
-        coordinate.setTarget(targetY);
+        distance = new TrisonicsPID(20, 0, 0);
+        this.driveDistance = driveDistance;
         sensors = Sensors.getInstance();
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	stopTime = System.currentTimeMillis() + 5000;
-    	if (reset) sensors.resetPosition();
+    	encoderTarget = sensors.getAverageEncoder() + 
+    			driveDistance * sensors.ENCODERCOUNTSPERINCH;
+    	distance.setTarget(encoderTarget);
     }
 
     double deadBand = 0.1;
@@ -52,9 +50,8 @@ public class DriveToPoint extends Command {
     }
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double correction = angle.getCorrection(sensors.getYaw()) +
-    			coordinate.getCorrection(sensors.getPositionY());
-    	double ramp = distance.getCorrection(sensors.getPositionX());
+    	double correction = angle.getCorrection(sensors.getYaw());
+    	double ramp = distance.getCorrection(sensors.getAverageEncoder());
     	if (ramp > 1) ramp = 1;
     	double left = (speed - correction)*ramp;
     	double right = (speed + correction)*ramp;
@@ -66,7 +63,7 @@ public class DriveToPoint extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return targetX - sensors.getPositionX() < 1;
+        return encoderTarget - sensors.getAverageEncoder() < 1;
     }
 
     // Called once after isFinished returns true
@@ -78,4 +75,5 @@ public class DriveToPoint extends Command {
     // subsystems is scheduled to run
     protected void interrupted() {
     }
+ 
 }

@@ -25,7 +25,7 @@ public class IntakeRunCommand extends Command {
     protected void execute() {
     	double power = Robot.oi.driver.getLeftTrigger();
     	if (Robot.oi.driver.getButtonY()) {
-    		power = power*-1;
+    		power *= -1;
     	} else {
     		if (sensors.getIntakeSwitch()) power = 0;
     	}

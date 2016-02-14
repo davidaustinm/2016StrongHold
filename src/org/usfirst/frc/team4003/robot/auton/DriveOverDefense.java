@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4003.robot.auton;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.*;
 
 import org.usfirst.frc.team4003.robot.*;
 import org.usfirst.frc.team4003.robot.commands.TrisonicsPID;
@@ -17,7 +18,7 @@ public class DriveOverDefense extends Command {
     double speed;
     TrisonicsPID pid = new TrisonicsPID(.02,0,0);
     Sensors sensors = Sensors.getInstance();
-    final double PITCHDOWNLIMIT = -10;
+    final double PITCHDOWNLIMIT = -6;
     final double PITCHDOWNTHRESHOLD = -2;
 
     public DriveOverDefense(double speed) {
@@ -58,6 +59,7 @@ public class DriveOverDefense extends Command {
 			Robot.strongHoldDrive.setPower(0, 0);
 			break;
 		}
+		SmartDashboard.putNumber("State", state);
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -8,7 +8,7 @@ import org.opencv.core.Rect;
 public class Target {
 	double centerX, centerY;
 	double width, height;
-	double distance;
+	double distance, area;
 	double aspectRatio;
 	double error;
 	
@@ -20,8 +20,9 @@ public class Target {
 		width = rectangle.width;
 		height = rectangle.height;
 		aspectRatio = width/height;
+		area = rectangle.width * rectangle.height;
 		
-		error = Math.abs(1.4-aspectRatio);
+		error = Math.abs(1.2-aspectRatio);
 		
 		Moments moments = Imgproc.moments(contour);
     	centerX = moments.get_m10()/moments.get_m00();

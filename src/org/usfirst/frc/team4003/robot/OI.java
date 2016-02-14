@@ -11,16 +11,26 @@ import org.usfirst.frc.team4003.robot.commands.actions.*;
 public class OI {
 	public Xbox driver = new Xbox(0);
 	public Xbox operator = new Xbox(1);
-	public XboxButton shiftHigh = new XboxButton(driver, XboxButton.BUTTONRB);
-	public XboxButton shiftLow = new XboxButton(driver, XboxButton.BUTTONLB);
+	public XboxButton shiftHigh = new XboxButton(driver, XboxButton.BUTTONB);
+	public XboxButton shiftLow = new XboxButton(driver, XboxButton.BUTTONX);
+	public XboxButton raiseIntake = new XboxButton(driver, XboxButton.BUTTONRB);
+	public XboxButton lowerIntake = new XboxButton(driver, XboxButton.BUTTONLB);
 	public XboxButton loadBoulder = new XboxButton(operator,XboxButton.BUTTONB);
-	/*
+	public XboxButton homeTurret = new XboxButton(operator,XboxButton.BUTTONY);
+	public XboxButton shooterOn = new XboxButton(operator,XboxButton.BUTTONRB);
+	public XboxButton shooterOff = new XboxButton(operator,XboxButton.BUTTONLB);
+
 	public OI() {
-		shiftHigh.whenPressed(new ShifterCommand(false));
-		shiftLow.whenPressed(new ShifterCommand(true));
-		loadBoulder.whenPressed(new LoadBoulderIntoConveyor());
+		//shiftHigh.whenPressed(new ShifterCommand(false));
+		//shiftLow.whenPressed(new ShifterCommand(true));
+		//loadBoulder.whenPressed(new LoadBoulderIntoConveyor());
+		//homeTurret.whenPressed(new HomeTurret());
+		//shooterOn.whenPressed(new ShooterCommand(true));
+		//shooterOff.whenPressed(new ShooterCommand(false));
+		raiseIntake.whenPressed(new IntakeUpDownCommand(false));
+		lowerIntake.whenPressed(new IntakeUpDownCommand(true));
 	}
-	*/
+
     //// CREATING BUTTONS
     // One type of button is a joystick button which is any button on a joystick.
     // You create one by telling it which joystick it's on and which button

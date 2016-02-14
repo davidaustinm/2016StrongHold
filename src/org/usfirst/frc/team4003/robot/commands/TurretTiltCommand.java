@@ -21,7 +21,9 @@ public class TurretTiltCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.turretTilt.setPower(Robot.oi.operator.getRightJoyY());
+    	double power = Robot.oi.operator.getRightJoyY();
+    	if (Math.abs(power) < 0.1) power = 0;
+    	Robot.turretTilt.setPower(power);
     }
 
     // Make this return true when this Command no longer needs to run execute()

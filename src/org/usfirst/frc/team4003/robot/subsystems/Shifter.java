@@ -8,8 +8,9 @@ import edu.wpi.first.wpilibj.*;
  *
  */
 public class Shifter extends Subsystem {
-    Solenoid shifter = new Solenoid(RobotMap.SHIFTER);
-    // Put methods for controlling this subsystem
+    Solenoid shifter = new Solenoid(20, RobotMap.SHIFTER);
+	//Solenoid shifter = new Solenoid(20, 0);
+	// Put methods for controlling this subsystem
     // here. Call these from Commands.
 
     public void initDefaultCommand() {
@@ -19,6 +20,9 @@ public class Shifter extends Subsystem {
     
     public void setLow(boolean low) {
     	shifter.set(low);
+    }
+    public boolean getStatus() {
+    	return shifter.get();
     }
 }
 

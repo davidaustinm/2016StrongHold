@@ -17,6 +17,7 @@ public class Sensors {
 	DigitalInput intakeSwitch;
 	DigitalInput turretResetSwitch;
 	AnalogInput turretTiltPot;
+	DigitalInput auton0, auton1, auton2, auton3, auton4, auton5;
 	
 	public static final double ENCODERCOUNTSPERINCH = 135;
 	
@@ -31,6 +32,20 @@ public class Sensors {
 	double robotY = 0;
 	double rollBaseLine = 0;
 	double pitchBaseLine = 0;
+	
+	public static final int ROCKWALL = 0;
+	public static final int ROUGHTERRAIN = 1;
+	public static final int MOAT = 2;
+	public static final int RAMPART = 3;
+	public static final int CHEVAL = 4;
+	public static final int PORTCULLIS = 5;
+	public static final int DRAWBRIDGE = 6;
+	public static final int SALLYPORT = 7;
+	
+	public static final int SPYBOT = 0;
+	
+	double goalX = 80;
+	double goalY = 60;
 	
 	static Sensors sensors = null;
 	public Sensors(){
@@ -51,6 +66,27 @@ public class Sensors {
 		turretResetSwitch = new DigitalInput(RobotMap.TURRETRESETSWITCH);
 		turretTiltPot = new AnalogInput(RobotMap.TURRETTILT);
 		*/
+		auton0 = new DigitalInput(RobotMap.POSITIONAUTON0);
+		auton1 = new DigitalInput(RobotMap.POSITIONAUTON1);
+		auton2 = new DigitalInput(RobotMap.POSITIONAUTON2);
+		auton3 = new DigitalInput(RobotMap.DEFENSEAUTON0);
+		auton4 = new DigitalInput(RobotMap.DEFENSEAUTON1);
+		auton5 = new DigitalInput(RobotMap.DEFENSEAUTON2);
+	}
+	
+	public int getPosition() {
+		int position = 0;
+		if (auton2.get()) position += 4;
+		if (auton1.get()) position += 2;
+		if (auton0.get()) position += 1;
+		return position;
+	}
+	public int getDefense() {
+		int defense = 0;
+		if (auton5.get()) defense += 4;
+		if (auton4.get()) defense += 2;
+		if (auton3.get()) defense += 1;
+		return defense;
 	}
 	
 	public static Sensors getInstance(){
@@ -89,9 +125,18 @@ public class Sensors {
 	public Double getTargetAngle(){
 		Target target = Robot.camera.getTarget();
 		if (target == null) return null;
-		double W =20.0 /target.width *(target.centerX -80);
+		double W = -20.0 /target.width *(target.centerX - goalX);
 		double angle =Math.atan(W /target.distance) *180 /Math.PI;
-		return new Double(getYaw() -angle);
+		angle = Math.toDegrees(angle);
+		return new Double(angle);
+	}
+	public Double getTargetVAngle() {
+		Target target = Robot.camera.getTarget();
+		if (target == null) return null;
+		double H = -12.0 / target.height * (target.centerY - goalY);
+		double angle = Math.atan(H/target.distance) * 180/Math.PI;
+		angle = Math.toDegrees(angle);
+		return new Double(angle);
 	}
 	public void resetEncoders() {
 		leftDriveEncoder.reset();
@@ -102,6 +147,9 @@ public class Sensors {
 	}
 	public int getRightDriveEncoder() {
 		return rightDriveEncoder.get();
+	}
+	public double getAverageEncoder() {
+		return (getLeftDriveEncoder() + getRightDriveEncoder())/2.0;
 	}
 	public boolean getConveyorSwitch() {
 		return conveyorSwitch.get();

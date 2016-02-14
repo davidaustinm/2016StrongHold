@@ -7,18 +7,18 @@ package org.usfirst.frc.team4003.robot;
  */
 public class RobotMap {
 	// TalonSRX, these are CAN ids
-	public static final int LEFTFRONTDRIVEMOTOR = 1;
-	public static final int LEFTBACKDRIVEMOTOR = 2;
-	public static final int RIGHTFRONTDRIVEMOTOR = 3;
-	public static final int RIGHTBACKDRIVEMOTOR = 4;
-	public static final int SHOOTER0 = 5;
-	public static final int SHOOTER1 = 6;
+	public static final int LEFTFRONTDRIVEMOTOR = 11;
+	public static final int LEFTBACKDRIVEMOTOR = 12;
+	public static final int RIGHTFRONTDRIVEMOTOR = 13;
+	public static final int RIGHTBACKDRIVEMOTOR = 14;
+	public static final int SHOOTER0 = 15;
+	public static final int SHOOTER1 = 16;
+	public static final int TURRETSPIN = 2;
+	public static final int TURRETTILT = 3;
 	
 	// Talons, PWM
 	public static final int INTAKEMOTOR0 = 0;
 	public static final int INTAKEMOTOR1 = 1;
-	public static final int TURRETSPIN = 2;
-	public static final int TURRETTILT = 3;
 	public static final int CONVEYOR0 = 4;
 	public static final int CONVEYOR1 = 5;
 	public static final int HANGING = 6;
@@ -42,6 +42,13 @@ public class RobotMap {
 	public static final int CONVEYORSWITCH = 11;
 	public static final int TURRETRESETSWITCH = 12;
 	public static final int COMPRESSOR = 13;
+	
+	public static final int POSITIONAUTON0 = 14;
+	public static final int POSITIONAUTON1 = 15;
+	public static final int POSITIONAUTON2 = 16;
+	public static final int DEFENSEAUTON0 = 17;
+	public static final int DEFENSEAUTON1 = 18;
+	public static final int DEFENSEAUTON2 = 19;
 	
 	// Analog inputs
 	public static final int TILTPOT = 0;
