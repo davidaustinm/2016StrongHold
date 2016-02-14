@@ -123,7 +123,7 @@ public class Sensors {
 		return -ahrs.getAngle();
 	}
 	public Double getTargetAngle(){
-		Target target = Robot.camera.getTarget();
+		Target target = Robot.targetCamera.getTarget();
 		if (target == null) return null;
 		double W = -20.0 /target.width *(target.centerX - goalX);
 		double angle =Math.atan(W /target.distance) *180 /Math.PI;
@@ -131,7 +131,7 @@ public class Sensors {
 		return new Double(angle);
 	}
 	public Double getTargetVAngle() {
-		Target target = Robot.camera.getTarget();
+		Target target = Robot.targetCamera.getTarget();
 		if (target == null) return null;
 		double H = -12.0 / target.height * (target.centerY - goalY);
 		double angle = Math.atan(H/target.distance) * 180/Math.PI;

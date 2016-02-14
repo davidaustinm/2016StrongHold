@@ -39,9 +39,15 @@ public class Robot extends IterativeRobot {
 
     Command autonomousCommand;
     SendableChooser chooser;
-    public static Camera camera;
+    public static TargetCamera targetCamera;
+    public static DriverCamera driverCamera;
+    public static DashboardMatProvider activeCamera = null;
+
     protected Thread targetThread;
+    protected Thread driverThread;
     protected Thread cameraServerThread;
+    
+    protected static boolean enableTargetTracking = false;
     
     static {
     	 System.load("/usr/local/lib/lib_OpenCV/java/libopencv_java2410.so");
@@ -68,13 +74,32 @@ public class Robot extends IterativeRobot {
         //chooser = new SendableChooser();
         //chooser.addDefault("Default Auto", new ExampleCommand());
         //chooser.addObject("My Auto", new MyAutoCommand());
-        camera = new Camera();
-        targetThread = new Thread(camera);
+        targetCamera = new TargetCamera();
+        targetThread = new Thread(targetCamera);
         targetThread.start();
+        
+        driverCamera = new DriverCamera();
+        driverThread = new Thread(driverCamera);
+        driverThread.start();
+        
+        activeCamera = targetCamera;
+        
         cameraServerThread = new Thread(new TSCameraServer());
         //cameraServerThread.start();
     }
     
+    public static void enableTargetTracking() {
+    	enableTargetTracking = true;
+    }
+    
+    public static void disableTargetTracking() {
+    	enableTargetTracking = false;
+    }
+    
+    public static boolean isTargetTracking() {
+    	return enableTargetTracking;
+    }
+
 	/**
      * This function is called once each time the robot enters Disabled mode.
      * You can use it to reset any subsystem information you want to clear when

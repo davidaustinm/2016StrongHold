@@ -52,5 +52,9 @@ public class RobotMap {
 	
 	// Analog inputs
 	public static final int TILTPOT = 0;
+	
+	// Cameras
+	public static final int TARGET_CAMERA = 0;
+	public static final int DRIVER_CAMERA = 1;
 
 }

@@ -37,7 +37,7 @@ public class TSCameraServer implements Runnable {
 					int sizeIgnored = socketInputStream.readInt();
 
 					while (!socket.isClosed() && !Thread.currentThread().isInterrupted()) {
-						img  = Robot.camera.getDashboardImg();
+						img  = Robot.activeCamera.getDashboardImg();
 						if (img != null) {
 							long startTime = System.currentTimeMillis();
 							
