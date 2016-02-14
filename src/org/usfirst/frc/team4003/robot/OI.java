@@ -15,20 +15,30 @@ public class OI {
 	public XboxButton shiftLow = new XboxButton(driver, XboxButton.BUTTONX);
 	public XboxButton raiseIntake = new XboxButton(driver, XboxButton.BUTTONRB);
 	public XboxButton lowerIntake = new XboxButton(driver, XboxButton.BUTTONLB);
-	public XboxButton loadBoulder = new XboxButton(operator,XboxButton.BUTTONB);
+	public XboxButton loadBoulder = new XboxButton(driver, XboxButton.BUTTONY);
+	public XboxButton unloadBoulder = new XboxButton(driver, XboxButton.BUTTONA);
+	
+	public XboxButton cameraToggle = new XboxButton(operator,XboxButton.BUTTONA);
 	public XboxButton homeTurret = new XboxButton(operator,XboxButton.BUTTONY);
+	public XboxButton trackingOn = new XboxButton(operator,XboxButton.BUTTONX);
+	public XboxButton trackingOff = new XboxButton(operator,XboxButton.BUTTONB);
 	public XboxButton shooterOn = new XboxButton(operator,XboxButton.BUTTONRB);
 	public XboxButton shooterOff = new XboxButton(operator,XboxButton.BUTTONLB);
 
 	public OI() {
 		//shiftHigh.whenPressed(new ShifterCommand(false));
 		//shiftLow.whenPressed(new ShifterCommand(true));
-		//loadBoulder.whenPressed(new LoadBoulderIntoConveyor());
-		//homeTurret.whenPressed(new HomeTurret());
-		//shooterOn.whenPressed(new ShooterCommand(true));
-		//shooterOff.whenPressed(new ShooterCommand(false));
 		raiseIntake.whenPressed(new IntakeUpDownCommand(false));
 		lowerIntake.whenPressed(new IntakeUpDownCommand(true));
+		//loadBoulder.whenPressed(new LoadBoulderIntoConveyor());
+		//unloadBoulder.whenPressed(new LoadBoulderOutOfConveyor());
+		
+		//cameraToggle.whenPressed(new CameraToggle());
+		//homeTurret.whenPressed(new HomeTurret());
+		//trackingOn.whenPressed(new TrackingOn(true));
+		//trackingOff.whenPressed(new TrackingOn(false));
+		//shooterOn.whenPressed(new ShooterCommand(true));
+		//shooterOff.whenPressed(new ShooterCommand(false));
 	}
 
     //// CREATING BUTTONS
