@@ -22,6 +22,9 @@ public class Xbox {
 	public boolean getRawButton(final int button) {
 		return ((0x1 << (button - 1)) & _ds.getStickButtons(_port)) != 0;
 	}
+	public int getDpad() {
+		return _ds.getStickPOV(_port, 0);
+	}
 	/**
 	* Warning! getRightTrigger() and getLeftTrigger() both use getRawAxis(3).
 	* As getRawAxis(3) goes below zero, getRightTrigger() increases, and as
@@ -80,6 +83,5 @@ public class Xbox {
 	public boolean getButtonRS() {
 		return getRawButton(10);
 	}
-	
 
 }
