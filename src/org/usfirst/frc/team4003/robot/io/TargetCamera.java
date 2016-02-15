@@ -121,7 +121,7 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 				try {
 					Thread.sleep(stop - now);
 				} catch (InterruptedException ex) {
-					// I EAT EXEPTIONS. OHM NOM NOM NOM!
+					// I EAT EXCEPTIONS. OHM NOM NOM NOM!
 				}
 			}
 		}
