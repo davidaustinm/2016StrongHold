@@ -47,7 +47,8 @@ public class Robot extends IterativeRobot {
     protected Thread driverThread;
     protected Thread cameraServerThread;
     
-    protected static boolean enableTargetTracking = false;
+    // Making this volatile is good enough, no need to sync.  A single dirty read isn't worth the overhead of synch.
+    protected static volatile boolean enableTargetTracking = false;
     
     static {
     	 System.load("/usr/local/lib/lib_OpenCV/java/libopencv_java2410.so");
@@ -85,7 +86,7 @@ public class Robot extends IterativeRobot {
         activeCamera = targetCamera;
         
         cameraServerThread = new Thread(new TSCameraServer());
-        //cameraServerThread.start();
+        cameraServerThread.start();
     }
     
     public static void enableTargetTracking() {

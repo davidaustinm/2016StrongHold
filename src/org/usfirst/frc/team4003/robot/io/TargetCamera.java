@@ -26,6 +26,14 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
     
     protected Mat dashboardImg = new Mat();
     
+    /* Let's sleep for a bit between reads. At 24fps that's 42ms.
+     * While actually running the targeting code the sleep won't happen
+     * as that loop generally takes about 100ms to complete resulting in some lag.
+     * If lag is an issue because of this mechanism just up the framerate. 1000/60 is
+     * probably as fast as we'd want to try and go.
+     */
+    protected int minSleepTime = 1000/24;
+    
 	public TargetCamera() {
 		vcap = new VideoCapture();
         vcap.open(RobotMap.TARGET_CAMERA);
@@ -47,9 +55,9 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 	public void run() {
 		Mat img = new Mat();
 		while(Thread.currentThread().isInterrupted() == false) {
+			long start = System.currentTimeMillis();
 			vcap.read(img);
 			if (Robot.isTargetTracking()) {
-				long start = System.currentTimeMillis();
 				
 				Size size = img.size();
 				SmartDashboard.putNumber("pixelwidth", size.width);
@@ -104,6 +112,17 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 			} else {
 				setDashboardImg(img);
 				setTarget(null);
+			}
+			
+			// If the loop ran faster than minSleepTime let's sleep.
+			long stop = start + minSleepTime;
+			long now = System.currentTimeMillis();
+			if (stop > now) {
+				try {
+					Thread.sleep(stop - now);
+				} catch (InterruptedException ex) {
+					// I EAT EXEPTIONS. OHM NOM NOM NOM!
+				}
 			}
 		}
 	}

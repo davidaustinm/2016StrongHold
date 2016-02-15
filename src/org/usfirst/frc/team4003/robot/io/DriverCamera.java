@@ -21,6 +21,12 @@ public class DriverCamera implements Runnable, DashboardMatProvider {
 	VideoCapture vcap;
 
     protected Mat dashboardImg = new Mat();
+
+    /* Let's sleep for a bit between reads. At 24fps that's 42ms.
+     * If lag is an issue because of this mechanism just up the framerate. 1000/60 is
+     * probably as fast as we'd want to try and go.
+     */
+    protected int minSleepTime = 1000/24;
     
 	public DriverCamera() {
 		vcap = new VideoCapture();
@@ -43,9 +49,20 @@ public class DriverCamera implements Runnable, DashboardMatProvider {
 	public void run() {
 		Mat img = new Mat();
 		while(Thread.currentThread().isInterrupted() == false) {
-			// TODO: We might want to rate limit this, maybe force a 41ms sleep for 24fps.
+			long start = System.currentTimeMillis();
 			vcap.read(img);
 			setDashboardImg(img);
+
+			// If the loop ran faster than minSleepTime let's sleep.
+			long stop = start + minSleepTime;
+			long now = System.currentTimeMillis();
+			if (stop > now) {
+				try {
+					Thread.sleep(stop - now);
+				} catch (InterruptedException ex) {
+					// I EAT EXEPTIONS. OHM NOM NOM NOM!
+				}
+			}
 		}
 	}
 }

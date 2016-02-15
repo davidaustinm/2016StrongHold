@@ -37,7 +37,12 @@ public class TSCameraServer implements Runnable {
 					int sizeIgnored = socketInputStream.readInt();
 
 					while (!socket.isClosed() && !Thread.currentThread().isInterrupted()) {
-						img  = Robot.activeCamera.getDashboardImg();
+
+						// We don't want to try and read while activeCamera is being swapped out so synch on that object.
+						synchronized(Robot.activeCamera) {
+							img  = Robot.activeCamera.getDashboardImg();
+						}
+
 						if (img != null) {
 							long startTime = System.currentTimeMillis();
 							

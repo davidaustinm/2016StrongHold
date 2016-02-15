@@ -14,10 +14,12 @@ public class CameraToggle extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	if (Robot.activeCamera == Robot.targetCamera) {
-    		Robot.activeCamera = Robot.driverCamera;
-    	} else {
-    		Robot.activeCamera = Robot.targetCamera;
+    	synchronized(Robot.activeCamera) {
+			if (Robot.activeCamera == Robot.targetCamera) {
+				Robot.activeCamera = Robot.driverCamera;
+			} else {
+				Robot.activeCamera = Robot.targetCamera;
+			}
     	}
     }
 
