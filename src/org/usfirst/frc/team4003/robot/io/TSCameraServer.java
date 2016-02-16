@@ -15,7 +15,7 @@ public class TSCameraServer implements Runnable {
     private static final int PORT = 1180;
     private static final byte[] MAGIC_NUMBER = {0x01, 0x00, 0x00, 0x00};
     private double fps = 24; 
-    private int compression = 60;
+    private int quality = 95;
     
 	@Override
 	public void run() {
@@ -40,14 +40,17 @@ public class TSCameraServer implements Runnable {
 
 						// We don't want to try and read while activeCamera is being swapped out so synch on that object.
 						synchronized(Robot.activeCamera) {
+							//System.out.println("Pulling image from activeCamera");
 							img  = Robot.activeCamera.getDashboardImg();
+							//System.out.println("Image size: " + img.size().height + " x " + img.size().width);
+							//System.out.println("Got it!");
 						}
 
 						if (img != null) {
 							long startTime = System.currentTimeMillis();
 							
 							MatOfByte byteMat = new MatOfByte();
-							MatOfInt params = new MatOfInt(Highgui.IMWRITE_JPEG_QUALITY, compression);
+							MatOfInt params = new MatOfInt(Highgui.IMWRITE_JPEG_QUALITY, quality);
 							try { // imencode() doesn't always work as we get bad data on our feed shortly after startup.
 								Highgui.imencode(".jpeg", img, byteMat, params);
 								
@@ -58,8 +61,10 @@ public class TSCameraServer implements Runnable {
 
 								socketOutputStream.write(MAGIC_NUMBER);
 								socketOutputStream.writeInt(byteArray.length);
-								// Might want to chunk this up into 2k or 4k blocks if performance is an issue.
+								System.out.println("image size: " + byteArray.length);
 								socketOutputStream.write(byteArray, 0, byteArray.length);
+								// Flushing the buffer reduces lag considerably.
+								socketOutputStream.flush();
 							} catch (Exception ex) {
 								System.out.println(ex.getMessage());
 							}

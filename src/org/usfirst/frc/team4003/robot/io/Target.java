@@ -22,11 +22,16 @@ public class Target {
 		aspectRatio = width/height;
 		area = rectangle.width * rectangle.height;
 		
-		error = Math.abs(1.2-aspectRatio);
+		error = Math.abs((20.00/12.00)-aspectRatio);
 		
+		/*
 		Moments moments = Imgproc.moments(contour);
     	centerX = moments.get_m10()/moments.get_m00();
     	centerY = moments.get_m01()/moments.get_m00();
+    	*/
+		centerX = rectangle.tl().x + rectangle.width/2.0;
+		centerY = rectangle.tl().y;
+		//TODO: Set based of actual camera resolution, not assuming 160x120 always.
     	distance = 20*100.0/(rectangle.width * tanAngle);
 	}
 	

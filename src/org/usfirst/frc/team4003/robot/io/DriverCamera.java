@@ -57,11 +57,13 @@ public class DriverCamera implements Runnable, DashboardMatProvider {
 			long stop = start + minSleepTime;
 			long now = System.currentTimeMillis();
 			if (stop > now) {
+				/*
 				try {
 					Thread.sleep(stop - now);
 				} catch (InterruptedException ex) {
 					// I EAT EXCEPTIONS. OHM NOM NOM NOM!
 				}
+				*/
 			}
 		}
 	}
