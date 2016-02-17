@@ -48,10 +48,13 @@ public class DriverCamera implements Runnable, DashboardMatProvider {
 	
 	public void run() {
 		Mat img = new Mat();
+		Mat smallImg = new Mat();
 		while(Thread.currentThread().isInterrupted() == false) {
 			long start = System.currentTimeMillis();
 			vcap.read(img);
-			setDashboardImg(img);
+			Imgproc.resize(img, smallImg, new Size(320, 180));
+
+			setDashboardImg(smallImg);
 
 			// If the loop ran faster than minSleepTime let's sleep.
 			long stop = start + minSleepTime;

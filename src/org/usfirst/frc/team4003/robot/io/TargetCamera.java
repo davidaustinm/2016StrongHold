@@ -9,6 +9,7 @@ import org.opencv.core.Point;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
+import org.opencv.core.Rect;
 import org.opencv.highgui.VideoCapture;
 import org.opencv.imgproc.Imgproc;
 import org.opencv.highgui.Highgui;
@@ -61,9 +62,11 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 	public void run() {
 		Mat img = new Mat();
 		Mat mask = new Mat();
+		Mat origImg = new Mat();
 		while (Thread.currentThread().isInterrupted() == false) {
 			long start = System.currentTimeMillis();
-			vcap.read(img);
+			vcap.read(origImg);
+			Imgproc.resize(origImg, img, new Size(320, 180));
 			if (Robot.isTargetTracking()) {
 
 				Size size = img.size();
@@ -86,7 +89,9 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 				List<Target> targets = new ArrayList<Target>();
 				for (int c = 0; c < contours.size(); c++) {
 					MatOfPoint cont = contours.get(c);
+					Rect bounding = Imgproc.boundingRect(cont);
 					if (Imgproc.boundingRect(cont).area() > minArea) {
+						Core.rectangle(dash, bounding.br(), bounding.tl(), new Scalar(255, 255, 0));
 						targets.add(new Target(cont));
 						// Draw large enough contours in red
 						Imgproc.drawContours(dash, contours, c, new Scalar(0, 0, 255));

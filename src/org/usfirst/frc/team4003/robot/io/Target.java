@@ -2,6 +2,7 @@ package org.usfirst.frc.team4003.robot.io;
 
 import org.opencv.imgproc.Imgproc;
 import org.opencv.imgproc.Moments;
+import org.usfirst.frc.team4003.robot.RobotMap;
 import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;
 
@@ -14,6 +15,8 @@ public class Target {
 	
 	double angle = 68.5/2.0 * Math.PI/180;
     double tanAngle = Math.tan(angle);
+
+	protected double halfHypot = Math.sqrt(Math.pow(RobotMap.TARGET_CAMERA_H,  2) + Math.pow(RobotMap.TARGET_CAMERA_W, 2)) / 2.0;
     
 	public Target(MatOfPoint contour) {
 		Rect rectangle = Imgproc.boundingRect(contour);
@@ -22,7 +25,10 @@ public class Target {
 		aspectRatio = width/height;
 		area = rectangle.width * rectangle.height;
 		
-		error = Math.abs((20.00/12.00)-aspectRatio);
+		//error = Math.abs((RobotMap.TARGET_TAPE_WIDTH / RobotMap.TARGET_TAPE_HEIGHT) - aspectRatio);
+		// Because we're looking up at the target 1.6 isn't really the best aspect ratio.  Looks more like 2.0 on
+		// the outer defense line and up to 3.0-ish if you're getting really close to it.
+		error = Math.abs(2.0 - aspectRatio);
 		
 		/*
 		Moments moments = Imgproc.moments(contour);
@@ -31,8 +37,7 @@ public class Target {
     	*/
 		centerX = rectangle.tl().x + rectangle.width/2.0;
 		centerY = rectangle.tl().y;
-		//TODO: Set based of actual camera resolution, not assuming 160x120 always.
-    	distance = 20*100.0/(rectangle.width * tanAngle);
+    	distance = 20 * halfHypot / (rectangle.width * tanAngle);
 	}
 	
 	public double getError() {

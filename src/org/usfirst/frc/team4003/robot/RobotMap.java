@@ -54,7 +54,18 @@ public class RobotMap {
 	public static final int TILTPOT = 0;
 	
 	// Cameras
-	public static final int TARGET_CAMERA = 0;
-	public static final int DRIVER_CAMERA = 1;
+	public static final int TARGET_CAMERA = 1; // This one is stuck in 1280x720 mode
+	public static final int DRIVER_CAMERA = 0; // This one is stuck in 160x120 mode
+	
+	public static final int TARGET_CAMERA_W = 320;
+	public static final int TARGET_CAMERA_H = 180;
+
+	public static final int DRIVER_CAMERA_W = 320;
+	public static final int DRIVER_CAMERA_H = 180;
+	
+	public static final double TARGET_TAPE_HEIGHT = 12.0; // In inches
+	public static final double TARGET_TAPE_WIDTH = 20.0; // In inches
+	
+	
 
 }
