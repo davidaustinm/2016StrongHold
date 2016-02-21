@@ -7,6 +7,7 @@ import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.CANTalon.TalonControlMode;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -17,11 +18,14 @@ public class ShooterSubsystem extends Subsystem {
     // here. Call these from Commands.
 	CANTalon shooter0 = new CANTalon(RobotMap.SHOOTER0);
 	//CANTalon shooter0 = new CANTalon(16);
-	double shooter0Target = 4000;
-	double shooter1Target = 4000;
+	double shooter0Target = 4300;
+	double shooter1Target = 4300;
 	CANTalon shooter1 = new CANTalon(RobotMap.SHOOTER1);
+	CANTalon.TalonControlMode defaultMode;
 	public ShooterSubsystem() {
+		defaultMode = shooter0.getControlMode();
         shooter0.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+        shooter0.setInverted(true);
         shooter0.reverseSensor(false);
         shooter0.configNominalOutputVoltage(0, 0);
         shooter0.configPeakOutputVoltage(12, -12);
@@ -32,8 +36,9 @@ public class ShooterSubsystem extends Subsystem {
         shooter0.setD(0);
         shooter0.changeControlMode(TalonControlMode.Speed);
        
-        shooter1.setInverted(true);
+        //shooter1.setInverted(true);
         shooter1.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
+        shooter1.setInverted(true);
         shooter1.reverseSensor(false);
         shooter1.configNominalOutputVoltage(0, 0);
         shooter1.configPeakOutputVoltage(12, -12);
@@ -48,10 +53,12 @@ public class ShooterSubsystem extends Subsystem {
 	
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
-        setDefaultCommand(new ShooterTest());
+        //setDefaultCommand(new ShooterTest());
     }
     
     public void setOn(boolean on) {
+    	//shooter0Target = SmartDashboard.getNumber("Shooter 0");
+    	//shooter1Target = SmartDashboard.getNumber("Shooter 1");
     	if (on) {
     		shooter0.set(shooter0Target);
     		shooter1.set(shooter1Target);
@@ -62,8 +69,14 @@ public class ShooterSubsystem extends Subsystem {
     	}
     }
     public void setPower(double power) {
+    	shooter0.changeControlMode(defaultMode);
+    	shooter1.changeControlMode(defaultMode);
     	shooter0.set(power);
     	shooter1.set(power);
+    	/*
+    	SmartDashboard.putNumber("shooter 0", shooter0.getSpeed());
+    	SmartDashboard.putNumber("shooter 1", shooter1.getSpeed());
+    	*/
     }
     public double getShooter0Speed() {
     	return shooter0.getSpeed();

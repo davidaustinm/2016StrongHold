@@ -3,6 +3,7 @@ package org.usfirst.frc.team4003.robot.io;
 import com.kauailabs.navx.frc.AHRS;
 
 import edu.wpi.first.wpilibj.*;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team4003.robot.*;
 
@@ -61,17 +62,21 @@ public class Sensors {
 		shooter0Encoder = new Encoder(RobotMap.SHOOTER0ENCODERA, RobotMap.SHOOTER0ENCODERB);
 		shooter1Encoder = new Encoder(RobotMap.SHOOTER1ENCODERA, RobotMap.SHOOTER1ENCODERB);
 		turretEncoder = new Encoder(RobotMap.TURRETENCODERA, RobotMap.TURRETENCODERB);
+		*/
+		/*
 		conveyorSwitch = new DigitalInput(RobotMap.CONVEYORSWITCH);
 		intakeSwitch = new DigitalInput(RobotMap.INTAKESWITCH);
 		turretResetSwitch = new DigitalInput(RobotMap.TURRETRESETSWITCH);
-		turretTiltPot = new AnalogInput(RobotMap.TURRETTILT);
 		*/
+		//turretTiltPot = new AnalogInput(RobotMap.TURRETTILT);
+		/*
 		auton0 = new DigitalInput(RobotMap.POSITIONAUTON0);
 		auton1 = new DigitalInput(RobotMap.POSITIONAUTON1);
 		auton2 = new DigitalInput(RobotMap.POSITIONAUTON2);
 		auton3 = new DigitalInput(RobotMap.DEFENSEAUTON0);
 		auton4 = new DigitalInput(RobotMap.DEFENSEAUTON1);
 		auton5 = new DigitalInput(RobotMap.DEFENSEAUTON2);
+		*/
 	}
 	
 	public int getPosition() {
@@ -152,10 +157,12 @@ public class Sensors {
 		return (getLeftDriveEncoder() + getRightDriveEncoder())/2.0;
 	}
 	public boolean getConveyorSwitch() {
-		return conveyorSwitch.get();
+		//return conveyorSwitch.get();
+		return false;
 	}
 	public boolean getIntakeSwitch() {
-		return intakeSwitch.get();
+		//return intakeSwitch.get();
+		return false;
 	}
 	public int changeInLeftEncoder() {
 		int current = getLeftDriveEncoder();
@@ -206,16 +213,37 @@ public class Sensors {
 		lastShooter1Encoder = current1;
 		shooter1Speed = change1 / (double) changeInTime;
 	}
+	public void displayTurretEncoders() {
+		SmartDashboard.putNumber("Turret Tilt", Robot.turretTilt.getPosition());
+		SmartDashboard.putNumber("Turret Spin", Robot.turretSpin.getPosition());
+	}
+	public void displayShooterSpeeds() {
+		SmartDashboard.putNumber("Shooter 0", Robot.shooter.getShooter0Speed());
+		SmartDashboard.putNumber("Shooter 1", Robot.shooter.getShooter1Speed());
+	}
+	/*
 	public double getShooter0Speed() {
 		return shooter0Speed;
 	}
 	public double getShooter1Speed() {
 		return shooter1Speed;
 	}
+	*/
 	public boolean getTurretResetSwitch() {
-		return turretResetSwitch.get();
+		//return turretResetSwitch.get();
+		return false;
 	}
 	public double getTurretTiltPot() {
 		return turretTiltPot.getVoltage();
+	}
+	public void displaySwitches() {
+		SmartDashboard.putBoolean("Intake switch", getIntakeSwitch());
+		SmartDashboard.putBoolean("Conveyor switch", getConveyorSwitch());
+		SmartDashboard.putBoolean("Turret switch", getTurretResetSwitch());
+	}
+	public void displayOrientation() {
+		SmartDashboard.putNumber("Pitch", getPitch());
+		SmartDashboard.putNumber("Yaw", getYaw());
+		SmartDashboard.putNumber("Roll", getRoll());
 	}
 }

@@ -26,19 +26,19 @@ public class OI {
 	public XboxButton shooterOff = new XboxButton(operator,XboxButton.BUTTONLB);
 
 	public OI() {
-		//shiftHigh.whenPressed(new ShifterCommand(false));
-		//shiftLow.whenPressed(new ShifterCommand(true));
-		//`raiseIntake.whenPressed(new IntakeUpDownCommand(false));
-		//lowerIntake.whenPressed(new IntakeUpDownCommand(true));
+		shiftHigh.whenPressed(new ShifterCommand(false));
+		shiftLow.whenPressed(new ShifterCommand(true));
+		raiseIntake.whenPressed(new IntakeUpDownCommand(false));
+		lowerIntake.whenPressed(new IntakeUpDownCommand(true));
 		//loadBoulder.whenPressed(new LoadBoulderIntoConveyor());
 		//unloadBoulder.whenPressed(new LoadBoulderOutOfConveyor());
 		
-		cameraToggle.whenPressed(new CameraToggle());
+		//cameraToggle.whenPressed(new CameraToggle());
 		//homeTurret.whenPressed(new HomeTurret());
 		trackingOn.whenPressed(new TrackingOn(true));
 		trackingOff.whenPressed(new TrackingOn(false));
-		//shooterOn.whenPressed(new ShooterCommand(true));
-		//shooterOff.whenPressed(new ShooterCommand(false));
+		shooterOn.whenPressed(new ShooterCommand(true));
+		shooterOff.whenPressed(new ShooterCommand(false));
 	}
 
     //// CREATING BUTTONS

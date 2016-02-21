@@ -7,20 +7,18 @@ package org.usfirst.frc.team4003.robot;
  */
 public class RobotMap {
 	// TalonSRX, these are CAN ids
-	public static final int LEFTFRONTDRIVEMOTOR = 11;
-	public static final int LEFTBACKDRIVEMOTOR = 12;
-	public static final int RIGHTFRONTDRIVEMOTOR = 13;
+	public static final int LEFTFRONTDRIVEMOTOR = 13;
+	public static final int LEFTBACKDRIVEMOTOR = 16;
+	public static final int RIGHTFRONTDRIVEMOTOR = 2;
 	public static final int RIGHTBACKDRIVEMOTOR = 14;
-	public static final int SHOOTER0 = 15;
-	public static final int SHOOTER1 = 16;
-	public static final int TURRETSPIN = 2;
-	public static final int TURRETTILT = 3;
+	public static final int SHOOTER0 = 15; // top shooter
+	public static final int SHOOTER1 = 3; // bottom shooter
+	public static final int TURRETSPIN = 11;
+	public static final int TURRETTILT = 12;
 	
 	// Talons, PWM
-	public static final int INTAKEMOTOR0 = 0;
-	public static final int INTAKEMOTOR1 = 1;
-	public static final int CONVEYOR0 = 4;
-	public static final int CONVEYOR1 = 5;
+	public static final int INTAKEMOTOR = 2;
+	public static final int CONVEYOR = 1;
 	public static final int HANGING = 6;
 	
 	// Solenoids
@@ -54,8 +52,8 @@ public class RobotMap {
 	public static final int TILTPOT = 0;
 	
 	// Cameras
-	public static final int TARGET_CAMERA = 1; // This one is stuck in 1280x720 mode
-	public static final int DRIVER_CAMERA = 0; // This one is stuck in 160x120 mode
+	public static final int TARGET_CAMERA = 0; // This one is stuck in 1280x720 mode
+	public static final int DRIVER_CAMERA = 1; // This one is stuck in 160x120 mode
 	
 	public static final int TARGET_CAMERA_W = 320;
 	public static final int TARGET_CAMERA_H = 180;

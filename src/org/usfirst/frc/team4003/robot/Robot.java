@@ -40,11 +40,11 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     SendableChooser chooser;
     public static TargetCamera targetCamera;
-    public static DriverCamera driverCamera;
+    //public static DriverCamera driverCamera;
     public static DashboardMatProvider activeCamera = null;
 
     protected Thread targetThread;
-    protected Thread driverThread;
+    //protected Thread driverThread;
     protected Thread cameraServerThread;
     
     // Making this volatile is good enough, no need to sync.  A single dirty read isn't worth the overhead of synch.
@@ -79,14 +79,21 @@ public class Robot extends IterativeRobot {
         targetThread = new Thread(targetCamera);
         targetThread.start();
         
+        /*
         driverCamera = new DriverCamera();
         driverThread = new Thread(driverCamera);
         driverThread.start();
+        */
         
         activeCamera = targetCamera;
         
         cameraServerThread = new Thread(new TSCameraServer());
         cameraServerThread.start();
+        /*
+        Compressor compressor = new Compressor(20);
+        compressor.setClosedLoopControl(true);
+        compressor.start();
+        */
     }
     
     public static void enableTargetTracking() {
@@ -125,11 +132,13 @@ public class Robot extends IterativeRobot {
 	 */
     public void autonomousInit() {
         //autonomousCommand = (Command) chooser.getSelected();
+    	
     	Robot.turretTilt.resetPosition();
         Robot.turretSpin.resetPosition();
         sensors.resetYaw();
         sensors.resetEncoders();
         sensors.setBaseLines();
+        /*
         int defense = sensors.getDefense();
         int position = sensors.getPosition();
         if (position == Sensors.SPYBOT) {
@@ -137,6 +146,8 @@ public class Robot extends IterativeRobot {
         } else {
          autonomousCommand = new DefenseAuton(defense);
         }
+        */
+        autonomousCommand = new DefenseAuton(Sensors.ROCKWALL);
         if (autonomousCommand != null) autonomousCommand.start();
     }
 
@@ -161,6 +172,7 @@ public class Robot extends IterativeRobot {
      */
     
     public void teleopPeriodic() {
+    	sensors.displayShooterSpeeds();
         Scheduler.getInstance().run();
         /*
         SmartDashboard.putNumber("yaw", Sensors.getInstance().getYaw());

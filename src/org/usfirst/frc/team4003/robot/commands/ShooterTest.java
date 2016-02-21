@@ -21,8 +21,9 @@ public class ShooterTest extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double power = - Robot.oi.operator.getLeftJoyY();
+    	double power = -Robot.oi.operator.getLeftJoyY();
     	Robot.shooter.setPower(power);
+    	SmartDashboard.putNumber("power",  power);
     	SmartDashboard.putNumber("Shooter0Speed", Robot.shooter.getShooter0Speed());
     	SmartDashboard.putNumber("Shooter1Speed", Robot.shooter.getShooter1Speed());
     }

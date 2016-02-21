@@ -6,11 +6,9 @@ import edu.wpi.first.wpilibj.*;
 import org.usfirst.frc.team4003.robot.RobotMap;
 import org.usfirst.frc.team4003.robot.commands.*;
 public class IntakeRun extends Subsystem {
-    Talon intake0 = new Talon(RobotMap.INTAKEMOTOR0);
-    Talon intake1 = new Talon(RobotMap.INTAKEMOTOR1);
+    Talon intake0 = new Talon(RobotMap.INTAKEMOTOR);
     
     public IntakeRun() {
-    	intake1.setInverted(true);
     }
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
@@ -23,7 +21,6 @@ public class IntakeRun extends Subsystem {
     
     public void setPower(double power) {
     	intake0.set(power);
-    	intake1.set(power);
     }
 }
 

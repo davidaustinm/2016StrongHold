@@ -9,16 +9,14 @@ import org.usfirst.frc.team4003.robot.commands.*;
  *
  */
 public class BoulderConveyor extends Subsystem {
-    Talon bc0 = new Talon(RobotMap.CONVEYOR0);
-    Talon bc1 = new Talon(RobotMap.CONVEYOR1);
+    Talon bc0 = new Talon(RobotMap.CONVEYOR);
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     public BoulderConveyor() {
-    	bc1.setInverted(true);
+    	bc0.setInverted(true);
     }
     public void setPower(double power) {
     	bc0.set(power);
-    	bc1.set(power);
     }
     public void initDefaultCommand() {
         // Set the default command for a subsystem hered.

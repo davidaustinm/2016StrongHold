@@ -1,6 +1,8 @@
 package org.usfirst.frc.team4003.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc.team4003.robot.*;
 
 /**
@@ -23,6 +25,7 @@ public class BoulderConveyorCommand extends Command {
     	double power = Robot.oi.operator.getRightTrigger()-
     			Robot.oi.operator.getLeftTrigger();
     	if(Math.abs(power)<.1)power = 0;
+    	SmartDashboard.putNumber("conveyor", power);
     	Robot.boulderConveyor.setPower(power);
     }
 
