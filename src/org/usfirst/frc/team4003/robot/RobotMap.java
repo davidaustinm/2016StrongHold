@@ -38,7 +38,7 @@ public class RobotMap {
 	public static final int TURRETENCODERB = 9;
 	public static final int INTAKESWITCH = 10;
 	public static final int CONVEYORSWITCH = 11;
-	public static final int TURRETRESETSWITCH = 12;
+	public static final int TURRETRESETSWITCH = 4;
 	public static final int COMPRESSOR = 13;
 	
 	public static final int POSITIONAUTON0 = 14;

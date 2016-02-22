@@ -146,12 +146,21 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 			*/
 		}
 	}
+	boolean targetReady = false;
+	public synchronized void setTargetReady(boolean t) {
+		targetReady = t;
+	}
 
+	public synchronized boolean getTargetReady() {
+		return targetReady;
+	}
 	public synchronized void setTarget(Target t) {
 		target = t;
+		setTargetReady(true);
 	}
 
 	public synchronized Target getTarget() {
+		setTargetReady(false);
 		return target;
 	}
 

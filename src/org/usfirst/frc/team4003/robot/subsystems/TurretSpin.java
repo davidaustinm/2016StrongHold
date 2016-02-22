@@ -43,7 +43,7 @@ public class TurretSpin extends Subsystem {
     	spin.set(0);
     }
     public void initDefaultCommand() {
-    	setDefaultCommand(new TurretSpinCommand());
+    	//setDefaultCommand(new TurretSpinCommand());
     }
     public void setPower(double power) {
     	spin.set(power);

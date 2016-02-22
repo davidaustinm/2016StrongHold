@@ -30,7 +30,7 @@ public class StrongHoldArcade extends Command {
 	double inertiam1 = 1-inertia;
 	double oldThrottle = 0;
 	double oldWheel = 0;
-	double maxSpeed = 1;
+	double maxSpeed = .6;
     protected void execute() {
     	double tmpThrottle = -deadBand(Robot.oi.driver.getLeftJoyY());
     	double tmpWheel = deadBand(Robot.oi.driver.getRightJoyX());

@@ -45,8 +45,8 @@ public class Sensors {
 	
 	public static final int SPYBOT = 0;
 	
-	double goalX = 80;
-	double goalY = 60;
+	double goalX = 160;
+	double goalY = 140;
 	
 	static Sensors sensors = null;
 	public Sensors(){
@@ -66,8 +66,8 @@ public class Sensors {
 		/*
 		conveyorSwitch = new DigitalInput(RobotMap.CONVEYORSWITCH);
 		intakeSwitch = new DigitalInput(RobotMap.INTAKESWITCH);
-		turretResetSwitch = new DigitalInput(RobotMap.TURRETRESETSWITCH);
 		*/
+		turretResetSwitch = new DigitalInput(RobotMap.TURRETRESETSWITCH);
 		//turretTiltPot = new AnalogInput(RobotMap.TURRETTILT);
 		/*
 		auton0 = new DigitalInput(RobotMap.POSITIONAUTON0);
@@ -131,7 +131,7 @@ public class Sensors {
 		Target target = Robot.targetCamera.getTarget();
 		if (target == null) return null;
 		double W = -20.0 /target.width *(target.centerX - goalX);
-		double angle =Math.atan(W /target.distance) *180 /Math.PI;
+		double angle =Math.atan(W /target.distance);
 		angle = Math.toDegrees(angle);
 		return new Double(angle);
 	}
@@ -139,8 +139,9 @@ public class Sensors {
 		Target target = Robot.targetCamera.getTarget();
 		if (target == null) return null;
 		double H = -12.0 / target.height * (target.centerY - goalY);
-		double angle = Math.atan(H/target.distance) * 180/Math.PI;
+		double angle = Math.atan(H/target.distance);
 		angle = Math.toDegrees(angle);
+		SmartDashboard.putNumber("Target Y", target.centerY);
 		return new Double(angle);
 	}
 	public void resetEncoders() {
@@ -230,15 +231,14 @@ public class Sensors {
 	}
 	*/
 	public boolean getTurretResetSwitch() {
-		//return turretResetSwitch.get();
-		return false;
+		return !turretResetSwitch.get();
 	}
 	public double getTurretTiltPot() {
 		return turretTiltPot.getVoltage();
 	}
 	public void displaySwitches() {
-		SmartDashboard.putBoolean("Intake switch", getIntakeSwitch());
-		SmartDashboard.putBoolean("Conveyor switch", getConveyorSwitch());
+		//SmartDashboard.putBoolean("Intake switch", getIntakeSwitch());
+		//SmartDashboard.putBoolean("Conveyor switch", getConveyorSwitch());
 		SmartDashboard.putBoolean("Turret switch", getTurretResetSwitch());
 	}
 	public void displayOrientation() {

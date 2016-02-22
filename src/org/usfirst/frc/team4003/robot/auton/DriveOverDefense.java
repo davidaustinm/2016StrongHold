@@ -18,8 +18,8 @@ public class DriveOverDefense extends Command {
     double speed;
     TrisonicsPID pid = new TrisonicsPID(.02,0,0);
     Sensors sensors = Sensors.getInstance();
-    final double PITCHDOWNLIMIT = -6;
-    final double PITCHDOWNTHRESHOLD = -2;
+    final double PITCHDOWNLIMIT = -10;
+    final double PITCHDOWNTHRESHOLD = -5;
 
     public DriveOverDefense(double speed) {
         // Use requires() here to declare subsystem dependencies
@@ -35,6 +35,7 @@ public class DriveOverDefense extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	SmartDashboard.putNumber("State", state);
 		double correction = pid.getCorrection(sensors.getYaw());
 		if (correction < -speed)
 			correction = -speed;
@@ -44,14 +45,14 @@ public class DriveOverDefense extends Command {
 		case PREDOWN:
 			Robot.strongHoldDrive.setPower(speed - correction, speed
 					+ correction);
-			if (sensors.getPitch() < sensors.getPitchBaseLine()
+			if (sensors.getRoll() < sensors.getRollBaseLine()
 					+ PITCHDOWNLIMIT)
 				state = DOWN;
 			break;
 		case DOWN:
 			Robot.strongHoldDrive.setPower(speed - correction, speed
 					+ correction);
-			if (sensors.getPitch() > sensors.getPitchBaseLine()
+			if (sensors.getRoll() > sensors.getRollBaseLine()
 					+ PITCHDOWNTHRESHOLD)
 				state = STOP;
 			break;

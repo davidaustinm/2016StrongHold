@@ -1,31 +1,25 @@
 package org.usfirst.frc.team4003.robot.auton;
 
-import org.usfirst.frc.team4003.robot.commands.*;
-import org.usfirst.frc.team4003.robot.io.*;
-
 import edu.wpi.first.wpilibj.command.CommandGroup;
+
+import org.usfirst.frc.team4003.robot.commands.*;
 
 /**
  *
  */
-public class DefenseAuton extends CommandGroup {
-    public DefenseAuton(int defense) {
-    	if (defense == Sensors.RAMPART) {
-    		addSequential(new RampartAuton()); 
-    		return;
-    	}
-    	addSequential(new DriveToPoint(44, 0, 0.6, 0, false, true));
-    	switch(defense) {
-    	case Sensors.ROCKWALL:
-    		addSequential(new DriveOverDefense(0.75));
-    		break;
-    	case Sensors.MOAT:
-    		addSequential(new DriveOverDefense(.75));
-    		break;
-    	case Sensors.ROUGHTERRAIN:
-    		addSequential(new DriveOverDefense(.75));
-    		break;
-    	}
+public class ChevalDeFrisAuton extends CommandGroup {
+    
+    public  ChevalDeFrisAuton() {
+    	addSequential(new DriveWhileLevel(.5));
+    	addSequential(new IntakeUpDownCommand(true));
+    	addSequential(new WaitForTime(1500));
+    	
+    	CommandGroup group = new CommandGroup();
+    	group.addSequential(new WaitForTime(500));
+    	group.addSequential(new IntakeUpDownCommand(false));
+    	
+    	addParallel(group);
+    	addSequential(new DriveOverChevalDeFris(.6));
     	addSequential(new DriveToPoint(12, 0, 0.65, 0, true, false));
         // Add Commands here:
         // e.g. addSequential(new Command1());

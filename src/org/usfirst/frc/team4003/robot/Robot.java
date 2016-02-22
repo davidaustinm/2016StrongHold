@@ -147,7 +147,7 @@ public class Robot extends IterativeRobot {
          autonomousCommand = new DefenseAuton(defense);
         }
         */
-        autonomousCommand = new DefenseAuton(Sensors.ROCKWALL);
+        autonomousCommand = new ChevalDeFrisAuton();
         if (autonomousCommand != null) autonomousCommand.start();
     }
 
@@ -161,6 +161,8 @@ public class Robot extends IterativeRobot {
         if (targetAngle == null) return;
         SmartDashboard.putNumber("targetAngle", targetAngle.doubleValue());*/
         SmartDashboard.putNumber("yaw", Sensors.getInstance().getYaw());
+        SmartDashboard.putNumber("pitch", Sensors.getInstance().getPitch());
+        SmartDashboard.putNumber("roll", Sensors.getInstance().getRoll());
     }
 
     public void teleopInit() {
@@ -174,6 +176,7 @@ public class Robot extends IterativeRobot {
     public void teleopPeriodic() {
     	sensors.displayShooterSpeeds();
         Scheduler.getInstance().run();
+        sensors.displaySwitches();
         /*
         SmartDashboard.putNumber("yaw", Sensors.getInstance().getYaw());
         SmartDashboard.putNumber("roll", Sensors.getInstance().getRoll());
