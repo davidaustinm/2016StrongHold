@@ -14,6 +14,10 @@ public class XboxButton extends Button {
     public static final int BUTTONLB = 7;
     public static final int BUTTONLS = 8;
     public static final int BUTTONRS = 9;
+    public static final int DPADUP = 10;
+    public static final int DPADRIGHT = 11;
+    public static final int DPADDOWN = 12;
+    public static final int DPADLEFT = 13;
     
     Xbox xbox;
     int button;
@@ -34,6 +38,10 @@ public class XboxButton extends Button {
             case BUTTONRB: return xbox.getButtonRB();
             case BUTTONLS: return xbox.getButtonLS();
             case BUTTONRS: return xbox.getButtonRS();
+            case DPADUP: return xbox.getDpadUp();
+            case DPADRIGHT: return xbox.getDpadRight();
+            case DPADDOWN: return xbox.getDpadDown();
+            case DPADLEFT: return xbox.getDpadLeft();
         }
         return false;
     }

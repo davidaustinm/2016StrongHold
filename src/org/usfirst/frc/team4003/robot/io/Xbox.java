@@ -25,6 +25,18 @@ public class Xbox {
 	public int getDpad() {
 		return _ds.getStickPOV(_port, 0);
 	}
+	public boolean getDpadUp() {
+		return getDpad() == 0;
+	}
+	public boolean getDpadRight() {
+		return getDpad() == 90;
+	}
+	public boolean getDpadDown() {
+		return getDpad() == 180;
+	}
+	public boolean getDpadLeft() {
+		return getDpad() == 270;
+	}
 	/**
 	* Warning! getRightTrigger() and getLeftTrigger() both use getRawAxis(3).
 	* As getRawAxis(3) goes below zero, getRightTrigger() increases, and as

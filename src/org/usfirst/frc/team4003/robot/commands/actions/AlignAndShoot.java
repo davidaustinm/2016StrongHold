@@ -1,27 +1,21 @@
-package org.usfirst.frc.team4003.robot.auton;
+package org.usfirst.frc.team4003.robot.commands.actions;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-import org.usfirst.frc.team4003.robot.commands.actions.*;
 import org.usfirst.frc.team4003.robot.commands.*;
-
 /**
  *
  */
-public class ChevalDeFrisAuton extends CommandGroup {
+public class AlignAndShoot extends CommandGroup {
     
-    public  ChevalDeFrisAuton() {
-    	addSequential(new DriveWhileLevel(.5));
+    public  AlignAndShoot() {
     	addSequential(new IntakeUpDownCommand(true));
-    	addSequential(new WaitForTime(1500));
+    	addSequential(new WaitForTime(500));
+    	addSequential(new TrackingOn(true));
+    	addSequential(new WaitUntilAligned());
+    	addSequential(new TrackingOn(false));
+    	addSequential(new AutoShoot());
+    	//addSequential(new IntakeUpDownCommand(false));
     	
-    	CommandGroup group = new CommandGroup();
-    	group.addSequential(new WaitForTime(500));
-    	group.addSequential(new IntakeUpDownCommand(false));
-    	
-    	addParallel(group);
-    	addSequential(new DriveOverChevalDeFris(.6));
-    	addSequential(new DriveToPoint(12, 0, 0.65, 0, true, false));
-    	addSequential(new AlignAndShoot());
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

@@ -1,7 +1,7 @@
 package org.usfirst.frc.team4003.robot.auton;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
-
+import org.usfirst.frc.team4003.robot.commands.actions.*;
 import org.usfirst.frc.team4003.robot.commands.*;
 
 /**
@@ -17,5 +17,6 @@ public class RampartAuton extends CommandGroup {
     	addSequential(new RotateToHeading(0, .4, .8));
     	addSequential(new DriveOverDefense(.5));
     	addSequential(new DriveToPoint(12, 0, 0.65, 0, true, false));
+    	addSequential(new AlignAndShoot());
     }
 }

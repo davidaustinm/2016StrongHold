@@ -1,5 +1,6 @@
 package org.usfirst.frc.team4003.robot.subsystems;
 
+import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Subsystem;
 
 import org.usfirst.frc.team4003.robot.RobotMap;
@@ -24,7 +25,13 @@ public class StrongHoldDrive extends Subsystem {
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         //setDefaultCommand(new MySpecialCommand());
-    	setDefaultCommand(new StrongHoldArcade());
+    	//setDefaultCommand(new StrongHoldArcade());
+    }
+    Command defaultCommand;
+    
+    public void setDefault(Command command) {
+    	setDefaultCommand(command);
+    	defaultCommand = command;
     }
     
     public void setPower(double leftPower, double rightPower) {

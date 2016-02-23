@@ -45,8 +45,13 @@ public class TurretSpin extends Subsystem {
     public void initDefaultCommand() {
     	//setDefaultCommand(new TurretSpinCommand());
     }
+    double maxSpeed = 1;
+    public void setMaxSpeed(double speed) {
+    	maxSpeed = speed;
+    }
+    
     public void setPower(double power) {
-    	spin.set(power);
+    	spin.set(power*maxSpeed);
     }
     public void rotateBy(double angle) {
     	setPositionMode();

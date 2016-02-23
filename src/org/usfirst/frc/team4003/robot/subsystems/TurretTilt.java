@@ -44,6 +44,10 @@ public class TurretTilt extends Subsystem {
 	public double getPosition() {
 		return tilt.getPosition();
 	}
+	double maxSpeed = 1;
+	public void setMaxSpeed(double speed) {
+		maxSpeed = speed;
+	}
 	public void setPower(double power) {
 		SmartDashboard.putNumber("New Position", getPosition());
 		if (sensors.getTurretResetSwitch()) {
@@ -51,7 +55,7 @@ public class TurretTilt extends Subsystem {
 			upperLimit = getPosition() + UPPERLIMIT;
 		}
 		if (power > 0 && getPosition() >= upperLimit) power = 0;
-		tilt.set(power);
+		tilt.set(power*maxSpeed);
 	}
 	public void setPositionMode() {
 		tilt.changeControlMode(CANTalon.TalonControlMode.Position);

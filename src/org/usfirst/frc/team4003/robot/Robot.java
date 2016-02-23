@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4003.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import org.usfirst.frc.team4003.robot.commands.actions.*;
 import org.usfirst.frc.team4003.robot.io.*;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -35,6 +36,9 @@ public class Robot extends IterativeRobot {
 	public static ShooterSubsystem shooter;
 	public static OI oi;
 	
+	public static StrongHoldTank tankDrive;
+	public static StrongHoldArcade arcadeDrive;
+	
 	Sensors sensors;
 
     Command autonomousCommand;
@@ -53,14 +57,19 @@ public class Robot extends IterativeRobot {
     static {
     	 System.load("/usr/local/lib/lib_OpenCV/java/libopencv_java2410.so");
     	 if (SubsystemLoad.DRIVETRAIN) driveTrain = new DriveTrainSubsystem();
-    	 if (SubsystemLoad.STRONGHOLDDRIVE) strongHoldDrive = new StrongHoldDrive();
+    	 if (SubsystemLoad.STRONGHOLDDRIVE) {
+    		 strongHoldDrive = new StrongHoldDrive();
+    		 tankDrive = new StrongHoldTank();
+        	 arcadeDrive = new StrongHoldArcade();
+        	 //arcadeDrive.start();
+    	 }
     	 if (SubsystemLoad.INTAKERUN) intakeRun = new IntakeRun();
     	 if (SubsystemLoad.INTAKEUPDOWN) intakeUpDown = new IntakeUpDown();
     	 if (SubsystemLoad.SHIFTER) shifter = new Shifter();
     	 if (SubsystemLoad.TURRETSPIN) turretSpin = new TurretSpin();
     	 if (SubsystemLoad.TURRETTILT) turretTilt = new TurretTilt();
     	 if (SubsystemLoad.BOULDERCONVEYOR) boulderConveyor = new BoulderConveyor(); 
-    	 if (SubsystemLoad.SHOOTER) shooter = new ShooterSubsystem();
+    	 if (SubsystemLoad.SHOOTER) shooter = new ShooterSubsystem();    	 
     }
     
     /**
@@ -148,6 +157,9 @@ public class Robot extends IterativeRobot {
         }
         */
         autonomousCommand = new ChevalDeFrisAuton();
+        autonomousCommand = new AlignAndShoot();
+        autonomousCommand = new DefenseAuton(Sensors.ROUGHTERRAIN);
+        //autonomousCommand = new ChevalDeFrisAuton();
         if (autonomousCommand != null) autonomousCommand.start();
     }
 
@@ -167,6 +179,7 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
         if (autonomousCommand != null) autonomousCommand.cancel();
+        arcadeDrive.start();
     }
 
     /**
@@ -177,6 +190,7 @@ public class Robot extends IterativeRobot {
     	sensors.displayShooterSpeeds();
         Scheduler.getInstance().run();
         sensors.displaySwitches();
+        SmartDashboard.putNumber("dpad", oi.driver.getDpad());
         /*
         SmartDashboard.putNumber("yaw", Sensors.getInstance().getYaw());
         SmartDashboard.putNumber("roll", Sensors.getInstance().getRoll());

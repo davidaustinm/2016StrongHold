@@ -2,7 +2,7 @@ package org.usfirst.frc.team4003.robot.auton;
 
 import org.usfirst.frc.team4003.robot.commands.*;
 import org.usfirst.frc.team4003.robot.io.*;
-
+import org.usfirst.frc.team4003.robot.commands.actions.*;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 
 /**
@@ -27,6 +27,7 @@ public class DefenseAuton extends CommandGroup {
     		break;
     	}
     	addSequential(new DriveToPoint(12, 0, 0.65, 0, true, false));
+    	addSequential(new AlignAndShoot());
         // Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());

@@ -1,39 +1,40 @@
 package org.usfirst.frc.team4003.robot.commands;
 
 import org.usfirst.frc.team4003.robot.Robot;
-import org.usfirst.frc.team4003.robot.io.*;
 
 import edu.wpi.first.wpilibj.command.Command;
-import edu.wpi.first.wpilibj.smartdashboard.*;
 
 /**
  *
  */
-public class IntakeRunCommand extends Command {
-	Sensors sensors;
-    public IntakeRunCommand() {
+public class ChangeDriveMode extends Command {
+	public static final int TANK = 0;
+	public static final int ARCADE = 1;
+	int mode;
+    public ChangeDriveMode(int mode) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
-    	requires(Robot.intakeRun);
-    	sensors = Sensors.getInstance();
+    	this.mode = mode;
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	if (mode == TANK) {
+    		Robot.arcadeDrive.cancel();
+    		Robot.tankDrive.start();
+    	} else {
+    		Robot.tankDrive.cancel();
+    		Robot.arcadeDrive.start();
+    	}
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double power = Robot.oi.driver.getRightTrigger()-
-    			Robot.oi.driver.getLeftTrigger();
-    	if(Math.abs(power)<.1)power = 0;
-    	if (sensors.getIntakeSwitch()) power = 0;
-    	Robot.intakeRun.setPower(power);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return true;
     }
 
     // Called once after isFinished returns true

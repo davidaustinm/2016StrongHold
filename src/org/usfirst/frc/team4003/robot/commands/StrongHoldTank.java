@@ -25,10 +25,14 @@ public class StrongHoldTank extends Command {
     	if (Math.abs(x) < deadBand) return 0;
     	return x;
     }
+    double maxSpeed = 0.6;
+    public void setMaxSpeed(double speed) {
+    	maxSpeed = speed;
+    }
     protected void execute() {
     	double left = deadBand(-Robot.oi.driver.getLeftJoyY());
     	double right = deadBand(-Robot.oi.driver.getRightJoyY());
-    	Robot.strongHoldDrive.setPower(left, right);
+    	Robot.strongHoldDrive.setPower(left * maxSpeed, right * maxSpeed);
     }
 
     // Make this return true when this Command no longer needs to run execute()

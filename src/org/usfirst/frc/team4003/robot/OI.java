@@ -24,6 +24,15 @@ public class OI {
 	public XboxButton trackingOff = new XboxButton(operator,XboxButton.BUTTONB);
 	public XboxButton shooterOn = new XboxButton(operator,XboxButton.BUTTONRB);
 	public XboxButton shooterOff = new XboxButton(operator,XboxButton.BUTTONLB);
+	
+	
+	public XboxButton tankDrive = new XboxButton(driver,XboxButton.DPADUP);
+	public XboxButton arcadeDrive = new XboxButton(driver,XboxButton.DPADDOWN);
+	public XboxButton slowDrive = new XboxButton(driver,XboxButton.DPADRIGHT);
+	public XboxButton fastDrive = new XboxButton(driver,XboxButton.DPADLEFT);
+	public XboxButton slowTurret = new XboxButton(operator,XboxButton.DPADRIGHT);
+	public XboxButton fastTurret = new XboxButton(operator,XboxButton.DPADLEFT);
+	
 
 	public OI() {
 		shiftHigh.whenPressed(new ShifterCommand(false));
@@ -39,6 +48,14 @@ public class OI {
 		trackingOff.whenPressed(new TrackingOn(false));
 		shooterOn.whenPressed(new ShooterCommand(true));
 		shooterOff.whenPressed(new ShooterCommand(false));
+		
+		tankDrive.whenPressed(new ChangeDriveMode(ChangeDriveMode.TANK));
+		arcadeDrive.whenPressed(new ChangeDriveMode(ChangeDriveMode.ARCADE));
+		slowDrive.whenPressed(new ChangeDriveSpeed(0.4));
+		fastDrive.whenPressed(new ChangeDriveSpeed(0.6));
+		
+		slowTurret.whenPressed(new ChangeTurretSpeed(0.5));
+		fastTurret.whenPressed(new ChangeTurretSpeed(1));
 	}
 
     //// CREATING BUTTONS

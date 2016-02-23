@@ -45,8 +45,8 @@ public class Sensors {
 	
 	public static final int SPYBOT = 0;
 	
-	double goalX = 160;
-	double goalY = 140;
+	public static final double goalX = 180;
+	public static final double goalY = 140;
 	
 	static Sensors sensors = null;
 	public Sensors(){
@@ -143,6 +143,24 @@ public class Sensors {
 		angle = Math.toDegrees(angle);
 		SmartDashboard.putNumber("Target Y", target.centerY);
 		return new Double(angle);
+	}
+	public Double[] getTargetData() {
+		Target target = Robot.targetCamera.getTarget();
+		if (target == null) return null;
+		double W = -20.0 /target.width *(target.centerX - goalX);
+		double hangle =Math.atan(W /target.distance);
+		hangle = Math.toDegrees(hangle);
+		
+		double H = -12.0 / target.height * (target.centerY - goalY);
+		double vangle = Math.atan(H/target.distance);
+		vangle = Math.toDegrees(vangle);
+		SmartDashboard.putNumber("Target Y", target.centerY);
+		SmartDashboard.putNumber("Target X", target.centerX);
+	
+		return new Double[] {new Double(hangle), 
+				new Double(vangle), 
+				new Double(Math.abs(target.centerX - goalX)),
+				new Double(Math.abs(target.centerY - goalY))};
 	}
 	public void resetEncoders() {
 		leftDriveEncoder.reset();
@@ -245,5 +263,14 @@ public class Sensors {
 		SmartDashboard.putNumber("Pitch", getPitch());
 		SmartDashboard.putNumber("Yaw", getYaw());
 		SmartDashboard.putNumber("Roll", getRoll());
+	}
+	
+	boolean alignedToGoal = false;
+	public void setAlignedToGoal(boolean b) {
+		alignedToGoal = b;
+	}
+	
+	public boolean getAlignedToGoal() {
+		return alignedToGoal;
 	}
 }

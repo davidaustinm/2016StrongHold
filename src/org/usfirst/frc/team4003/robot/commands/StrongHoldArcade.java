@@ -31,6 +31,9 @@ public class StrongHoldArcade extends Command {
 	double oldThrottle = 0;
 	double oldWheel = 0;
 	double maxSpeed = .6;
+	public void setMaxSpeed(double speed) {
+		maxSpeed = speed;
+	}
     protected void execute() {
     	double tmpThrottle = -deadBand(Robot.oi.driver.getLeftJoyY());
     	double tmpWheel = deadBand(Robot.oi.driver.getRightJoyX());

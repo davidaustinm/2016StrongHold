@@ -125,6 +125,9 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 				SmartDashboard.putNumber("Contour Count", targets.size());
 				SmartDashboard.putNumber("Time", System.currentTimeMillis() - start);
 			} else {
+				Point tl = new Point(Sensors.goalX - 10, Sensors.goalY - 5);
+				Point br = new Point(Sensors.goalX + 10, Sensors.goalY + 5);
+				Core.rectangle(img, tl, br, new Scalar(0, 0, 255), 4);
 				setDashboardImg(img);
 				setTarget(null);
 			}
