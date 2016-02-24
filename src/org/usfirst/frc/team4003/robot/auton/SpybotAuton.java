@@ -1,36 +1,17 @@
 package org.usfirst.frc.team4003.robot.auton;
 
-import org.usfirst.frc.team4003.robot.commands.*;
-import org.usfirst.frc.team4003.robot.io.*;
-import org.usfirst.frc.team4003.robot.commands.actions.*;
 import edu.wpi.first.wpilibj.command.CommandGroup;
-
+import org.usfirst.frc.team4003.robot.commands.*;
+import org.usfirst.frc.team4003.robot.commands.actions.*;
 /**
  *
  */
-public class DefenseAuton extends CommandGroup {
-    public DefenseAuton(int defense) {
-    	if (defense == Sensors.RAMPART) {
-    		addSequential(new RampartAuton()); 
-    		return;
-    	}
-    	if (defense == Sensors.CHEVAL) {
-    		addSequential(new ChevalDeFrisAuton());
-    		return;
-    	}	
-    	addSequential(new DriveToPoint(44, 0, 0.5, 0, false, true));
-    	switch(defense) {
-    	case Sensors.ROCKWALL:
-    		addSequential(new DriveOverDefense(0.7));
-    		break;
-    	case Sensors.MOAT:
-    		addSequential(new DriveOverDefense(0.7));
-    		break;
-    	case Sensors.ROUGHTERRAIN:
-    		addSequential(new DriveOverDefense(0.7));
-    		break;
-    	}
-    	addSequential(new DriveToPoint(Sensors.getInstance().getFinalDrive(), 0, 0.65, 0, true, false));
+public class SpybotAuton extends CommandGroup {
+    
+    public SpybotAuton() {
+    	addSequential(new IntakeUpDownCommand(true));
+    	addSequential(new WaitForTime(2000));
+    	//addSequential(new SpinTurret(0.25, SpinTurret.CCW));
     	addSequential(new AlignAndShoot());
         // Add Commands here:
         // e.g. addSequential(new Command1());

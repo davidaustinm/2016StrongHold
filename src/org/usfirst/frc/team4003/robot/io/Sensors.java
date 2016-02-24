@@ -17,10 +17,11 @@ public class Sensors {
 	DigitalInput conveyorSwitch;
 	DigitalInput intakeSwitch;
 	DigitalInput turretResetSwitch;
+	DigitalInput intakeLimitSwitch;
 	AnalogInput turretTiltPot;
 	DigitalInput auton0, auton1, auton2, auton3, auton4, auton5;
 	
-	public static final double ENCODERCOUNTSPERINCH = 135;
+	public static final double ENCODERCOUNTSPERINCH = 22;
 	
 	int lastLeftEncoder = 0;
 	int lastRightEncoder = 0;
@@ -45,8 +46,8 @@ public class Sensors {
 	
 	public static final int SPYBOT = 0;
 	
-	public static final double goalX = 180;
-	public static final double goalY = 140;
+	public static final double goalX = 200; // 180
+	public static final double goalY = 140; // 140
 	
 	static Sensors sensors = null;
 	public Sensors(){
@@ -63,10 +64,10 @@ public class Sensors {
 		shooter1Encoder = new Encoder(RobotMap.SHOOTER1ENCODERA, RobotMap.SHOOTER1ENCODERB);
 		turretEncoder = new Encoder(RobotMap.TURRETENCODERA, RobotMap.TURRETENCODERB);
 		*/
-		/*
+		
 		conveyorSwitch = new DigitalInput(RobotMap.CONVEYORSWITCH);
 		intakeSwitch = new DigitalInput(RobotMap.INTAKESWITCH);
-		*/
+		intakeLimitSwitch = new DigitalInput(RobotMap.INTAKELIMITSWITCH);
 		turretResetSwitch = new DigitalInput(RobotMap.TURRETRESETSWITCH);
 		//turretTiltPot = new AnalogInput(RobotMap.TURRETTILT);
 		/*
@@ -80,11 +81,19 @@ public class Sensors {
 	}
 	
 	public int getPosition() {
+		/*
 		int position = 0;
 		if (auton2.get()) position += 4;
 		if (auton1.get()) position += 2;
 		if (auton0.get()) position += 1;
 		return position;
+		*/
+		return 4;
+	}
+	
+	public double getFinalDrive() {
+		if (getPosition() == 2) return 50;
+		return 12;
 	}
 	public int getDefense() {
 		int defense = 0;
@@ -172,16 +181,20 @@ public class Sensors {
 	public int getRightDriveEncoder() {
 		return rightDriveEncoder.get();
 	}
+	public void displayDriveEncoders() {
+		SmartDashboard.putNumber("Left Drive Encoder",  getLeftDriveEncoder());
+		SmartDashboard.putNumber("Right Drive Encoder",  getRightDriveEncoder());
+	}
 	public double getAverageEncoder() {
 		return (getLeftDriveEncoder() + getRightDriveEncoder())/2.0;
 	}
 	public boolean getConveyorSwitch() {
-		//return conveyorSwitch.get();
-		return false;
+		return !conveyorSwitch.get() && !Robot.oi.turretConveyorSwitchOverride.get();
+		//return false;
 	}
 	public boolean getIntakeSwitch() {
-		//return intakeSwitch.get();
-		return false;
+		return !intakeSwitch.get() && !Robot.oi.intakeSwitchOverride.get();
+		//return false;
 	}
 	public int changeInLeftEncoder() {
 		int current = getLeftDriveEncoder();
@@ -249,15 +262,20 @@ public class Sensors {
 	}
 	*/
 	public boolean getTurretResetSwitch() {
-		return !turretResetSwitch.get();
+		return !turretResetSwitch.get() && !Robot.oi.turretConveyorSwitchOverride.get();
+	}
+	
+	public boolean getIntakeLimitSwitch() {
+		return !intakeLimitSwitch.get();
 	}
 	public double getTurretTiltPot() {
 		return turretTiltPot.getVoltage();
 	}
 	public void displaySwitches() {
-		//SmartDashboard.putBoolean("Intake switch", getIntakeSwitch());
-		//SmartDashboard.putBoolean("Conveyor switch", getConveyorSwitch());
+		SmartDashboard.putBoolean("Intake switch", getIntakeSwitch());
+		SmartDashboard.putBoolean("Conveyor switch", getConveyorSwitch());
 		SmartDashboard.putBoolean("Turret switch", getTurretResetSwitch());
+		SmartDashboard.putBoolean("Intake Limit Switch",  getIntakeLimitSwitch());
 	}
 	public void displayOrientation() {
 		SmartDashboard.putNumber("Pitch", getPitch());

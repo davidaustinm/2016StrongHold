@@ -24,7 +24,7 @@ public class WaitForIntakeSwitch extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return sensors.getIntakeSwitch();
+        return sensors.getIntakeLimitSwitch();
     }
 
     // Called once after isFinished returns true

@@ -3,7 +3,7 @@ package org.usfirst.frc.team4003.robot.auton;
 import edu.wpi.first.wpilibj.command.CommandGroup;
 import org.usfirst.frc.team4003.robot.commands.actions.*;
 import org.usfirst.frc.team4003.robot.commands.*;
-
+import org.usfirst.frc.team4003.robot.io.*;
 /**
  *
  */
@@ -15,12 +15,12 @@ public class ChevalDeFrisAuton extends CommandGroup {
     	addSequential(new WaitForTime(1500));
     	
     	CommandGroup group = new CommandGroup();
-    	group.addSequential(new WaitForTime(500));
+    	group.addSequential(new WaitForTime(10)); //was 500
     	group.addSequential(new IntakeUpDownCommand(false));
     	
     	addParallel(group);
-    	addSequential(new DriveOverChevalDeFris(.6));
-    	addSequential(new DriveToPoint(12, 0, 0.65, 0, true, false));
+    	addSequential(new DriveOverChevalDeFris(0.6));
+    	addSequential(new DriveToPoint(Sensors.getInstance().getFinalDrive(), 0, 0.65, 0, true, false));
     	addSequential(new AlignAndShoot());
         // Add Commands here:
         // e.g. addSequential(new Command1());

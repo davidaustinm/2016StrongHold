@@ -32,15 +32,17 @@ public class OI {
 	public XboxButton fastDrive = new XboxButton(driver,XboxButton.DPADLEFT);
 	public XboxButton slowTurret = new XboxButton(operator,XboxButton.DPADRIGHT);
 	public XboxButton fastTurret = new XboxButton(operator,XboxButton.DPADLEFT);
+	public XboxButton turretConveyorSwitchOverride = new XboxButton(operator, XboxButton.DPADNW);
+	public XboxButton intakeSwitchOverride = new XboxButton(driver, XboxButton.DPADNW);
 	
 
 	public OI() {
-		shiftHigh.whenPressed(new ShifterCommand(false));
-		shiftLow.whenPressed(new ShifterCommand(true));
+		//shiftHigh.whenPressed(new ShifterCommand(false));
+		//shiftLow.whenPressed(new ShifterCommand(true));
 		raiseIntake.whenPressed(new IntakeUpDownCommand(false));
 		lowerIntake.whenPressed(new IntakeUpDownCommand(true));
-		//loadBoulder.whenPressed(new LoadBoulderIntoConveyor());
-		//unloadBoulder.whenPressed(new LoadBoulderOutOfConveyor());
+		loadBoulder.whenPressed(new RunIntakeAndConveyor(true));
+		unloadBoulder.whenPressed(new RunIntakeAndConveyor(false));
 		
 		//cameraToggle.whenPressed(new CameraToggle());
 		//homeTurret.whenPressed(new HomeTurret());

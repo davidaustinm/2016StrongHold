@@ -25,6 +25,7 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 	double tanAngle = Math.tan(angle);
 	volatile Target target = null;
 	double minArea = 150;
+	Target lastBest = null;
 
 	protected Mat dashboardImg = new Mat();
 
@@ -67,6 +68,7 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 			long start = System.currentTimeMillis();
 			vcap.read(origImg);
 			Imgproc.resize(origImg, img, new Size(320, 180));
+			//Imgproc.resize(origImg, img, new Size(640, 360));
 			if (Robot.isTargetTracking()) {
 
 				Size size = img.size();
@@ -112,11 +114,22 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 							error = best.getError();
 						}
 					}
+					
+					// Run through again and compare to the lastBest
+					if (lastBest != null) {
+						for (int i = 0; i < targets.size(); i++) {
+							if (targets.get(i).getError() < best.getError() + 0.4
+									&& distance(targets.get(i)) < distance(best)){
+								best = targets.get(i);
+							}
+								
+						}
+					}
 					// Draw a circle in the middle-ish of our best target.
-					Core.circle(dash, new Point(best.centerX, best.centerY), 8, new Scalar(0, 0, 255));
+					Core.circle(dash, new Point(best.centerX, best.centerY), 8, new Scalar(0, 0, 255), 6);
 					updateDashboard(best);
-				}
-
+				} 
+				lastBest = best;
 				// Now that we've marked up the image a bit set it to be the
 				// version that goes on the dashboard.
 				setDashboardImg(dash);
@@ -148,6 +161,10 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 			}
 			*/
 		}
+		lastBest = null;
+	}
+	public double distance(Target t) {
+		return Math.abs(t.centerX - Sensors.goalX) + Math.abs(t.centerY - Sensors.goalY);
 	}
 	boolean targetReady = false;
 	public synchronized void setTargetReady(boolean t) {

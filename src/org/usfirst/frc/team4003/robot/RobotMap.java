@@ -36,9 +36,12 @@ public class RobotMap {
 	public static final int SHOOTER1ENCODERB = 7;
 	public static final int TURRETENCODERA = 8;
 	public static final int TURRETENCODERB = 9;
-	public static final int INTAKESWITCH = 10;
-	public static final int CONVEYORSWITCH = 11;
+	
+	public static final int INTAKESWITCH = 9;
+	public static final int CONVEYORSWITCH = 5;
 	public static final int TURRETRESETSWITCH = 4;
+	public static final int INTAKELIMITSWITCH = 6;
+	
 	public static final int COMPRESSOR = 13;
 	
 	public static final int POSITIONAUTON0 = 14;
@@ -64,6 +67,7 @@ public class RobotMap {
 	public static final double TARGET_TAPE_HEIGHT = 12.0; // In inches
 	public static final double TARGET_TAPE_WIDTH = 20.0; // In inches
 	
-	
+	public static final int CLOCKWISE = -1;
+	public static final int COUNTERCLOCKWISE = 1;
 
 }

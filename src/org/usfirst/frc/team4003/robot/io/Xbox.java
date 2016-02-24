@@ -37,6 +37,18 @@ public class Xbox {
 	public boolean getDpadLeft() {
 		return getDpad() == 270;
 	}
+	public boolean getDpadNE() {
+		return getDpad() == 45;
+	}
+	public boolean getDpadSE() {
+		return getDpad() == 135;
+	}
+	public boolean getDpadSW() {
+		return getDpad() == 225;
+	}
+	public boolean getDpadNW() {
+		return getDpad() == 315;
+	}
 	/**
 	* Warning! getRightTrigger() and getLeftTrigger() both use getRawAxis(3).
 	* As getRawAxis(3) goes below zero, getRightTrigger() increases, and as

@@ -18,8 +18,8 @@ public class StrongHoldDrive extends Subsystem {
     CANTalon rightBack = new CANTalon(RobotMap.RIGHTBACKDRIVEMOTOR);
     
     public StrongHoldDrive() {
-    	leftFront.setInverted(true);
-    	leftBack.setInverted(true);
+    	rightFront.setInverted(true);
+    	rightBack.setInverted(true);
     }
 
     public void initDefaultCommand() {

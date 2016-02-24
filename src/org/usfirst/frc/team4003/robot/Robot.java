@@ -98,6 +98,7 @@ public class Robot extends IterativeRobot {
         
         cameraServerThread = new Thread(new TSCameraServer());
         cameraServerThread.start();
+        
         /*
         Compressor compressor = new Compressor(20);
         compressor.setClosedLoopControl(true);
@@ -150,15 +151,23 @@ public class Robot extends IterativeRobot {
         /*
         int defense = sensors.getDefense();
         int position = sensors.getPosition();
+        if (position == 2 || position == 3) {
+        	TrackTarget.setSpinHint(TrackTarget.RIGHT);
+        }
+        if (position == 5) {
+        	TrackTarget.setSpinHint(TrackTarget.LEFT);
+        }
         if (position == Sensors.SPYBOT) {
         	autonomousCommand = new SpyBotAuton();
         } else {
-         autonomousCommand = new DefenseAuton(defense);
+        	autonomousCommand = new DefenseAuton(defense);
         }
         */
         autonomousCommand = new ChevalDeFrisAuton();
         autonomousCommand = new AlignAndShoot();
-        autonomousCommand = new DefenseAuton(Sensors.ROUGHTERRAIN);
+        autonomousCommand = new DefenseAuton(Sensors.RAMPART);
+        autonomousCommand = new SpybotAuton();
+        
         //autonomousCommand = new ChevalDeFrisAuton();
         if (autonomousCommand != null) autonomousCommand.start();
     }
@@ -190,7 +199,8 @@ public class Robot extends IterativeRobot {
     	sensors.displayShooterSpeeds();
         Scheduler.getInstance().run();
         sensors.displaySwitches();
-        SmartDashboard.putNumber("dpad", oi.driver.getDpad());
+        sensors.displayDriveEncoders();
+        
         /*
         SmartDashboard.putNumber("yaw", Sensors.getInstance().getYaw());
         SmartDashboard.putNumber("roll", Sensors.getInstance().getRoll());

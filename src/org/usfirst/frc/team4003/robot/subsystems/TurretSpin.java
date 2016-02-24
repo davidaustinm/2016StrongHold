@@ -16,7 +16,12 @@ public class TurretSpin extends Subsystem {
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
     CANTalon.TalonControlMode defaultMode;
-    final double ENCODERCOUNTSPERDEGREE = 3;
+    
+    public static final int SPINHALFREV = 19000;
+    final double ENCODERCOUNTSPERDEGREE = SPINHALFREV/180.0;
+    final double UPPERLIMIT = 3*SPINHALFREV;
+    final double LOWERLIMIT = -SPINHALFREV;
+    
     public TurretSpin() {
     	spin.setInverted(true);
     	spin.reverseSensor(true);;
@@ -29,7 +34,7 @@ public class TurretSpin extends Subsystem {
     	spin.setPosition(0);
     }
     public double getPosition() {
-    	return spin.getEncPosition();
+    	return spin.getPosition();
     }
     public void setPositionMode() {
     	spin.changeControlMode(CANTalon.TalonControlMode.Position);
@@ -43,7 +48,7 @@ public class TurretSpin extends Subsystem {
     	spin.set(0);
     }
     public void initDefaultCommand() {
-    	//setDefaultCommand(new TurretSpinCommand());
+    	//setDefaultCommand(new TurretSpinCommand()); // TODO
     }
     double maxSpeed = 1;
     public void setMaxSpeed(double speed) {
@@ -51,7 +56,14 @@ public class TurretSpin extends Subsystem {
     }
     
     public void setPower(double power) {
+    	double position = getPosition();
+    	if (power > 0 && position > UPPERLIMIT) power = 0;
+    	if (power < 0 && position < LOWERLIMIT) power = 0;
     	spin.set(power*maxSpeed);
+    }
+    
+    public void setPower(double power, int direction) {
+    	setPower(Math.abs(power) * direction);
     }
     public void rotateBy(double angle) {
     	setPositionMode();
