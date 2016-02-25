@@ -8,7 +8,7 @@ import org.usfirst.frc.team4003.robot.commands.*;
 public class AlignAndShoot extends CommandGroup {
     
     public  AlignAndShoot() {
-    	addSequential(new IntakeUpDownCommand(true));
+    	addSequential(new IntakeRaiseLower(true));
     	addSequential(new WaitForTime(500));
     	addSequential(new TrackingOn(true));
     	addSequential(new WaitUntilAligned());

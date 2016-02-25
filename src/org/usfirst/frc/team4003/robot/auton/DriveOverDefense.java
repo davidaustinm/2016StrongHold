@@ -20,6 +20,7 @@ public class DriveOverDefense extends Command {
     Sensors sensors = Sensors.getInstance();
     final double PITCHDOWNLIMIT = -10;
     final double PITCHDOWNTHRESHOLD = -5;
+    long stopTime;
 
     public DriveOverDefense(double speed) {
         // Use requires() here to declare subsystem dependencies
@@ -31,6 +32,7 @@ public class DriveOverDefense extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	stopTime = System.currentTimeMillis() + 6000;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -41,6 +43,10 @@ public class DriveOverDefense extends Command {
 			correction = -speed;
 		if (correction > speed)
 			correction = speed;
+		if (System.currentTimeMillis() > stopTime) {
+			speed = 0;
+			correction = 0;
+		}
 		switch (state) {
 		case PREDOWN:
 			Robot.strongHoldDrive.setPower(speed - correction, speed

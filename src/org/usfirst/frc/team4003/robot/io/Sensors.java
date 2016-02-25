@@ -283,6 +283,15 @@ public class Sensors {
 		SmartDashboard.putNumber("Roll", getRoll());
 	}
 	
+	public void displayAutonSwitches() {
+		SmartDashboard.putBoolean("Auton0", auton0.get());
+		SmartDashboard.putBoolean("Auton1", auton1.get());
+		SmartDashboard.putBoolean("Auton2", auton2.get());
+		SmartDashboard.putBoolean("Auton3", auton3.get());
+		SmartDashboard.putBoolean("Auton4", auton4.get());
+		SmartDashboard.putBoolean("Auton5", auton5.get());
+	}
+	
 	boolean alignedToGoal = false;
 	public void setAlignedToGoal(boolean b) {
 		alignedToGoal = b;

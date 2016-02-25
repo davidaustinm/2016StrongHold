@@ -10,7 +10,7 @@ import org.usfirst.frc.team4003.robot.io.*;
 public class RampartAuton extends CommandGroup {
     
     public  RampartAuton() {
-    	addSequential(new DriveToPoint(47, 0, .5, 0, false, true));
+    	addSequential(new DriveToPoint(47, 0, 0.5, 0, false, true));
     	double heading = -25;
     	addSequential(new RotateToHeading(heading, 0.4, 0.4));
     	addSequential(new DriveOnHeading(heading, 12, 0.4, false));

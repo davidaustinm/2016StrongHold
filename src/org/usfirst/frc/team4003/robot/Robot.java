@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4003.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
+import edu.wpi.first.wpilibj.command.*;
 import org.usfirst.frc.team4003.robot.commands.actions.*;
 import org.usfirst.frc.team4003.robot.io.*;
 
@@ -140,6 +141,7 @@ public class Robot extends IterativeRobot {
 	 * You can add additional auto modes by adding additional commands to the chooser code above (like the commented example)
 	 * or additional comparisons to the switch structure below with additional strings & commands.
 	 */
+	String delayString = "Delay (seconds)";
     public void autonomousInit() {
         //autonomousCommand = (Command) chooser.getSelected();
     	
@@ -148,7 +150,7 @@ public class Robot extends IterativeRobot {
         sensors.resetYaw();
         sensors.resetEncoders();
         sensors.setBaseLines();
-        /*
+        
         int defense = sensors.getDefense();
         int position = sensors.getPosition();
         if (position == 2 || position == 3) {
@@ -162,11 +164,18 @@ public class Robot extends IterativeRobot {
         } else {
         	autonomousCommand = new DefenseAuton(defense);
         }
-        */
+        
+        SmartDashboard.putNumber("Defense",  defense);
+        SmartDashboard.putNumber("Position", position);
         autonomousCommand = new ChevalDeFrisAuton();
         autonomousCommand = new AlignAndShoot();
         autonomousCommand = new DefenseAuton(Sensors.RAMPART);
         autonomousCommand = new SpybotAuton();
+        
+        int delay = (int) SmartDashboard.getNumber(delayString);
+        CommandGroup auton = new CommandGroup();
+        if (delay > 0) auton.addSequential(new WaitForTime(delay * 1000));
+        auton.addSequential(autonomousCommand);
         
         //autonomousCommand = new ChevalDeFrisAuton();
         if (autonomousCommand != null) autonomousCommand.start();
@@ -183,6 +192,7 @@ public class Robot extends IterativeRobot {
     public void teleopInit() {
         if (autonomousCommand != null) autonomousCommand.cancel();
         arcadeDrive.start();
+        SmartDashboard.putNumber(delayString, 0);
     }
 
     /**
@@ -190,9 +200,11 @@ public class Robot extends IterativeRobot {
      */
     
     public void teleopPeriodic() {
-    	sensors.displayShooterSpeeds();
         Scheduler.getInstance().run();
+        sensors.displayShooterSpeeds();
         sensors.displaySwitches();
+        sensors.displayAutonSwitches();
+        sensors.displayTurretEncoders();
         sensors.displayDriveEncoders();
     }
     

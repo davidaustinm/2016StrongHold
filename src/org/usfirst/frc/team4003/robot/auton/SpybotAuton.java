@@ -9,7 +9,7 @@ import org.usfirst.frc.team4003.robot.commands.actions.*;
 public class SpybotAuton extends CommandGroup {
     
     public SpybotAuton() {
-    	addSequential(new IntakeUpDownCommand(true));
+    	addSequential(new IntakeRaiseLower(true));
     	addSequential(new WaitForTime(2000));
     	//addSequential(new SpinTurret(0.25, SpinTurret.CCW));
     	addSequential(new AlignAndShoot());

@@ -10,7 +10,8 @@ import org.usfirst.frc.team4003.robot.commands.*;
  */
 public class IntakeUpDown extends Subsystem {
     //Solenoid intakeDown = new Solenoid(20, RobotMap.INTAKEDOWN);
-	Solenoid intakeDown = new Solenoid(20, 0);
+	DoubleSolenoid intakeDown = new DoubleSolenoid(20, RobotMap.BLOCKSOLENOIDFORWARD, 
+			RobotMap.BLOCKSOLENOIDREVERSE);
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
 
@@ -19,8 +20,15 @@ public class IntakeUpDown extends Subsystem {
         //setDefaultCommand(new MySpecialCommand());
     	//setDefaultCommand(new IntakeUpDownCommand());
     }
-    public void down(boolean down) {
-    	intakeDown.set(down);
+    
+    public void setDown() {
+    	intakeDown.set(DoubleSolenoid.Value.kForward);
+    }
+    public void setUp() {
+    	intakeDown.set(DoubleSolenoid.Value.kReverse);
+    }
+    public void setOff() {
+    	intakeDown.set(DoubleSolenoid.Value.kOff);
     }
 }
 

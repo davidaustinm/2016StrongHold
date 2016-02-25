@@ -14,7 +14,6 @@ public class LoadBoulderOutOfConveyor extends CommandGroup {
     
     public  LoadBoulderOutOfConveyor() {
     	requires(Robot.intakeUpDown);
-    	setInterruptible(false);
     	IntakeRaiseLower raiseIntake = new IntakeRaiseLower(false);
     	addSequential(raiseIntake);
     	addSequential(new WaitForIntakeSwitch());

@@ -3,6 +3,7 @@ package org.usfirst.frc.team4003.robot.subsystems;
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.CANTalon.FeedbackDevice;
 import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import org.usfirst.frc.team4003.robot.RobotMap;
 import org.usfirst.frc.team4003.robot.commands.*;
@@ -57,6 +58,7 @@ public class TurretSpin extends Subsystem {
     
     public void setPower(double power) {
     	double position = getPosition();
+    	SmartDashboard.putNumber("Turret Spin Power", power);
     	if (power > 0 && position > UPPERLIMIT) power = 0;
     	if (power < 0 && position < LOWERLIMIT) power = 0;
     	spin.set(power*maxSpeed);

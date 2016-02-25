@@ -12,7 +12,7 @@ public class OI {
 	public Xbox driver = new Xbox(0);
 	public Xbox operator = new Xbox(1);
 	public XboxButton shiftHigh = new XboxButton(driver, XboxButton.BUTTONB);
-	public XboxButton shiftLow = new XboxButton(driver, XboxButton.BUTTONX);
+	public XboxButton pidHold = new XboxButton(driver, XboxButton.BUTTONX);
 	public XboxButton raiseIntake = new XboxButton(driver, XboxButton.BUTTONRB);
 	public XboxButton lowerIntake = new XboxButton(driver, XboxButton.BUTTONLB);
 	public XboxButton loadBoulder = new XboxButton(driver, XboxButton.BUTTONY);
@@ -39,6 +39,7 @@ public class OI {
 	public OI() {
 		//shiftHigh.whenPressed(new ShifterCommand(false));
 		//shiftLow.whenPressed(new ShifterCommand(true));
+		pidHold.whenPressed(new PIDHold());
 		raiseIntake.whenPressed(new IntakeUpDownCommand(false));
 		lowerIntake.whenPressed(new IntakeUpDownCommand(true));
 		loadBoulder.whenPressed(new RunIntakeAndConveyor(true));

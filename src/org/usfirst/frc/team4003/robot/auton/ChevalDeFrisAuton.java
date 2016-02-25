@@ -11,12 +11,12 @@ public class ChevalDeFrisAuton extends CommandGroup {
     
     public  ChevalDeFrisAuton() {
     	addSequential(new DriveWhileLevel(.5));
-    	addSequential(new IntakeUpDownCommand(true));
+    	addSequential(new IntakeRaiseLower(true));
     	addSequential(new WaitForTime(1500));
     	
     	CommandGroup group = new CommandGroup();
     	group.addSequential(new WaitForTime(10)); //was 500
-    	group.addSequential(new IntakeUpDownCommand(false));
+    	group.addSequential(new IntakeRaiseLower(false));
     	
     	addParallel(group);
     	addSequential(new DriveOverChevalDeFris(0.6));

@@ -27,7 +27,7 @@ public class DefenseAuton extends CommandGroup {
     		addSequential(new DriveOverDefense(0.7));
     		break;
     	case Sensors.ROUGHTERRAIN:
-    		addSequential(new DriveOverDefense(0.7));
+    		addSequential(new DriveOverDefense(0.6));
     		break;
     	}
     	addSequential(new DriveToPoint(Sensors.getInstance().getFinalDrive(), 0, 0.65, 0, true, false));

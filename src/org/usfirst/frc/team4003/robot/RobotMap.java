@@ -43,6 +43,8 @@ public class RobotMap {
 	public static final int INTAKELIMITSWITCH = 6;
 	
 	public static final int COMPRESSOR = 13;
+	public static final int BLOCKSOLENOIDFORWARD = 0;
+	public static final int BLOCKSOLENOIDREVERSE = 1;
 	
 	public static final int POSITIONAUTON0 = 14;
 	public static final int POSITIONAUTON1 = 15;
