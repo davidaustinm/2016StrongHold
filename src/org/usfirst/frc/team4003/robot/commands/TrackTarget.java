@@ -56,7 +56,7 @@ public class TrackTarget extends Command {
     	
     	long currentTime = System.currentTimeMillis();
     	Double[] targetData = sensors.getTargetData();
-    	SmartDashboard.putNumber("tiltHint", tiltHint);
+    	//SmartDashboard.putNumber("tiltHint", tiltHint);
     	if (targetData == null) {
 
     		if (tiltHint == DOWN) {

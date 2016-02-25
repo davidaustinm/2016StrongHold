@@ -23,9 +23,9 @@ public class ShooterTest extends Command {
     protected void execute() {
     	double power = -Robot.oi.operator.getLeftJoyY();
     	Robot.shooter.setPower(power);
-    	SmartDashboard.putNumber("power",  power);
-    	SmartDashboard.putNumber("Shooter0Speed", Robot.shooter.getShooter0Speed());
-    	SmartDashboard.putNumber("Shooter1Speed", Robot.shooter.getShooter1Speed());
+    	//SmartDashboard.putNumber("power",  power);
+    	//SmartDashboard.putNumber("Shooter0Speed", Robot.shooter.getShooter0Speed());
+    	//SmartDashboard.putNumber("Shooter1Speed", Robot.shooter.getShooter1Speed());
     }
 
     // Make this return true when this Command no longer needs to run execute()

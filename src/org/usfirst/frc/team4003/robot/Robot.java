@@ -178,12 +178,6 @@ public class Robot extends IterativeRobot {
     public void autonomousPeriodic() {
     	sensors.updatePosition();
         Scheduler.getInstance().run();
-        /*Double targetAngle = sensors.getTargetAngle();
-        if (targetAngle == null) return;
-        SmartDashboard.putNumber("targetAngle", targetAngle.doubleValue());*/
-        SmartDashboard.putNumber("yaw", Sensors.getInstance().getYaw());
-        SmartDashboard.putNumber("pitch", Sensors.getInstance().getPitch());
-        SmartDashboard.putNumber("roll", Sensors.getInstance().getRoll());
     }
 
     public void teleopInit() {
@@ -200,20 +194,6 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         sensors.displaySwitches();
         sensors.displayDriveEncoders();
-        
-        /*
-        SmartDashboard.putNumber("yaw", Sensors.getInstance().getYaw());
-        SmartDashboard.putNumber("roll", Sensors.getInstance().getRoll());
-        SmartDashboard.putNumber("pitch", Sensors.getInstance().getPitch());
-        SmartDashboard.putNumber("left Encoder:", sensors.getLeftDriveEncoder());
-        SmartDashboard.putNumber("right Encoder:", sensors.getRightDriveEncoder());
-        */
-        //shooter.setPower(-oi.operator.getLeftJoyY());
-        //SmartDashboard.putNumber("Shooter Speed", shooter.getShooter0Speed());
-        //SmartDashboard.putNumber("TurretPosition", turretSpin.getPosition());
-        //SmartDashboard.putNumber("TurretTilt", turretTilt.getPosition());
-        //SmartDashboard.putNumber("Stick", -oi.operator.getLeftJoyY());
-        //SmartDashboard.putBoolean("Shifter", shifter.getStatus());
     }
     
     /**

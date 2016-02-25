@@ -35,7 +35,7 @@ public class DriveOverDefense extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	SmartDashboard.putNumber("State", state);
+    	//SmartDashboard.putNumber("State", state);
 		double correction = pid.getCorrection(sensors.getYaw());
 		if (correction < -speed)
 			correction = -speed;
@@ -60,7 +60,7 @@ public class DriveOverDefense extends Command {
 			Robot.strongHoldDrive.setPower(0, 0);
 			break;
 		}
-		SmartDashboard.putNumber("State", state);
+		//SmartDashboard.putNumber("State", state);
     }
 
     // Make this return true when this Command no longer needs to run execute()

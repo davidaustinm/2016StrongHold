@@ -150,7 +150,7 @@ public class Sensors {
 		double H = -12.0 / target.height * (target.centerY - goalY);
 		double angle = Math.atan(H/target.distance);
 		angle = Math.toDegrees(angle);
-		SmartDashboard.putNumber("Target Y", target.centerY);
+		//SmartDashboard.putNumber("Target Y", target.centerY);
 		return new Double(angle);
 	}
 	public Double[] getTargetData() {
@@ -163,8 +163,8 @@ public class Sensors {
 		double H = -12.0 / target.height * (target.centerY - goalY);
 		double vangle = Math.atan(H/target.distance);
 		vangle = Math.toDegrees(vangle);
-		SmartDashboard.putNumber("Target Y", target.centerY);
-		SmartDashboard.putNumber("Target X", target.centerX);
+		//SmartDashboard.putNumber("Target Y", target.centerY);
+		//SmartDashboard.putNumber("Target X", target.centerX);
 	
 		return new Double[] {new Double(hangle), 
 				new Double(vangle), 

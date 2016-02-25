@@ -25,7 +25,7 @@ public class BoulderConveyorCommand extends Command {
     	double power = Robot.oi.operator.getRightTrigger()-
     			Robot.oi.operator.getLeftTrigger();
     	if(Math.abs(power)<.1)power = 0;
-    	SmartDashboard.putNumber("conveyor", power);
+    	//SmartDashboard.putNumber("conveyor", power);
     	Robot.boulderConveyor.setPower(power);
     }
 

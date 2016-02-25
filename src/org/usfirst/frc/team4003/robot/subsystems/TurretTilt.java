@@ -50,7 +50,7 @@ public class TurretTilt extends Subsystem {
 		maxSpeed = speed;
 	}
 	public void setPower(double power) {
-		SmartDashboard.putNumber("New Position", getPosition());
+		//SmartDashboard.putNumber("New Position", getPosition());
 		if (sensors.getTurretResetSwitch()) {
 			if (power < 0) power = 0;
 			upperLimit = getPosition() + UPPERLIMIT;
@@ -73,9 +73,9 @@ public class TurretTilt extends Subsystem {
 	public void rotateBy(double angle) {
 		setPositionMode();
 		double newPosition = getPosition() + angle * ENCODERCOUNTSPERDEGREE;
-		SmartDashboard.putNumber("current position", getPosition());
-		SmartDashboard.putNumber("New Position", newPosition);
-		SmartDashboard.putNumber("Vangle", angle);
+		//SmartDashboard.putNumber("current position", getPosition());
+		//SmartDashboard.putNumber("New Position", newPosition);
+		//SmartDashboard.putNumber("Vangle", angle);
 		if (newPosition > upperLimit) newPosition = upperLimit;
 		if (newPosition < 0) newPosition = 0;
 		tilt.setPosition(newPosition);

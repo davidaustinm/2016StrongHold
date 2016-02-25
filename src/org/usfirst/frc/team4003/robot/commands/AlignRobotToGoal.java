@@ -34,9 +34,9 @@ public class AlignRobotToGoal extends Command {
     	double correction = pid.getCorrection(current);
     	if (correction>1) correction =1;
     	if (correction<-1) correction =-1;
-    	SmartDashboard.putNumber("correction",correction);
-    	SmartDashboard.putNumber("target", target.doubleValue());
-    	SmartDashboard.putNumber("current", current);
+    	//SmartDashboard.putNumber("correction",correction);
+    	//SmartDashboard.putNumber("target", target.doubleValue());
+    	//SmartDashboard.putNumber("current", current);
     	Robot.driveTrain.setPower(-speed*correction, speed*correction);
     }
 

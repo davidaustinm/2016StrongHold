@@ -58,7 +58,7 @@ public class DriveOnHeading extends Command {
     	left = deadBand(left);
     	right = deadBand(right);
     	Robot.strongHoldDrive.setPower(left, right);
-    	SmartDashboard.putNumber("Robot X", sensors.getPositionX());
+    	//SmartDashboard.putNumber("Robot X", sensors.getPositionX());
     }
 
     // Make this return true when this Command no longer needs to run execute()

@@ -72,8 +72,8 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 			if (Robot.isTargetTracking()) {
 
 				Size size = img.size();
-				SmartDashboard.putNumber("pixelwidth", size.width);
-				SmartDashboard.putNumber("pixelheight", size.height);
+				//SmartDashboard.putNumber("pixelwidth", size.width);
+				//SmartDashboard.putNumber("pixelheight", size.height);
 
 				Imgproc.cvtColor(img, img, Imgproc.COLOR_BGR2HSV);
 				Scalar lowerHSV = new Scalar(70, 32, 48);
@@ -135,8 +135,8 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 				setDashboardImg(dash);
 
 				setTarget(best);
-				SmartDashboard.putNumber("Contour Count", targets.size());
-				SmartDashboard.putNumber("Time", System.currentTimeMillis() - start);
+				//SmartDashboard.putNumber("Contour Count", targets.size());
+				//SmartDashboard.putNumber("Time", System.currentTimeMillis() - start);
 			} else {
 				Point tl = new Point(Sensors.goalX - 10, Sensors.goalY - 5);
 				Point br = new Point(Sensors.goalX + 10, Sensors.goalY + 5);

@@ -57,8 +57,6 @@ public class ShooterSubsystem extends Subsystem {
     }
     
     public void setOn(boolean on) {
-    	//shooter0Target = SmartDashboard.getNumber("Shooter 0");
-    	//shooter1Target = SmartDashboard.getNumber("Shooter 1");
     	if (on) {
     		shooter0.set(shooter0Target);
     		shooter1.set(shooter1Target);
@@ -73,10 +71,6 @@ public class ShooterSubsystem extends Subsystem {
     	shooter1.changeControlMode(defaultMode);
     	shooter0.set(power);
     	shooter1.set(power);
-    	/*
-    	SmartDashboard.putNumber("shooter 0", shooter0.getSpeed());
-    	SmartDashboard.putNumber("shooter 1", shooter1.getSpeed());
-    	*/
     }
     public double getShooter0Speed() {
     	return shooter0.getSpeed();
