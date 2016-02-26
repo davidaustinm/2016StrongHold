@@ -172,7 +172,7 @@ public class Robot extends IterativeRobot {
         autonomousCommand = new DefenseAuton(Sensors.RAMPART);
         autonomousCommand = new SpybotAuton();
         
-        int delay = (int) SmartDashboard.getNumber(delayString);
+        int delay = (int) SmartDashboard.getNumber(delayString, 0);
         CommandGroup auton = new CommandGroup();
         if (delay > 0) auton.addSequential(new WaitForTime(delay * 1000));
         auton.addSequential(autonomousCommand);
