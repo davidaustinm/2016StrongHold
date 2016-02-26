@@ -10,7 +10,6 @@ public class DriveOverChevalDeFris extends DriveOverDefense {
 	long stopTime;
     public DriveOverChevalDeFris(double speed) {
 		super(speed);
-		// TODO Auto-generated constructor stub
 	}
 
 	// Called just before this Command runs the first time

@@ -46,12 +46,12 @@ public class RobotMap {
 	public static final int BLOCKSOLENOIDFORWARD = 0;
 	public static final int BLOCKSOLENOIDREVERSE = 1;
 	
-	public static final int POSITIONAUTON0 = 14;
-	public static final int POSITIONAUTON1 = 15;
-	public static final int POSITIONAUTON2 = 16;
-	public static final int DEFENSEAUTON0 = 17;
-	public static final int DEFENSEAUTON1 = 18;
-	public static final int DEFENSEAUTON2 = 19;
+	public static final int POSITIONAUTON0 = 10;
+	public static final int POSITIONAUTON1 = 11;
+	public static final int POSITIONAUTON2 = 12;
+	public static final int DEFENSEAUTON0 = 13;
+	public static final int DEFENSEAUTON1 = 14;
+	public static final int DEFENSEAUTON2 = 15;
 	
 	// Analog inputs
 	public static final int TILTPOT = 0;

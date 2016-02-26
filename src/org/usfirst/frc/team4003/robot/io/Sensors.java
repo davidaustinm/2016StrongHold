@@ -59,36 +59,27 @@ public class Sensors {
 		
 		leftDriveEncoder = new Encoder(RobotMap.LEFTDRIVEENCODERA, RobotMap.LEFTDRIVEENCODERB);
 		rightDriveEncoder = new Encoder(RobotMap.RIGHTDRIVEENCODERA, RobotMap.RIGHTDRIVEENCODERB);
-		/*
-		shooter0Encoder = new Encoder(RobotMap.SHOOTER0ENCODERA, RobotMap.SHOOTER0ENCODERB);
-		shooter1Encoder = new Encoder(RobotMap.SHOOTER1ENCODERA, RobotMap.SHOOTER1ENCODERB);
-		turretEncoder = new Encoder(RobotMap.TURRETENCODERA, RobotMap.TURRETENCODERB);
-		*/
 		
 		conveyorSwitch = new DigitalInput(RobotMap.CONVEYORSWITCH);
 		intakeSwitch = new DigitalInput(RobotMap.INTAKESWITCH);
 		intakeLimitSwitch = new DigitalInput(RobotMap.INTAKELIMITSWITCH);
 		turretResetSwitch = new DigitalInput(RobotMap.TURRETRESETSWITCH);
-		//turretTiltPot = new AnalogInput(RobotMap.TURRETTILT);
-		/*
+		
 		auton0 = new DigitalInput(RobotMap.POSITIONAUTON0);
 		auton1 = new DigitalInput(RobotMap.POSITIONAUTON1);
 		auton2 = new DigitalInput(RobotMap.POSITIONAUTON2);
 		auton3 = new DigitalInput(RobotMap.DEFENSEAUTON0);
 		auton4 = new DigitalInput(RobotMap.DEFENSEAUTON1);
 		auton5 = new DigitalInput(RobotMap.DEFENSEAUTON2);
-		*/
+		
 	}
 	
 	public int getPosition() {
-		/*
 		int position = 0;
 		if (auton2.get()) position += 4;
 		if (auton1.get()) position += 2;
 		if (auton0.get()) position += 1;
 		return position;
-		*/
-		return 4;
 	}
 	
 	public double getFinalDrive() {

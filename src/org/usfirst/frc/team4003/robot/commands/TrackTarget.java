@@ -84,11 +84,11 @@ public class TrackTarget extends Command {
     	targetLastSeen = currentTime;
     	double hPixelError = targetData[2];
     	double vPixelError = targetData[3];
-    	hPixelError = 0; // TODO
+    	//hPixelError = 0; // TODO
     	if (hPixelError < htolerance && vPixelError < vtolerance) {
     		sensors.setAlignedToGoal(true);
     		Robot.turretTilt.setPower(0);
-    		//Robot.turretSpin.setPower(0); // TODO
+    		Robot.turretSpin.setPower(0); // TODO
     		return;
     	} else {
     		sensors.setAlignedToGoal(false);
@@ -118,16 +118,16 @@ public class TrackTarget extends Command {
     	
     	double hAngle = targetData[0];
     	double spinSpeed = spinPID.getCorrection(-hAngle);
-    	/* TODO
+    	/* 
     	 * 
     	 * A positive hAngle means we want to rotate counter-clockwise
     	 * 
+    	 */
     	if (hAngle > 0) { 
     		Robot.turretSpin.setPower(spinSpeed, RobotMap.COUNTERCLOCKWISE);
     	} else {
     		Robot.turretSpin.setPower(spinSpeed, RobotMap.CLOCKWISE);
     	}
-    	*/
     }
 
     // Make this return true when this Command no longer needs to run execute()
@@ -138,7 +138,7 @@ public class TrackTarget extends Command {
     // Called once after isFinished returns true
     protected void end() {
     	Robot.turretTilt.setPower(0);
-    	//Robot.turretSpin.setPower(0); // TODO
+    	Robot.turretSpin.setPower(0); // TODO
     	sensors.setAlignedToGoal(false);
     	tiltHint = NONE;
     	spinHint = NONE;

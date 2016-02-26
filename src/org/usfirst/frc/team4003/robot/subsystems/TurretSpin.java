@@ -49,7 +49,7 @@ public class TurretSpin extends Subsystem {
     	spin.set(0);
     }
     public void initDefaultCommand() {
-    	//setDefaultCommand(new TurretSpinCommand()); // TODO
+    	setDefaultCommand(new TurretSpinCommand()); // TODO
     }
     double maxSpeed = 1;
     public void setMaxSpeed(double speed) {
