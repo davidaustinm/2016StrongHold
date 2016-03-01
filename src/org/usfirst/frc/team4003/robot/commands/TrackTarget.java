@@ -39,7 +39,7 @@ public class TrackTarget extends Command {
     	sensors = Sensors.getInstance();
     	tiltPID = new TrisonicsPID(0.033, 0.00, 0.001);
     	tiltPID.setTarget(0);
-    	spinPID = new TrisonicsPID(0.03, 0.005, 0.001);
+    	spinPID = new TrisonicsPID(0.01, 0.005, 0.001);
     	tiltPID.setTarget(0);
     }
 
@@ -108,7 +108,7 @@ public class TrackTarget extends Command {
     		tiltHint = DOWN;
     		spinHint = NONE;
     		hintStart = 0;
-    		hintTimeOut = 4000;    		
+    		hintTimeOut = 3000;    		
     	} else {
     		tiltHint = NONE;
     		spinHint = NONE;
@@ -117,7 +117,7 @@ public class TrackTarget extends Command {
     	}
     	
     	double hAngle = targetData[0];
-    	double spinSpeed = spinPID.getCorrection(-hAngle);
+    	double spinSpeed = spinPID.getCorrection(hAngle);
     	/* 
     	 * 
     	 * A positive hAngle means we want to rotate counter-clockwise

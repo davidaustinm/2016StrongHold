@@ -11,7 +11,7 @@ import org.usfirst.frc.team4003.robot.commands.actions.*;
 public class OI {
 	public Xbox driver = new Xbox(0);
 	public Xbox operator = new Xbox(1);
-	public XboxButton shiftHigh = new XboxButton(driver, XboxButton.BUTTONB);
+	public XboxButton interrupt = new XboxButton(driver, XboxButton.BUTTONB);
 	public XboxButton pidHold = new XboxButton(driver, XboxButton.BUTTONX);
 	public XboxButton raiseIntake = new XboxButton(driver, XboxButton.BUTTONRB);
 	public XboxButton lowerIntake = new XboxButton(driver, XboxButton.BUTTONLB);
@@ -39,14 +39,16 @@ public class OI {
 	public OI() {
 		//shiftHigh.whenPressed(new ShifterCommand(false));
 		//shiftLow.whenPressed(new ShifterCommand(true));
+		
 		pidHold.whenPressed(new PIDHold());
-		raiseIntake.whenPressed(new IntakeUpDownCommand(false));
-		lowerIntake.whenPressed(new IntakeUpDownCommand(true));
+		raiseIntake.whileHeld(new IntakeUpDownCommand(false));
+		lowerIntake.whileHeld(new IntakeUpDownCommand(true));
 		loadBoulder.whenPressed(new RunIntakeAndConveyor(true));
 		unloadBoulder.whenPressed(new RunIntakeAndConveyor(false));
+		interrupt.whenPressed(new InterruptCommand());
 		
-		//cameraToggle.whenPressed(new CameraToggle());
-		//homeTurret.whenPressed(new HomeTurret());
+		cameraToggle.whenPressed(new CameraToggle());
+		homeTurret.whenPressed(new HomeTurret());
 		trackingOn.whenPressed(new TrackingOn(true));
 		trackingOff.whenPressed(new TrackingOn(false));
 		shooterOn.whenPressed(new ShooterCommand(true));
@@ -59,6 +61,7 @@ public class OI {
 		
 		slowTurret.whenPressed(new ChangeTurretSpeed(0.5));
 		fastTurret.whenPressed(new ChangeTurretSpeed(1));
+		
 	}
 
     //// CREATING BUTTONS

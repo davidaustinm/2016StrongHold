@@ -46,19 +46,19 @@ public class RobotMap {
 	public static final int BLOCKSOLENOIDFORWARD = 0;
 	public static final int BLOCKSOLENOIDREVERSE = 1;
 	
-	public static final int POSITIONAUTON0 = 10;
+	public static final int POSITIONAUTON0 = 12;
 	public static final int POSITIONAUTON1 = 11;
-	public static final int POSITIONAUTON2 = 12;
-	public static final int DEFENSEAUTON0 = 13;
+	public static final int POSITIONAUTON2 = 10;
+	public static final int DEFENSEAUTON0 = 15;
 	public static final int DEFENSEAUTON1 = 14;
-	public static final int DEFENSEAUTON2 = 15;
+	public static final int DEFENSEAUTON2 = 13;
 	
 	// Analog inputs
 	public static final int TILTPOT = 0;
 	
 	// Cameras
-	public static final int TARGET_CAMERA = 0; // This one is stuck in 1280x720 mode
-	public static final int DRIVER_CAMERA = 1; // This one is stuck in 160x120 mode
+	public static final int TARGET_CAMERA = 1; // This one is stuck in 1280x720 mode
+	public static final int DRIVER_CAMERA = 0; // This one is stuck in 160x120 mode
 	
 	public static final int TARGET_CAMERA_W = 320;
 	public static final int TARGET_CAMERA_H = 180;
@@ -69,7 +69,7 @@ public class RobotMap {
 	public static final double TARGET_TAPE_HEIGHT = 12.0; // In inches
 	public static final double TARGET_TAPE_WIDTH = 20.0; // In inches
 	
-	public static final int CLOCKWISE = -1;
-	public static final int COUNTERCLOCKWISE = 1;
+	public static final int CLOCKWISE = 1;
+	public static final int COUNTERCLOCKWISE = -1;
 
 }

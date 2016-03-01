@@ -64,13 +64,15 @@ public class Robot extends IterativeRobot {
         	 arcadeDrive = new StrongHoldArcade();
         	 //arcadeDrive.start();
     	 }
+    	 
     	 if (SubsystemLoad.INTAKERUN) intakeRun = new IntakeRun();
     	 if (SubsystemLoad.INTAKEUPDOWN) intakeUpDown = new IntakeUpDown();
-    	 if (SubsystemLoad.SHIFTER) shifter = new Shifter();
+    	 //if (SubsystemLoad.SHIFTER) shifter = new Shifter();
     	 if (SubsystemLoad.TURRETSPIN) turretSpin = new TurretSpin();
     	 if (SubsystemLoad.TURRETTILT) turretTilt = new TurretTilt();
     	 if (SubsystemLoad.BOULDERCONVEYOR) boulderConveyor = new BoulderConveyor(); 
-    	 if (SubsystemLoad.SHOOTER) shooter = new ShooterSubsystem();    	 
+    	 if (SubsystemLoad.SHOOTER) shooter = new ShooterSubsystem();    
+    	 
     }
     
     /**
@@ -167,6 +169,7 @@ public class Robot extends IterativeRobot {
         
         SmartDashboard.putNumber("Defense",  defense);
         SmartDashboard.putNumber("Position", position);
+        /*
         autonomousCommand = new ChevalDeFrisAuton();
         autonomousCommand = new AlignAndShoot();
         autonomousCommand = new DefenseAuton(Sensors.RAMPART);
@@ -179,6 +182,7 @@ public class Robot extends IterativeRobot {
         
         //autonomousCommand = new ChevalDeFrisAuton();
         if (autonomousCommand != null) autonomousCommand.start();
+        */
     }
 
     /**
@@ -203,7 +207,7 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         sensors.displayShooterSpeeds();
         sensors.displaySwitches();
-        sensors.displayAutonSwitches();
+        //sensors.displayAutonSwitches();
         sensors.displayTurretEncoders();
         sensors.displayDriveEncoders();
     }

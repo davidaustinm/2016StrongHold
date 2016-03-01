@@ -24,7 +24,7 @@ public class TurretSpin extends Subsystem {
     final double LOWERLIMIT = -SPINHALFREV;
     
     public TurretSpin() {
-    	spin.setInverted(true);
+    	//spin.setInverted(true);
     	spin.reverseSensor(true);;
     	spin.setFeedbackDevice(FeedbackDevice.CtreMagEncoder_Relative);
     	defaultMode = spin.getControlMode();
@@ -35,7 +35,7 @@ public class TurretSpin extends Subsystem {
     	spin.setPosition(0);
     }
     public double getPosition() {
-    	return spin.getPosition();
+    	return spin.getEncPosition();
     }
     public void setPositionMode() {
     	spin.changeControlMode(CANTalon.TalonControlMode.Position);

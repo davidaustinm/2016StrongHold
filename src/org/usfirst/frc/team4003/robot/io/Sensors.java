@@ -65,13 +65,15 @@ public class Sensors {
 		intakeLimitSwitch = new DigitalInput(RobotMap.INTAKELIMITSWITCH);
 		turretResetSwitch = new DigitalInput(RobotMap.TURRETRESETSWITCH);
 		
+		/*
 		auton0 = new DigitalInput(RobotMap.POSITIONAUTON0);
 		auton1 = new DigitalInput(RobotMap.POSITIONAUTON1);
 		auton2 = new DigitalInput(RobotMap.POSITIONAUTON2);
 		auton3 = new DigitalInput(RobotMap.DEFENSEAUTON0);
+		
 		auton4 = new DigitalInput(RobotMap.DEFENSEAUTON1);
 		auton5 = new DigitalInput(RobotMap.DEFENSEAUTON2);
-		
+		*/
 	}
 	
 	public int getPosition() {
