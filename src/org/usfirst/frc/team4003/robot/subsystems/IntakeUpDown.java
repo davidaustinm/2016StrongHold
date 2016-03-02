@@ -21,10 +21,10 @@ public class IntakeUpDown extends Subsystem {
     	//setDefaultCommand(new IntakeUpDownCommand());
     }
     
-    public void setDown() {
+    public void setUp() {
     	intakeDown.set(DoubleSolenoid.Value.kForward);
     }
-    public void setUp() {
+    public void setDown() {
     	intakeDown.set(DoubleSolenoid.Value.kReverse);
     }
     public void setOff() {

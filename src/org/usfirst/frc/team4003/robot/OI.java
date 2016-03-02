@@ -24,6 +24,9 @@ public class OI {
 	public XboxButton trackingOff = new XboxButton(operator,XboxButton.BUTTONB);
 	public XboxButton shooterOn = new XboxButton(operator,XboxButton.BUTTONRB);
 	public XboxButton shooterOff = new XboxButton(operator,XboxButton.BUTTONLB);
+	public XboxButton operatorInterrupt = new XboxButton(operator, XboxButton.BUTTONSTART);
+	public XboxButton operatorLoadBoulder = new XboxButton(operator, XboxButton.DPADUP);
+	public XboxButton operatorUnloadBoulder = new XboxButton(operator, XboxButton.DPADDOWN);
 	
 	
 	public XboxButton tankDrive = new XboxButton(driver,XboxButton.DPADUP);
@@ -47,6 +50,8 @@ public class OI {
 		unloadBoulder.whenPressed(new RunIntakeAndConveyor(false));
 		interrupt.whenPressed(new InterruptCommand());
 		
+		operatorLoadBoulder.whenPressed(new RunIntakeAndConveyor(true));
+		operatorUnloadBoulder.whenPressed(new RunIntakeAndConveyor(false));
 		cameraToggle.whenPressed(new CameraToggle());
 		homeTurret.whenPressed(new HomeTurret());
 		trackingOn.whenPressed(new TrackingOn(true));

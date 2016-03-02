@@ -78,9 +78,9 @@ public class Sensors {
 	
 	public int getPosition() {
 		int position = 0;
-		if (auton2.get()) position += 4;
-		if (auton1.get()) position += 2;
-		if (auton0.get()) position += 1;
+		if (!auton2.get()) position += 4;
+		if (!auton1.get()) position += 2;
+		if (!auton0.get()) position += 1;
 		return position;
 	}
 	
@@ -90,9 +90,9 @@ public class Sensors {
 	}
 	public int getDefense() {
 		int defense = 0;
-		if (auton5.get()) defense += 4;
-		if (auton4.get()) defense += 2;
-		if (auton3.get()) defense += 1;
+		if (!auton5.get()) defense += 4;
+		if (!auton4.get()) defense += 2;
+		if (!auton3.get()) defense += 1;
 		return defense;
 	}
 	
