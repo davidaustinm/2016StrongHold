@@ -91,6 +91,7 @@ public class TrackTarget extends Command {
     	if ((Math.abs(hPixelError) < 8) && (Math.abs(vPixelError) < 8)) {
     		SmartDashboard.putString("On goal?", "YES!");
     		sensors.setAlignedToGoal(true);
+    		WaitUntilAligned.setAligned(true);
     		Robot.turretTilt.setPower(0);
     		Robot.turretSpin.setPower(0); // TODO
     		return;

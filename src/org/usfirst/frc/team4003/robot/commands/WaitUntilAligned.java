@@ -9,6 +9,10 @@ import org.usfirst.frc.team4003.robot.io.*;
  */
 public class WaitUntilAligned extends Command {
 	Sensors sensors;
+	static boolean aligned = false;
+	public static void setAligned(boolean b) {
+		aligned = b;
+	}
     public WaitUntilAligned() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
@@ -28,7 +32,8 @@ public class WaitUntilAligned extends Command {
     protected boolean isFinished() {
     	SmartDashboard.putNumber("WaitUntilAligned Sensor ID:", System.identityHashCode(sensors));
     	SmartDashboard.putBoolean("aligned?", sensors.getAlignedToGoal());
-        return sensors.getAlignedToGoal();
+        //return sensors.getAlignedToGoal();
+    	return aligned;
     }
 
     // Called once after isFinished returns true

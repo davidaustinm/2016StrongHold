@@ -43,7 +43,7 @@ public class OI {
 		//shiftHigh.whenPressed(new ShifterCommand(false));
 		//shiftLow.whenPressed(new ShifterCommand(true));
 		
-		pidHold.whenPressed(new PIDHold());
+		pidHold.whileHeld(new PIDHold());
 		raiseIntake.whileHeld(new IntakeUpDownCommand(false));
 		lowerIntake.whileHeld(new IntakeUpDownCommand(true));
 		loadBoulder.whenPressed(new RunIntakeAndConveyor(true));
