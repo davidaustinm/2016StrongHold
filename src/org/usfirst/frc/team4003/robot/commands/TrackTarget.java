@@ -87,6 +87,7 @@ public class TrackTarget extends Command {
     	SmartDashboard.putNumber("herror", hPixelError);
     	SmartDashboard.putNumber("verror", vPixelError);
     	//hPixelError = 0; // TODO
+    	SmartDashboard.putNumber("TrackTarget Sensor ID:", System.identityHashCode(sensors));
     	if ((Math.abs(hPixelError) < 8) && (Math.abs(vPixelError) < 8)) {
     		SmartDashboard.putString("On goal?", "YES!");
     		sensors.setAlignedToGoal(true);

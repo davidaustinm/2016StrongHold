@@ -26,6 +26,7 @@ public class WaitUntilAligned extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	SmartDashboard.putNumber("WaitUntilAligned Sensor ID:", System.identityHashCode(sensors));
     	SmartDashboard.putBoolean("aligned?", sensors.getAlignedToGoal());
         return sensors.getAlignedToGoal();
     }
