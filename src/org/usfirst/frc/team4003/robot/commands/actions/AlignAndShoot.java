@@ -10,6 +10,7 @@ public class AlignAndShoot extends CommandGroup {
     public  AlignAndShoot() {
     	addSequential(new IntakeRaiseLower(true));
     	addSequential(new WaitForTime(500));
+    	addSequential(new RunTurretTilt());
     	addSequential(new TrackingOn(true));
     	addSequential(new WaitUntilAligned());
     	addSequential(new TrackingOn(false));

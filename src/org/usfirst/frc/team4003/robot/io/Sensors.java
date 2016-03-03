@@ -23,6 +23,8 @@ public class Sensors {
 	
 	public static final double ENCODERCOUNTSPERINCH = 22;
 	
+	protected boolean alignedToGoal = false;
+
 	int lastLeftEncoder = 0;
 	int lastRightEncoder = 0;
 	int lastShooter0Encoder = 0;
@@ -46,7 +48,7 @@ public class Sensors {
 	
 	public static final int SPYBOT = 0;
 	
-	public static final double goalX = 200; // 180
+	public static final double goalX = 175; // 180
 	public static final double goalY = 140; // 140
 	
 	static Sensors sensors = null;
@@ -65,7 +67,7 @@ public class Sensors {
 		intakeLimitSwitch = new DigitalInput(RobotMap.INTAKELIMITSWITCH);
 		turretResetSwitch = new DigitalInput(RobotMap.TURRETRESETSWITCH);
 		
-		/*
+		
 		auton0 = new DigitalInput(RobotMap.POSITIONAUTON0);
 		auton1 = new DigitalInput(RobotMap.POSITIONAUTON1);
 		auton2 = new DigitalInput(RobotMap.POSITIONAUTON2);
@@ -73,7 +75,7 @@ public class Sensors {
 		
 		auton4 = new DigitalInput(RobotMap.DEFENSEAUTON1);
 		auton5 = new DigitalInput(RobotMap.DEFENSEAUTON2);
-		*/
+		
 	}
 	
 	public int getPosition() {
@@ -99,6 +101,7 @@ public class Sensors {
 	public static Sensors getInstance(){
 		if (sensors == null) sensors = new Sensors();
 		return sensors;
+		
 	}
 	
 	public double getYaw(){
@@ -285,7 +288,6 @@ public class Sensors {
 		SmartDashboard.putBoolean("Auton5", auton5.get());
 	}
 	
-	boolean alignedToGoal = false;
 	public void setAlignedToGoal(boolean b) {
 		alignedToGoal = b;
 	}

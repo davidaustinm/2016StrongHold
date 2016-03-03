@@ -22,7 +22,7 @@ public class BoulderConveyorCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double power = Robot.oi.operator.getRightTrigger()-
+    	double power = -Robot.oi.operator.getRightTrigger()+
     			Robot.oi.operator.getLeftTrigger();
     	if(Math.abs(power)<.1)power = 0;
     	//SmartDashboard.putNumber("conveyor", power);

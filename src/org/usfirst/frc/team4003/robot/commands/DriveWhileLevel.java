@@ -12,7 +12,7 @@ public class DriveWhileLevel extends Command {
 	double speed;
 	TrisonicsPID angle, coordinate;
 	Sensors sensors;
-	final double ROLLLIMIT = 1.8;
+	final double ROLLLIMIT = 2;
 	
     public DriveWhileLevel(double speed) {
         // Use requires() here to declare subsystem dependencies
@@ -51,7 +51,7 @@ public class DriveWhileLevel extends Command {
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
         return sensors.getRoll() > sensors.getRollBaseLine() + ROLLLIMIT &&
-        		sensors.getPositionX() > 46;
+        		sensors.getPositionX() > 47;
     }
 
     // Called once after isFinished returns true

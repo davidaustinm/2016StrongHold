@@ -16,7 +16,7 @@ public class CameraToggle extends Command {
     protected void initialize() {
     	synchronized(Robot.activeCamera) {
 			if (Robot.activeCamera == Robot.targetCamera) {
-				//Robot.activeCamera = Robot.driverCamera;
+				Robot.activeCamera = Robot.driverCamera;
 			} else {
 				Robot.activeCamera = Robot.targetCamera;
 			}

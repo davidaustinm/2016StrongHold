@@ -37,9 +37,9 @@ public class TrackTarget extends Command {
     	requires(Robot.turretSpin);
     	camera = Robot.targetCamera;
     	sensors = Sensors.getInstance();
-    	tiltPID = new TrisonicsPID(0.033, 0.00, 0.001);
+    	tiltPID = new TrisonicsPID(0.038, 0.00, 0.00);
     	tiltPID.setTarget(0);
-    	spinPID = new TrisonicsPID(0.01, 0.005, 0.001);
+    	spinPID = new TrisonicsPID(0.023, 0.00, 0.00);
     	tiltPID.setTarget(0);
     }
 
@@ -49,8 +49,8 @@ public class TrackTarget extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
-    double htolerance = 5;
-    double vtolerance = 5;
+    double htolerance = 8;
+    double vtolerance = 8;
     protected void execute() {
     	if (camera.getTargetReady() == false) return;
     	
@@ -84,14 +84,18 @@ public class TrackTarget extends Command {
     	targetLastSeen = currentTime;
     	double hPixelError = targetData[2];
     	double vPixelError = targetData[3];
+    	SmartDashboard.putNumber("herror", hPixelError);
+    	SmartDashboard.putNumber("verror", vPixelError);
     	//hPixelError = 0; // TODO
-    	if (hPixelError < htolerance && vPixelError < vtolerance) {
+    	if ((Math.abs(hPixelError) < 8) && (Math.abs(vPixelError) < 8)) {
+    		SmartDashboard.putString("On goal?", "YES!");
     		sensors.setAlignedToGoal(true);
     		Robot.turretTilt.setPower(0);
     		Robot.turretSpin.setPower(0); // TODO
     		return;
     	} else {
-    		sensors.setAlignedToGoal(false);
+    		SmartDashboard.putString("On goal?", "No!");
+    		//sensors.setAlignedToGoal(false);
     	}
     	
     	double vAngle = targetData[1];
@@ -139,7 +143,7 @@ public class TrackTarget extends Command {
     protected void end() {
     	Robot.turretTilt.setPower(0);
     	Robot.turretSpin.setPower(0); // TODO
-    	sensors.setAlignedToGoal(false);
+    	//sensors.setAlignedToGoal(false);
     	tiltHint = NONE;
     	spinHint = NONE;
     	hintTimeOut = 1000;

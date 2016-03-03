@@ -7,37 +7,31 @@ import edu.wpi.first.wpilibj.command.Command;
 /**
  *
  */
-public class IntakeRaiseLower extends Command {
-	boolean lower;
+public class RunTurretTilt extends Command {
 	long stopTime;
-    public IntakeRaiseLower(boolean lower) {
+    public RunTurretTilt() {
         // Use requires() here to declare subsystem dependencies
-        // eg. requires(chassis);
-    	this.lower = !lower;
+        requires(Robot.turretTilt);
     }
-    public void canInterrupt(boolean b) {
-    	setInterruptible(b);
-    }
+
     // Called just before this Command runs the first time
     protected void initialize() {
     	stopTime = System.currentTimeMillis() + 500;
-    	if (lower) Robot.intakeUpDown.setDown();
-    	else Robot.intakeUpDown.setUp();
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (lower) Robot.intakeUpDown.setDown();
-    	else Robot.intakeUpDown.setUp();
+    	Robot.turretTilt.setPower(0.6);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return !lower || System.currentTimeMillis() > stopTime;
+        return System.currentTimeMillis() > stopTime;
     }
 
     // Called once after isFinished returns true
     protected void end() {
+    	Robot.turretTilt.setPower(0);
     }
 
     // Called when another command which requires one or more of the same

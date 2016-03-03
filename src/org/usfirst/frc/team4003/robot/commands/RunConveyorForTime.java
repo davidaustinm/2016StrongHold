@@ -25,7 +25,7 @@ public class RunConveyorForTime extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (in) Robot.boulderConveyor.setPower(1);
+    	if (!in) Robot.boulderConveyor.setPower(1);
     	else Robot.boulderConveyor.setPower(-1);
     }
 

@@ -45,11 +45,11 @@ public class Robot extends IterativeRobot {
     Command autonomousCommand;
     SendableChooser chooser;
     public static TargetCamera targetCamera;
-    //public static DriverCamera driverCamera;
+    public static DriverCamera driverCamera;
     public static DashboardMatProvider activeCamera = null;
 
     protected Thread targetThread;
-    //protected Thread driverThread;
+    protected Thread driverThread;
     protected Thread cameraServerThread;
     
     // Making this volatile is good enough, no need to sync.  A single dirty read isn't worth the overhead of synch.
@@ -91,11 +91,11 @@ public class Robot extends IterativeRobot {
         targetThread = new Thread(targetCamera);
         targetThread.start();
         
-        /*
+        
         driverCamera = new DriverCamera();
         driverThread = new Thread(driverCamera);
         driverThread.start();
-        */
+        
         
         activeCamera = targetCamera;
         
@@ -155,6 +155,8 @@ public class Robot extends IterativeRobot {
         
         int defense = sensors.getDefense();
         int position = sensors.getPosition();
+        
+        position = 4;
         if (position == 2 || position == 3) {
         	TrackTarget.setSpinHint(TrackTarget.RIGHT);
         }
@@ -181,8 +183,11 @@ public class Robot extends IterativeRobot {
         auton.addSequential(autonomousCommand);
         
         //autonomousCommand = new ChevalDeFrisAuton();
+         */
+        autonomousCommand = new DefenseAuton(Sensors.ROCKWALL);
+        //autonomousCommand = new ChevalDeFrisAuton();
         if (autonomousCommand != null) autonomousCommand.start();
-        */
+        
     }
 
     /**
@@ -207,7 +212,7 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         sensors.displayShooterSpeeds();
         sensors.displaySwitches();
-        //sensors.displayAutonSwitches();
+        sensors.displayAutonSwitches();
         sensors.displayTurretEncoders();
         sensors.displayDriveEncoders();
     }

@@ -9,17 +9,19 @@ import org.opencv.core.*;
 import org.usfirst.frc.team4003.robot.Robot;
 import org.opencv.core.Mat;
 import org.opencv.highgui.*;
+import edu.wpi.first.wpilibj.Timer;
 
 public class TSCameraServer implements Runnable {
 
     private static final int PORT = 1180;
     private static final byte[] MAGIC_NUMBER = {0x01, 0x00, 0x00, 0x00};
     private double fps = 24; 
-    private int quality = 95;
+    private int quality = 80;
     
 	@Override
 	public void run() {
 		Mat img;
+		Timer.delay(3);
 		while (!Thread.currentThread().isInterrupted()) {
 			System.out.println("Starting TSCameraServer");
 			try (ServerSocket serverSocket = new ServerSocket(PORT)) {
@@ -61,7 +63,7 @@ public class TSCameraServer implements Runnable {
 
 								socketOutputStream.write(MAGIC_NUMBER);
 								socketOutputStream.writeInt(byteArray.length);
-								System.out.println("image size: " + byteArray.length);
+								//System.out.println("image size: " + byteArray.length);
 								socketOutputStream.write(byteArray, 0, byteArray.length);
 								// Flushing the buffer reduces lag considerably.
 								socketOutputStream.flush();

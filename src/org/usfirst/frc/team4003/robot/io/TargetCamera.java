@@ -64,6 +64,9 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 		Mat img = new Mat();
 		Mat mask = new Mat();
 		Mat origImg = new Mat();
+		Mat hierarchy = new Mat();
+		Mat dash = new Mat();
+		Mat dashOut = new Mat();
 		while (Thread.currentThread().isInterrupted() == false) {
 			long start = System.currentTimeMillis();
 			vcap.read(origImg);
@@ -81,25 +84,23 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 				Core.inRange(img, lowerHSV, upperHSV, mask);
 
 				List<MatOfPoint> contours = new ArrayList<MatOfPoint>();
-				Mat hierarchy = new Mat();
 				Imgproc.findContours(mask, contours, hierarchy, Imgproc.RETR_LIST, Imgproc.CHAIN_APPROX_SIMPLE);
 
-				Mat dash = new Mat();
 				img.copyTo(dash);
-				Imgproc.cvtColor(dash, dash, Imgproc.COLOR_HSV2BGR);
+				Imgproc.cvtColor(dash, dashOut, Imgproc.COLOR_HSV2BGR);
 
 				List<Target> targets = new ArrayList<Target>();
 				for (int c = 0; c < contours.size(); c++) {
 					MatOfPoint cont = contours.get(c);
 					Rect bounding = Imgproc.boundingRect(cont);
 					if (Imgproc.boundingRect(cont).area() > minArea) {
-						Core.rectangle(dash, bounding.br(), bounding.tl(), new Scalar(255, 255, 0));
+						Core.rectangle(dashOut, bounding.br(), bounding.tl(), new Scalar(255, 255, 0));
 						targets.add(new Target(cont));
 						// Draw large enough contours in red
-						Imgproc.drawContours(dash, contours, c, new Scalar(0, 0, 255));
+						Imgproc.drawContours(dashOut, contours, c, new Scalar(0, 0, 255));
 					} else {
 						// Draw small contours in black for debugging.
-						Imgproc.drawContours(dash, contours, c, new Scalar(0, 0, 0));
+						Imgproc.drawContours(dashOut, contours, c, new Scalar(0, 0, 0));
 
 					}
 				}
@@ -126,14 +127,14 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 						}
 					}
 					// Draw a circle in the middle-ish of our best target.
-					Core.circle(dash, new Point(best.centerX, best.centerY), 8, new Scalar(0, 0, 255), 6);
+					Core.circle(dashOut, new Point(best.centerX, best.centerY), 8, new Scalar(0, 0, 255), 6);
 					updateDashboard(best);
 				} 
 				lastBest = best;
 				// Now that we've marked up the image a bit set it to be the
 				// version that goes on the dashboard.
-				setDashboardImg(dash);
-
+				setDashboardImg(dashOut);
+				if (best != null) updateDashboard(best);
 				setTarget(best);
 				//SmartDashboard.putNumber("Contour Count", targets.size());
 				//SmartDashboard.putNumber("Time", System.currentTimeMillis() - start);

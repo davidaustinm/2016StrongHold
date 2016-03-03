@@ -20,7 +20,7 @@ public class DriveOverChevalDeFris extends DriveOverDefense {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (System.currentTimeMillis() > slowTime) speed = 0.3;
+    	if (System.currentTimeMillis() > slowTime) speed = 0.6;
     	if (System.currentTimeMillis() > stopTime) speed = 0;
     	super.execute();
     }
