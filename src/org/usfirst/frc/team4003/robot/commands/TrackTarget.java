@@ -23,7 +23,7 @@ public class TrackTarget extends Command {
 	public static final int DOWN = 4;
 	static int tiltHint = NONE;
 	static int spinHint = NONE;
-	static int hintTimeOut = 5000;
+	static int hintTimeOut = 3000;
 	static int hintStart = 1000;
 	static long targetLastSeen = 0;
 	
