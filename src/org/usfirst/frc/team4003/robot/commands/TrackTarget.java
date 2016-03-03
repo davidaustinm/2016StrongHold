@@ -49,8 +49,8 @@ public class TrackTarget extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
-    double htolerance = 8;
-    double vtolerance = 8;
+    double htolerance = 5;
+    double vtolerance = 5;
     protected void execute() {
     	if (camera.getTargetReady() == false) return;
     	
@@ -88,7 +88,7 @@ public class TrackTarget extends Command {
     	SmartDashboard.putNumber("verror", vPixelError);
     	//hPixelError = 0; // TODO
     	SmartDashboard.putNumber("TrackTarget Sensor ID:", System.identityHashCode(sensors));
-    	if ((Math.abs(hPixelError) < 8) && (Math.abs(vPixelError) < 8)) {
+    	if ((Math.abs(hPixelError) < htolerance) && (Math.abs(vPixelError) < vtolerance)) {
     		SmartDashboard.putString("On goal?", "YES!");
     		sensors.setAlignedToGoal(true);
     		WaitUntilAligned.setAligned(true);
