@@ -147,6 +147,8 @@ public class Robot extends IterativeRobot {
     public void autonomousInit() {
         //autonomousCommand = (Command) chooser.getSelected();
     	
+    	TrackTarget.setAuton(true);
+    	
     	Robot.turretTilt.resetPosition();
         Robot.turretSpin.resetPosition();
         sensors.resetYaw();
@@ -184,7 +186,7 @@ public class Robot extends IterativeRobot {
         
         //autonomousCommand = new ChevalDeFrisAuton();
          */
-        autonomousCommand = new DefenseAuton(Sensors.ROCKWALL);
+        autonomousCommand = new AlignAndShoot();
         //autonomousCommand = new ChevalDeFrisAuton();
         if (autonomousCommand != null) autonomousCommand.start();
         
@@ -200,6 +202,7 @@ public class Robot extends IterativeRobot {
 
     public void teleopInit() {
         if (autonomousCommand != null) autonomousCommand.cancel();
+        TrackTarget.setAuton(false);
         arcadeDrive.start();
         SmartDashboard.putNumber(delayString, 0);
     }
@@ -210,6 +213,8 @@ public class Robot extends IterativeRobot {
     
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        SmartDashboard.putNumber("Position", sensors.getPosition());
+        SmartDashboard.putNumber("Defense", sensors.getDefense());
         sensors.displayShooterSpeeds();
         sensors.displaySwitches();
         sensors.displayAutonSwitches();

@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4003.robot.commands;
 
 import org.usfirst.frc.team4003.robot.Robot;
+import org.usfirst.frc.team4003.robot.commands.actions.*;
 import org.usfirst.frc.team4003.robot.RobotMap;
 
 import edu.wpi.first.wpilibj.command.Command;
@@ -29,6 +30,11 @@ public class TrackTarget extends Command {
 	
 	public static void setTiltHint(int hint) {tiltHint = hint;}
 	public static void setSpinHint(int hint) {spinHint = hint;}
+	
+	static boolean auton = false;
+	public static void setAuton(boolean b) {
+		auton = b;
+	}
 	
     public TrackTarget() {
         // Use requires() here to declare subsystem dependencies
@@ -87,13 +93,19 @@ public class TrackTarget extends Command {
     	SmartDashboard.putNumber("herror", hPixelError);
     	SmartDashboard.putNumber("verror", vPixelError);
     	//hPixelError = 0; // TODO
+    	hPixelError = 0;
+    	vPixelError = 0;
     	SmartDashboard.putNumber("TrackTarget Sensor ID:", System.identityHashCode(sensors));
     	if ((Math.abs(hPixelError) < htolerance) && (Math.abs(vPixelError) < vtolerance)) {
     		SmartDashboard.putString("On goal?", "YES!");
     		sensors.setAlignedToGoal(true);
     		WaitUntilAligned.setAligned(true);
     		Robot.turretTilt.setPower(0);
-    		Robot.turretSpin.setPower(0); // TODO
+    		Robot.turretSpin.setPower(0);
+    		if (auton) {
+    			(new AutoShoot()).start();
+    			cancel();
+    		}
     		return;
     	} else {
     		SmartDashboard.putString("On goal?", "No!");

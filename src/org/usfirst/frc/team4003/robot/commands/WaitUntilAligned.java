@@ -10,6 +10,7 @@ import org.usfirst.frc.team4003.robot.io.*;
 public class WaitUntilAligned extends Command {
 	Sensors sensors;
 	static boolean aligned = false;
+	int count = 0;
 	public static void setAligned(boolean b) {
 		aligned = b;
 	}
@@ -30,8 +31,9 @@ public class WaitUntilAligned extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
+    	count ++;
     	SmartDashboard.putNumber("WaitUntilAligned Sensor ID:", System.identityHashCode(sensors));
-    	SmartDashboard.putBoolean("aligned?", sensors.getAlignedToGoal());
+    	SmartDashboard.putString("aligned?", aligned + " " + count);
         //return sensors.getAlignedToGoal();
     	return aligned;
     }
