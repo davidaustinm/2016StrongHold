@@ -48,8 +48,8 @@ public class Sensors {
 	
 	public static final int SPYBOT = 0;
 	
-	public static final double goalX = 175; // 180
-	public static final double goalY = 140; // 140
+	public static final double goalX = 172; // 180
+	public static final double goalY = 133; // 140, was 128 before elimns, we want 123
 	
 	static Sensors sensors = null;
 	public Sensors(){
@@ -87,7 +87,7 @@ public class Sensors {
 	}
 	
 	public double getFinalDrive() {
-		if (getPosition() == 2) return 50;
+		if (getPosition() == 2) return 30;
 		return 12;
 	}
 	public int getDefense() {

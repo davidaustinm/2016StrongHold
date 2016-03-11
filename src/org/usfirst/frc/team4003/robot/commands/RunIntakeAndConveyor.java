@@ -27,7 +27,7 @@ public class RunIntakeAndConveyor extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double power = 1;
+    	double power = 0.7;
     	if (in == false) power *= -1;
     	Robot.intakeRun.setPower(power);
     	Robot.boulderConveyor.setPower(-power);

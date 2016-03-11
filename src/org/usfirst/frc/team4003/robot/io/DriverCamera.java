@@ -31,7 +31,8 @@ public class DriverCamera implements Runnable, DashboardMatProvider {
 	public DriverCamera() {
 		vcap = new VideoCapture();
         vcap.open(RobotMap.DRIVER_CAMERA);
-        Timer.delay(2);
+		//vcap.open("cam0");
+        Timer.delay(3);
 	}
 	
 	protected void setDashboardImg(Mat i) {
@@ -52,7 +53,8 @@ public class DriverCamera implements Runnable, DashboardMatProvider {
 		while(Thread.currentThread().isInterrupted() == false) {
 			long start = System.currentTimeMillis();
 			vcap.read(img);
-			Imgproc.resize(img, smallImg, new Size(320, 180));
+			smallImg = img;
+			//Imgproc.resize(img, smallImg, new Size(320, 180));
 
 			setDashboardImg(smallImg);
 

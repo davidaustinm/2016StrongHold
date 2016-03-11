@@ -1,9 +1,11 @@
 package org.usfirst.frc.team4003.robot;
 
 import edu.wpi.first.wpilibj.buttons.Button;
+
 import org.usfirst.frc.team4003.robot.commands.*;
 import org.usfirst.frc.team4003.robot.io.*;
 import org.usfirst.frc.team4003.robot.commands.actions.*;
+import org.usfirst.frc.team4003.robot.commands.actions.FinishShooting;
 /**
  * This class is the glue that binds the controls on the physical operator
  * interface to the commands and command groups that allow control of the robot.
@@ -46,12 +48,12 @@ public class OI {
 		pidHold.whileHeld(new PIDHold());
 		raiseIntake.whileHeld(new IntakeUpDownCommand(false));
 		lowerIntake.whileHeld(new IntakeUpDownCommand(true));
-		loadBoulder.whenPressed(new RunIntakeAndConveyor(true));
-		unloadBoulder.whenPressed(new RunIntakeAndConveyor(false));
+		//loadBoulder.whenPressed(new RunIntakeAndConveyor(true));
+		//unloadBoulder.whenPressed(new RunIntakeAndConveyor(false));
 		interrupt.whenPressed(new InterruptCommand());
 		
-		operatorLoadBoulder.whenPressed(new RunIntakeAndConveyor(true));
-		operatorUnloadBoulder.whenPressed(new RunIntakeAndConveyor(false));
+		//operatorLoadBoulder.whenPressed(new RunIntakeAndConveyor(true));
+		//operatorUnloadBoulder.whenPressed(new RunIntakeAndConveyor(false));
 		cameraToggle.whenPressed(new CameraToggle());
 		homeTurret.whenPressed(new HomeTurret());
 		trackingOn.whenPressed(new TrackingOn(true));
@@ -61,10 +63,10 @@ public class OI {
 		
 		tankDrive.whenPressed(new ChangeDriveMode(ChangeDriveMode.TANK));
 		arcadeDrive.whenPressed(new ChangeDriveMode(ChangeDriveMode.ARCADE));
-		slowDrive.whenPressed(new ChangeDriveSpeed(0.4));
-		fastDrive.whenPressed(new ChangeDriveSpeed(0.6));
+		slowDrive.whenPressed(new ChangeDriveSpeed(0.6));
+		fastDrive.whenPressed(new ChangeDriveSpeed(0.8));
 		
-		slowTurret.whenPressed(new ChangeTurretSpeed(0.5));
+		slowTurret.whenPressed(new ChangeTurretSpeed(0.3));
 		fastTurret.whenPressed(new ChangeTurretSpeed(1));
 		
 	}

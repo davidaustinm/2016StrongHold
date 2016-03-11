@@ -158,13 +158,15 @@ public class Robot extends IterativeRobot {
         int defense = sensors.getDefense();
         int position = sensors.getPosition();
         
-        position = 4;
+        //position = 4;
+        /*
         if (position == 2 || position == 3) {
         	TrackTarget.setSpinHint(TrackTarget.RIGHT);
         }
         if (position == 5) {
         	TrackTarget.setSpinHint(TrackTarget.LEFT);
         }
+        */
         if (position == Sensors.SPYBOT) {
         	autonomousCommand = new SpyBotAuton();
         } else {
@@ -178,15 +180,16 @@ public class Robot extends IterativeRobot {
         autonomousCommand = new AlignAndShoot();
         autonomousCommand = new DefenseAuton(Sensors.RAMPART);
         autonomousCommand = new SpybotAuton();
-        
+        */
+        /*
         int delay = (int) SmartDashboard.getNumber(delayString, 0);
         CommandGroup auton = new CommandGroup();
         if (delay > 0) auton.addSequential(new WaitForTime(delay * 1000));
         auton.addSequential(autonomousCommand);
-        
+        */
         //autonomousCommand = new ChevalDeFrisAuton();
-         */
-        autonomousCommand = new AlignAndShoot();
+       
+        //autonomousCommand = new AlignAndShoot();
         //autonomousCommand = new ChevalDeFrisAuton();
         if (autonomousCommand != null) autonomousCommand.start();
         
@@ -213,13 +216,20 @@ public class Robot extends IterativeRobot {
     
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        sensors.displayShooterSpeeds();
+        /*
         SmartDashboard.putNumber("Position", sensors.getPosition());
         SmartDashboard.putNumber("Defense", sensors.getDefense());
-        sensors.displayShooterSpeeds();
+        //sensors.displaySwitches();
+        
+        //sensors.displayShooterSpeeds();
+        
+        
         sensors.displaySwitches();
         sensors.displayAutonSwitches();
         sensors.displayTurretEncoders();
         sensors.displayDriveEncoders();
+        */
     }
     
     /**

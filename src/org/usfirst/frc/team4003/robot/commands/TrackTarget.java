@@ -43,9 +43,13 @@ public class TrackTarget extends Command {
     	requires(Robot.turretSpin);
     	camera = Robot.targetCamera;
     	sensors = Sensors.getInstance();
-    	tiltPID = new TrisonicsPID(0.038, 0.00, 0.00);
+    	double tiltKi = 0;
+    	if (auton) tiltKi = 0.001;
+    	tiltPID = new TrisonicsPID(0.038, tiltKi, 0.00);
     	tiltPID.setTarget(0);
-    	spinPID = new TrisonicsPID(0.023, 0.00, 0.00);
+    	double spinKi = 0;
+    	if (auton) spinKi = 0.001;
+    	spinPID = new TrisonicsPID(0.023, spinKi, 0.00);
     	tiltPID.setTarget(0);
     }
 
@@ -55,14 +59,16 @@ public class TrackTarget extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
-    double htolerance = 5;
-    double vtolerance = 5;
+    double htolerance = 4;
+    double vtolerance = 4;
+    
     protected void execute() {
+    	SmartDashboard.putNumber("spinHint", spinHint);
     	if (camera.getTargetReady() == false) return;
     	
     	long currentTime = System.currentTimeMillis();
     	Double[] targetData = sensors.getTargetData();
-    	//SmartDashboard.putNumber("tiltHint", tiltHint);
+    	SmartDashboard.putNumber("spinHint", spinHint);
     	if (targetData == null) {
 
     		if (tiltHint == DOWN) {
@@ -76,9 +82,9 @@ public class TrackTarget extends Command {
     		if (spinHint != NONE && currentTime > targetLastSeen + hintStart) {
     			if (currentTime < targetLastSeen + hintStart + hintTimeOut) {
     				if (spinHint == LEFT) 
-    					Robot.turretSpin.setPower(0.6, RobotMap.COUNTERCLOCKWISE);
+    					Robot.turretSpin.setPower(0.4, RobotMap.COUNTERCLOCKWISE);
     				else 
-    					Robot.turretSpin.setPower(0.6, RobotMap.CLOCKWISE);
+    					Robot.turretSpin.setPower(0.4, RobotMap.CLOCKWISE);
     			} else {
     				Robot.turretSpin.setPower(0);
     				spinHint = NONE;
@@ -86,16 +92,16 @@ public class TrackTarget extends Command {
     		
     		}
     		return;
-    	}
+    	} 
     	targetLastSeen = currentTime;
     	double hPixelError = targetData[2];
     	double vPixelError = targetData[3];
     	SmartDashboard.putNumber("herror", hPixelError);
     	SmartDashboard.putNumber("verror", vPixelError);
     	//hPixelError = 0; // TODO
-    	hPixelError = 0;
-    	vPixelError = 0;
-    	SmartDashboard.putNumber("TrackTarget Sensor ID:", System.identityHashCode(sensors));
+    	//hPixelError = 0;
+    	//vPixelError = 0;
+    	//SmartDashboard.putNumber("TrackTarget Sensor ID:", System.identityHashCode(sensors));
     	if ((Math.abs(hPixelError) < htolerance) && (Math.abs(vPixelError) < vtolerance)) {
     		SmartDashboard.putString("On goal?", "YES!");
     		sensors.setAlignedToGoal(true);
@@ -103,6 +109,7 @@ public class TrackTarget extends Command {
     		Robot.turretTilt.setPower(0);
     		Robot.turretSpin.setPower(0);
     		if (auton) {
+    			(new TrackingOn(false)).start();
     			(new AutoShoot()).start();
     			cancel();
     		}
@@ -141,11 +148,13 @@ public class TrackTarget extends Command {
     	 * A positive hAngle means we want to rotate counter-clockwise
     	 * 
     	 */
+    	
     	if (hAngle > 0) { 
     		Robot.turretSpin.setPower(spinSpeed, RobotMap.COUNTERCLOCKWISE);
     	} else {
     		Robot.turretSpin.setPower(spinSpeed, RobotMap.CLOCKWISE);
     	}
+    	
     }
 
     // Make this return true when this Command no longer needs to run execute()

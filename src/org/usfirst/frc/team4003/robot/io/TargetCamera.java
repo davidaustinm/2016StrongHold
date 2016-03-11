@@ -42,10 +42,11 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 		vcap = new VideoCapture();
 		vcap.open(RobotMap.TARGET_CAMERA);
 		Timer.delay(2);
-		/* TODO: Find out why this doesn't work at all.
-		vcap.set(Highgui.CV_CAP_PROP_FRAME_WIDTH, 640);
-		vcap.set(Highgui.CV_CAP_PROP_FRAME_HEIGHT, 480);
-		*/
+		//vcap.set(15, -9);
+		/* TODO: Find out why this doesn't work at all. */
+		//vcap.set(Highgui.CV_CAP_PROP_FRAME_WIDTH, 320);
+		//vcap.set(Highgui.CV_CAP_PROP_FRAME_HEIGHT, 240);
+		
 	}
 
 	protected void setDashboardImg(Mat i) {
@@ -70,17 +71,22 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 		while (Thread.currentThread().isInterrupted() == false) {
 			long start = System.currentTimeMillis();
 			vcap.read(origImg);
-			Imgproc.resize(origImg, img, new Size(320, 180));
+			Imgproc.resize(origImg, img, new Size(320, 240));
+			//img = origImg;
 			//Imgproc.resize(origImg, img, new Size(640, 360));
 			if (Robot.isTargetTracking()) {
 
 				Size size = img.size();
-				//SmartDashboard.putNumber("pixelwidth", size.width);
-				//SmartDashboard.putNumber("pixelheight", size.height);
+				SmartDashboard.putNumber("pixelwidth", size.width);
+				SmartDashboard.putNumber("pixelheight", size.height);
 
 				Imgproc.cvtColor(img, img, Imgproc.COLOR_BGR2HSV);
-				Scalar lowerHSV = new Scalar(70, 32, 48);
-				Scalar upperHSV = new Scalar(94, 255, 255);
+				//Scalar lowerHSV = new Scalar(70, 32, 48);
+				//Scalar upperHSV = new Scalar(94, 255, 255);
+				Scalar lowerHSV = new Scalar(50, 20, 200); //50, 127, 200
+				Scalar upperHSV = new Scalar(94, 255, 255); // 94, 207, 255
+				
+				// worked during lunch:  50, 20, 200    94, 64, 220
 				Core.inRange(img, lowerHSV, upperHSV, mask);
 
 				List<MatOfPoint> contours = new ArrayList<MatOfPoint>();

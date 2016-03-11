@@ -21,10 +21,10 @@ public class DefenseAuton extends CommandGroup {
     	addSequential(new DriveToPoint(44, 0, 0.5, 0, false, true));
     	switch(defense) {
     	case Sensors.ROCKWALL:
-    		addSequential(new DriveOverDefense(0.7));
+    		addSequential(new DriveOverDefense(0.8));
     		break;
     	case Sensors.MOAT:
-    		addSequential(new DriveOverDefense(0.7));
+    		addSequential(new DriveOverDefense(0.85));
     		break;
     	case Sensors.ROUGHTERRAIN:
     		addSequential(new DriveOverDefense(0.6));

@@ -30,7 +30,7 @@ public class StrongHoldArcade extends Command {
 	double inertiam1 = 1-inertia;
 	double oldThrottle = 0;
 	double oldWheel = 0;
-	double maxSpeed = .6;
+	double maxSpeed = 0.8;
 	public void setMaxSpeed(double speed) {
 		maxSpeed = speed;
 	}
@@ -60,7 +60,9 @@ public class StrongHoldArcade extends Command {
     	
     	left = deadBand(left);
     	right = deadBand(right);
-    	Robot.strongHoldDrive.setPower(left * maxSpeed, right * maxSpeed);
+    	double currentMaxSpeed = maxSpeed;
+    	if (Robot.oi.driver.getRightTrigger() > 0.4) currentMaxSpeed = 1;
+    	Robot.strongHoldDrive.setPower(left * currentMaxSpeed, right * currentMaxSpeed);
     	
     }
 

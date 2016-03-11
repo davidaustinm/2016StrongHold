@@ -20,6 +20,8 @@ public class ShooterSubsystem extends Subsystem {
 	//CANTalon shooter0 = new CANTalon(16);
 	double shooter0Target = 4300;
 	double shooter1Target = 4300;
+	//double shooter0Target = 3500;
+	//double shooter1Target = 3500;
 	CANTalon shooter1 = new CANTalon(RobotMap.SHOOTER1);
 	CANTalon.TalonControlMode defaultMode;
 	public ShooterSubsystem() {

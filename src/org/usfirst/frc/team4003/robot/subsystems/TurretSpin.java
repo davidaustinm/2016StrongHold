@@ -19,7 +19,7 @@ public class TurretSpin extends Subsystem {
     CANTalon.TalonControlMode defaultMode;
     
     public static final int SPINHALFREV = 19000;
-    final double ENCODERCOUNTSPERDEGREE = SPINHALFREV/180.0;
+    public static final double ENCODERCOUNTSPERDEGREE = SPINHALFREV/180.0;
     final double UPPERLIMIT = 3*SPINHALFREV;
     final double LOWERLIMIT = -SPINHALFREV;
     

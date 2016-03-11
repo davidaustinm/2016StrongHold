@@ -1,16 +1,27 @@
 package org.usfirst.frc.team4003.robot.commands.actions;
 
 import edu.wpi.first.wpilibj.command.CommandGroup;
+import org.usfirst.frc.team4003.robot.io.*;
 import org.usfirst.frc.team4003.robot.commands.*;
+import org.usfirst.frc.team4003.robot.*;
 /**
  *
  */
 public class AlignAndShoot extends CommandGroup {
     
     public  AlignAndShoot() {
+    	Sensors sensors = Sensors.getInstance();
     	addSequential(new IntakeRaiseLower(true));
     	addSequential(new WaitForTime(500));
     	addSequential(new RunTurretTilt());
+    	if (sensors.getPosition() == 5) {
+    		//addSequential(new RunTurretSpinForTime(450, RobotMap.COUNTERCLOCKWISE));
+    		addSequential(new RotateTurretByAngle(Math.atan(1/3.0), RobotMap.COUNTERCLOCKWISE));
+    	}
+    	if (sensors.getPosition() == 2) {
+    		//addSequential(new RunTurretSpinForTime(450, RobotMap.CLOCKWISE));
+    		addSequential(new RotateTurretByAngle(Math.atan(1/2.0), RobotMap.CLOCKWISE));
+    	}
     	addSequential(new TrackingOn(true));
     	
     	/*

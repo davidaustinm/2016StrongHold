@@ -24,10 +24,17 @@ public class IntakeRunCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double power = Robot.oi.driver.getRightTrigger()-
-    			Robot.oi.driver.getLeftTrigger();
+    	double power = -Robot.oi.driver.getLeftTrigger();
     	if(Math.abs(power)<.1)power = 0;
+    	
+    	double operatorTriggerPower = Robot.oi.operator.getRightTrigger();
+    	if (Math.abs(operatorTriggerPower) > 0.2) power = operatorTriggerPower;
+    	
     	if (power > 0 && sensors.getIntakeSwitch()) power = 0;
+    	
+    	double operatorPower = -Robot.oi.operator.getLeftJoyY();
+    	if (Math.abs(operatorPower) > 0.2) {power = operatorPower;}
+    	
     	Robot.intakeRun.setPower(power);
     }
 

@@ -28,7 +28,8 @@ public class HomeTurret extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	Robot.turretTilt.setPower(-0.5);
+    	if (Robot.turretTilt.getPosition() > 500) Robot.turretTilt.setPower(-0.5);
+    	else Robot.turretTilt.setPower(0);
     	double spinSpeed = spinPID.getCorrection(Robot.turretSpin.getPosition());
     	if (Math.abs(spinSpeed) > 1) {
     		if (spinSpeed > 1) spinSpeed = 1;
@@ -39,7 +40,7 @@ public class HomeTurret extends Command {
     double tolerance = 300;
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return sensors.getTurretResetSwitch() &&
+        return //sensors.getTurretResetSwitch() &&
         		Math.abs(Robot.turretSpin.getPosition() - TurretSpin.SPINHALFREV) < tolerance;
     }
 

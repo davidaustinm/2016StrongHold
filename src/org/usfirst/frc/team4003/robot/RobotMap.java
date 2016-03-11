@@ -12,7 +12,7 @@ public class RobotMap {
 	public static final int RIGHTFRONTDRIVEMOTOR = 2;
 	public static final int RIGHTBACKDRIVEMOTOR = 14;
 	public static final int SHOOTER0 = 15; // top shooter
-	public static final int SHOOTER1 = 3; // bottom shooter
+	public static final int SHOOTER1 = 23; // bottom shooter
 	public static final int TURRETSPIN = 11;
 	public static final int TURRETTILT = 12;
 	
@@ -57,11 +57,11 @@ public class RobotMap {
 	public static final int TILTPOT = 0;
 	
 	// Cameras
-	public static final int TARGET_CAMERA = 0; // This one is stuck in 1280x720 mode
-	public static final int DRIVER_CAMERA = 1; // This one is stuck in 160x120 mode
+	public static final int TARGET_CAMERA = 1; // This one is stuck in 1280x720 mode
+	public static final int DRIVER_CAMERA = 0; // This one is stuck in 160x120 mode
 	
-	public static final int TARGET_CAMERA_W = 320;
-	public static final int TARGET_CAMERA_H = 180;
+	public static final int TARGET_CAMERA_W = 320; //320
+	public static final int TARGET_CAMERA_H = 180; //180
 
 	public static final int DRIVER_CAMERA_W = 320;
 	public static final int DRIVER_CAMERA_H = 180;
