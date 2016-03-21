@@ -8,6 +8,10 @@ import org.usfirst.frc.team4003.robot.io.*;
  */
 public class PIDHold extends Command {
 	Sensors sensors = Sensors.getInstance();
+	double x = 0;
+	double lastLeft, lastRight;
+	double yawOffset;
+	long timeOut;
 	TrisonicsPID pid;
     public PIDHold() {
         // Use requires() here to declare subsystem dependencies
@@ -18,19 +22,32 @@ public class PIDHold extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	sensors.resetYaw();
-    	sensors.resetPosition();
+    	x = 0;
+    	lastLeft = sensors.getLeftDriveEncoder();
+    	lastRight = sensors.getRightDriveEncoder();
+    	yawOffset = sensors.getYaw();
+    	timeOut = System.currentTimeMillis() + 5000;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	double speed = pid.getCorrection(sensors.getPositionX());
+    	double left = sensors.getLeftDriveEncoder();
+    	double right = sensors.getRightDriveEncoder();
+    	double distance = (left + right - lastLeft - lastRight)/2.0;
+    	lastLeft = left;
+    	lastRight = right;
+    	x += distance * Math.cos(sensors.getYaw() - yawOffset);
+    	double speed = pid.getCorrection(x);
+    	if (Math.abs(speed) > 1) {
+    		if (speed > 1) speed = 1;
+    		else speed = -1;
+    	}
     	Robot.strongHoldDrive.setPower(speed, speed);
     }
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return System.currentTimeMillis() > timeOut;
     }
 
     // Called once after isFinished returns true

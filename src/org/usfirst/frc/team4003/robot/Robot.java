@@ -35,10 +35,13 @@ public class Robot extends IterativeRobot {
 	public static TurretTilt turretTilt;
 	public static BoulderConveyor boulderConveyor;
 	public static ShooterSubsystem shooter;
+	public static Cameras cameras;
 	public static OI oi;
 	
 	public static StrongHoldTank tankDrive;
 	public static StrongHoldArcade arcadeDrive;
+	
+	public static boolean NIVision = true;
 	
 	Sensors sensors;
 
@@ -56,7 +59,7 @@ public class Robot extends IterativeRobot {
     protected static volatile boolean enableTargetTracking = false;
     
     static {
-    	 System.load("/usr/local/lib/lib_OpenCV/java/libopencv_java2410.so");
+    	 System.load("/usr/local/lib/opencv310/libopencv_java310.so");
     	 if (SubsystemLoad.DRIVETRAIN) driveTrain = new DriveTrainSubsystem();
     	 if (SubsystemLoad.STRONGHOLDDRIVE) {
     		 strongHoldDrive = new StrongHoldDrive();
@@ -73,6 +76,8 @@ public class Robot extends IterativeRobot {
     	 if (SubsystemLoad.BOULDERCONVEYOR) boulderConveyor = new BoulderConveyor(); 
     	 if (SubsystemLoad.SHOOTER) shooter = new ShooterSubsystem();    
     	 
+    	 if (NIVision) cameras = new Cameras();
+    	 
     }
     
     /**
@@ -84,23 +89,20 @@ public class Robot extends IterativeRobot {
 		oi = new OI();
 		sensors = Sensors.getInstance();
 		
-        //chooser = new SendableChooser();
-        //chooser.addDefault("Default Auto", new ExampleCommand());
-        //chooser.addObject("My Auto", new MyAutoCommand());
-        targetCamera = new TargetCamera();
-        targetThread = new Thread(targetCamera);
-        targetThread.start();
+		if (NIVision == false) {
+			targetCamera = new TargetCamera();
+			targetThread = new Thread(targetCamera);
+			targetThread.start();
         
+			driverCamera = new DriverCamera();
+			driverThread = new Thread(driverCamera);
+			driverThread.start();
         
-        driverCamera = new DriverCamera();
-        driverThread = new Thread(driverCamera);
-        driverThread.start();
+			activeCamera = targetCamera;
         
-        
-        activeCamera = targetCamera;
-        
-        cameraServerThread = new Thread(new TSCameraServer());
-        cameraServerThread.start();
+			cameraServerThread = new Thread(new TSCameraServer());
+			cameraServerThread.start();
+		}
         
         /*
         Compressor compressor = new Compressor(20);

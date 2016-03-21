@@ -27,8 +27,9 @@ public class HomeTurret extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
+    int tiltCutoff = 500;
     protected void execute() {
-    	if (Robot.turretTilt.getPosition() > 500) Robot.turretTilt.setPower(-0.5);
+    	if (Robot.turretTilt.getPosition() > tiltCutoff) Robot.turretTilt.setPower(-0.5);
     	else Robot.turretTilt.setPower(0);
     	double spinSpeed = spinPID.getCorrection(Robot.turretSpin.getPosition());
     	if (Math.abs(spinSpeed) > 1) {

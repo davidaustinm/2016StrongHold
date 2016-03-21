@@ -10,9 +10,12 @@ import org.opencv.core.MatOfPoint;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
 import org.opencv.core.Rect;
-import org.opencv.highgui.VideoCapture;
+//import org.opencv.highgui.VideoCapture;
+//import org.opencv.imgproc.Imgproc;
+//import org.opencv.highgui.Highgui;
+import org.opencv.videoio.VideoCapture;
+import org.opencv.videoio.Videoio;
 import org.opencv.imgproc.Imgproc;
-import org.opencv.highgui.Highgui;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -23,7 +26,7 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 	VideoCapture vcap;
 	double angle = 68.5 / 2.0 * Math.PI / 180;
 	double tanAngle = Math.tan(angle);
-	volatile Target target = null;
+	Sensors sensors;
 	double minArea = 150;
 	Target lastBest = null;
 
@@ -39,9 +42,17 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 	protected int minSleepTime = 1000 / 24;
 
 	public TargetCamera() {
-		vcap = new VideoCapture();
-		vcap.open(RobotMap.TARGET_CAMERA);
-		Timer.delay(2);
+		sensors = Sensors.getInstance();
+		try {
+			vcap = new VideoCapture();
+			vcap.open(RobotMap.TARGET_CAMERA);
+			vcap.set(Videoio.CV_CAP_PROP_FRAME_WIDTH, 320);
+			vcap.set(Videoio.CV_CAP_PROP_FRAME_HEIGHT, 240);
+			Timer.delay(2);
+		} catch (Exception ex) {
+			//System.out.println("Target Camera Error: " + ex.getMessage());
+		}
+
 		//vcap.set(15, -9);
 		/* TODO: Find out why this doesn't work at all. */
 		//vcap.set(Highgui.CV_CAP_PROP_FRAME_WIDTH, 320);
@@ -100,7 +111,7 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 					MatOfPoint cont = contours.get(c);
 					Rect bounding = Imgproc.boundingRect(cont);
 					if (Imgproc.boundingRect(cont).area() > minArea) {
-						Core.rectangle(dashOut, bounding.br(), bounding.tl(), new Scalar(255, 255, 0));
+						Imgproc.rectangle(dashOut, bounding.br(), bounding.tl(), new Scalar(255, 255, 0));
 						targets.add(new Target(cont));
 						// Draw large enough contours in red
 						Imgproc.drawContours(dashOut, contours, c, new Scalar(0, 0, 255));
@@ -110,7 +121,7 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 
 					}
 				}
-
+		
 				Target best = null;
 				if (targets.size() > 0) {
 					best = targets.get(0);
@@ -133,7 +144,7 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 						}
 					}
 					// Draw a circle in the middle-ish of our best target.
-					Core.circle(dashOut, new Point(best.centerX, best.centerY), 8, new Scalar(0, 0, 255), 6);
+					Imgproc.circle(dashOut, new Point(best.centerX, best.centerY), 8, new Scalar(0, 0, 255), 6);
 					updateDashboard(best);
 				} 
 				lastBest = best;
@@ -141,15 +152,15 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 				// version that goes on the dashboard.
 				setDashboardImg(dashOut);
 				if (best != null) updateDashboard(best);
-				setTarget(best);
+				sensors.setTarget(best);
 				//SmartDashboard.putNumber("Contour Count", targets.size());
 				//SmartDashboard.putNumber("Time", System.currentTimeMillis() - start);
 			} else {
 				Point tl = new Point(Sensors.goalX - 10, Sensors.goalY - 5);
 				Point br = new Point(Sensors.goalX + 10, Sensors.goalY + 5);
-				Core.rectangle(img, tl, br, new Scalar(0, 0, 255), 4);
+				Imgproc.rectangle(img, tl, br, new Scalar(0, 0, 255), 4);
 				setDashboardImg(img);
-				setTarget(null);
+				sensors.setTarget(null);
 			}
 
 			// If the loop ran faster than minSleepTime let's sleep.
@@ -173,7 +184,9 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 	public double distance(Target t) {
 		return Math.abs(t.centerX - Sensors.goalX) + Math.abs(t.centerY - Sensors.goalY);
 	}
-	boolean targetReady = false;
+	/*
+	volatile boolean targetReady = false;
+	volatile Target target = null;
 	public synchronized void setTargetReady(boolean t) {
 		targetReady = t;
 	}
@@ -190,6 +203,7 @@ public class TargetCamera implements Runnable, DashboardMatProvider {
 		setTargetReady(false);
 		return target;
 	}
+	*/
 
 	public void updateDashboard(Target best) {
 		SmartDashboard.putNumber("centerx", best.centerX);

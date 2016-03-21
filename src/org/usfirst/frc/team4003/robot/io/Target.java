@@ -7,17 +7,19 @@ import org.opencv.core.MatOfPoint;
 import org.opencv.core.Rect;
 
 public class Target {
-	double centerX, centerY;
-	double width, height;
-	double distance, area;
-	double aspectRatio;
-	double error;
+	public double centerX, centerY;
+	public double width, height;
+	public double distance, area;
+	public double aspectRatio;
+	public double error;
 	
 	double angle = 68.5/2.0 * Math.PI/180;
     double tanAngle = Math.tan(angle);
 
 	protected double halfHypot = Math.sqrt(Math.pow(RobotMap.TARGET_CAMERA_H,  2) + Math.pow(RobotMap.TARGET_CAMERA_W, 2)) / 2.0;
-    
+    public Target() {
+    	
+    }
 	public Target(MatOfPoint contour) {
 		Rect rectangle = Imgproc.boundingRect(contour);
 		width = rectangle.width;

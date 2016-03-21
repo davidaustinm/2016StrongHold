@@ -48,8 +48,8 @@ public class Sensors {
 	
 	public static final int SPYBOT = 0;
 	
-	public static final double goalX = 172; // 180
-	public static final double goalY = 133; // 140, was 128 before elimns, we want 123
+	public static final double goalX = 173; // 180
+	public static final double goalY = 149; // 140, was 128 before elimns, we want 123
 	
 	static Sensors sensors = null;
 	public Sensors(){
@@ -133,7 +133,7 @@ public class Sensors {
 		return -ahrs.getAngle();
 	}
 	public Double getTargetAngle(){
-		Target target = Robot.targetCamera.getTarget();
+		Target target = getTarget();
 		if (target == null) return null;
 		double W = -20.0 /target.width *(target.centerX - goalX);
 		double angle =Math.atan(W /target.distance);
@@ -141,7 +141,7 @@ public class Sensors {
 		return new Double(angle);
 	}
 	public Double getTargetVAngle() {
-		Target target = Robot.targetCamera.getTarget();
+		Target target = getTarget();
 		if (target == null) return null;
 		double H = -12.0 / target.height * (target.centerY - goalY);
 		double angle = Math.atan(H/target.distance);
@@ -150,7 +150,7 @@ public class Sensors {
 		return new Double(angle);
 	}
 	public Double[] getTargetData() {
-		Target target = Robot.targetCamera.getTarget();
+		Target target = getTarget();
 		if (target == null) return null;
 		double W = -20.0 /target.width *(target.centerX - goalX);
 		double hangle =Math.atan(W /target.distance);
@@ -167,6 +167,26 @@ public class Sensors {
 				new Double(Math.abs(target.centerX - goalX)),
 				new Double(Math.abs(target.centerY - goalY))};
 	}
+	
+	volatile boolean targetReady = false;
+	volatile Target target = null;
+	public synchronized void setTargetReady(boolean t) {
+		targetReady = t;
+	}
+
+	public synchronized boolean getTargetReady() {
+		return targetReady;
+	}
+	public synchronized void setTarget(Target t) {
+		target = t;
+		setTargetReady(true);
+	}
+
+	public synchronized Target getTarget() {
+		setTargetReady(false);
+		return target;
+	}
+	
 	public void resetEncoders() {
 		leftDriveEncoder.reset();
 		rightDriveEncoder.reset();

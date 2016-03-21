@@ -64,7 +64,7 @@ public class TrackTarget extends Command {
     
     protected void execute() {
     	SmartDashboard.putNumber("spinHint", spinHint);
-    	if (camera.getTargetReady() == false) return;
+    	if (sensors.getTargetReady() == false) return;
     	
     	long currentTime = System.currentTimeMillis();
     	Double[] targetData = sensors.getTargetData();

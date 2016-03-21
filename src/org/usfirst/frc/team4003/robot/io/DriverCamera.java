@@ -1,16 +1,10 @@
 package org.usfirst.frc.team4003.robot.io;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.opencv.core.Core;
 import org.opencv.core.Mat;
-import org.opencv.core.Point;
-import org.opencv.core.MatOfPoint;
-import org.opencv.core.Scalar;
-import org.opencv.core.Size;
-import org.opencv.highgui.VideoCapture;
-import org.opencv.imgproc.Imgproc;
+
+//import org.opencv.highgui.VideoCapture;
+import org.opencv.videoio.VideoCapture;
+import org.opencv.videoio.Videoio;
 
 import edu.wpi.first.wpilibj.Timer;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
@@ -29,10 +23,20 @@ public class DriverCamera implements Runnable, DashboardMatProvider {
     protected int minSleepTime = 1000/24;
     
 	public DriverCamera() {
-		vcap = new VideoCapture();
-        vcap.open(RobotMap.DRIVER_CAMERA);
-		//vcap.open("cam0");
-        Timer.delay(3);
+		try {
+			vcap = new VideoCapture();
+			vcap.open(RobotMap.DRIVER_CAMERA);
+			//vcap.open("cam0");
+			Timer.delay(3);
+			while(!vcap.isOpened()) { 
+				System.out.println("Waiting on driver cam..."); 
+        		}
+			vcap.set(Videoio.CV_CAP_PROP_FRAME_WIDTH, 320);
+			vcap.set(Videoio.CV_CAP_PROP_FRAME_HEIGHT, 240);
+		} catch (Exception ex) {
+			System.out.println("Driver Camera Error: " + ex.getMessage());
+		}
+
 	}
 	
 	protected void setDashboardImg(Mat i) {

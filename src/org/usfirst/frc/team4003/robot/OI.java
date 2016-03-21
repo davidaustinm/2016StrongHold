@@ -54,10 +54,16 @@ public class OI {
 		
 		//operatorLoadBoulder.whenPressed(new RunIntakeAndConveyor(true));
 		//operatorUnloadBoulder.whenPressed(new RunIntakeAndConveyor(false));
-		cameraToggle.whenPressed(new CameraToggle());
+		if (Robot.NIVision) {
+			cameraToggle.whenPressed(new CameraToggleNI());
+			trackingOn.whenPressed(new TrackingOnNI(true));
+			trackingOff.whenPressed(new TrackingOnNI(false));
+		} else {
+			cameraToggle.whenPressed(new CameraToggle());
+			trackingOn.whenPressed(new TrackingOn(true));
+			trackingOff.whenPressed(new TrackingOn(false));
+		}
 		homeTurret.whenPressed(new HomeTurret());
-		trackingOn.whenPressed(new TrackingOn(true));
-		trackingOff.whenPressed(new TrackingOn(false));
 		shooterOn.whenPressed(new ShooterCommand(true));
 		shooterOff.whenPressed(new ShooterCommand(false));
 		

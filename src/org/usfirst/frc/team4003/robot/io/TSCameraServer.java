@@ -8,7 +8,9 @@ import java.net.Socket;
 import org.opencv.core.*;
 import org.usfirst.frc.team4003.robot.Robot;
 import org.opencv.core.Mat;
-import org.opencv.highgui.*;
+import org.opencv.imgcodecs.*;
+
+//import org.opencv.highgui.*;
 import edu.wpi.first.wpilibj.Timer;
 
 public class TSCameraServer implements Runnable {
@@ -52,9 +54,9 @@ public class TSCameraServer implements Runnable {
 							long startTime = System.currentTimeMillis();
 							
 							MatOfByte byteMat = new MatOfByte();
-							MatOfInt params = new MatOfInt(Highgui.IMWRITE_JPEG_QUALITY, quality);
+							MatOfInt params = new MatOfInt(Imgcodecs.IMWRITE_JPEG_QUALITY, quality);
 							try { // imencode() doesn't always work as we get bad data on our feed shortly after startup.
-								Highgui.imencode(".jpeg", img, byteMat, params);
+								Imgcodecs.imencode(".jpeg", img, byteMat, params);
 								
 								byte[] byteArray = byteMat.toArray();
 
