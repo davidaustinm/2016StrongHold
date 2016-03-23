@@ -16,11 +16,11 @@ public class AlignAndShoot extends CommandGroup {
     	addSequential(new RunTurretTilt());
     	if (sensors.getPosition() == 5) {
     		//addSequential(new RunTurretSpinForTime(450, RobotMap.COUNTERCLOCKWISE));
-    		addSequential(new RotateTurretByAngle(Math.atan(1/3.0), RobotMap.COUNTERCLOCKWISE));
+    		addSequential(new RotateTurretByAngle(Math.atan(0.4), RobotMap.COUNTERCLOCKWISE));
     	}
     	if (sensors.getPosition() == 2) {
     		//addSequential(new RunTurretSpinForTime(450, RobotMap.CLOCKWISE));
-    		addSequential(new RotateTurretByAngle(Math.atan(1/2.0), RobotMap.CLOCKWISE));
+    		addSequential(new RotateTurretByAngle(Math.atan(0.7), RobotMap.CLOCKWISE));
     	}
     	addSequential(new TrackingOn(true));
     	

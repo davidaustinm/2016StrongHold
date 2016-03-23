@@ -18,8 +18,8 @@ public class DriveOverDefense extends Command {
     double speed;
     TrisonicsPID pid = new TrisonicsPID(.02,0,0);
     Sensors sensors = Sensors.getInstance();
-    final double PITCHDOWNLIMIT = -10;
-    final double PITCHDOWNTHRESHOLD = -5;
+    double PITCHDOWNLIMIT = -10;
+    double PITCHDOWNTHRESHOLD = -5;
     long stopTime;
 
     public DriveOverDefense(double speed) {
@@ -28,6 +28,7 @@ public class DriveOverDefense extends Command {
     	this.speed = speed;
     	pid.setTarget(0);
     	requires(Robot.strongHoldDrive);
+    	if (sensors.getDefense() == Sensors.RAMPART) PITCHDOWNLIMIT = -8;
     }
 
     // Called just before this Command runs the first time
@@ -67,6 +68,7 @@ public class DriveOverDefense extends Command {
 			break;
 		}
 		//SmartDashboard.putNumber("State", state);
+		//sensors.displayOrientation();
     }
 
     // Make this return true when this Command no longer needs to run execute()

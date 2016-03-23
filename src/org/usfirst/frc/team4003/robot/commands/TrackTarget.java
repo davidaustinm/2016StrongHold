@@ -15,7 +15,6 @@ import edu.wpi.first.wpilibj.smartdashboard.*;;
 public class TrackTarget extends Command {
 	Sensors sensors;
 	TrisonicsPID tiltPID, spinPID;
-	TargetCamera camera;
 	
 	public static final int NONE = 0;
 	public static final int LEFT = 1;
@@ -41,14 +40,13 @@ public class TrackTarget extends Command {
         // eg. requires(chassis);
     	requires(Robot.turretTilt);
     	requires(Robot.turretSpin);
-    	camera = Robot.targetCamera;
     	sensors = Sensors.getInstance();
-    	double tiltKi = 0;
-    	if (auton) tiltKi = 0.001;
+    	double tiltKi = 0.01;
+    	if (auton) tiltKi = 0.01;
     	tiltPID = new TrisonicsPID(0.038, tiltKi, 0.00);
     	tiltPID.setTarget(0);
-    	double spinKi = 0;
-    	if (auton) spinKi = 0.001;
+    	double spinKi = 0.01;
+    	if (auton) spinKi = 0.01;
     	spinPID = new TrisonicsPID(0.023, spinKi, 0.00);
     	tiltPID.setTarget(0);
     }

@@ -26,7 +26,7 @@ public class OI {
 	public XboxButton trackingOff = new XboxButton(operator,XboxButton.BUTTONB);
 	public XboxButton shooterOn = new XboxButton(operator,XboxButton.BUTTONRB);
 	public XboxButton shooterOff = new XboxButton(operator,XboxButton.BUTTONLB);
-	public XboxButton operatorInterrupt = new XboxButton(operator, XboxButton.BUTTONSTART);
+	
 	public XboxButton operatorLoadBoulder = new XboxButton(operator, XboxButton.DPADUP);
 	public XboxButton operatorUnloadBoulder = new XboxButton(operator, XboxButton.DPADDOWN);
 	
@@ -35,6 +35,8 @@ public class OI {
 	public XboxButton arcadeDrive = new XboxButton(driver,XboxButton.DPADDOWN);
 	public XboxButton slowDrive = new XboxButton(driver,XboxButton.DPADRIGHT);
 	public XboxButton fastDrive = new XboxButton(driver,XboxButton.DPADLEFT);
+	
+	public XboxButton slowShooter = new XboxButton(operator, XboxButton.BUTTONSTART);
 	public XboxButton slowTurret = new XboxButton(operator,XboxButton.DPADRIGHT);
 	public XboxButton fastTurret = new XboxButton(operator,XboxButton.DPADLEFT);
 	public XboxButton turretConveyorSwitchOverride = new XboxButton(operator, XboxButton.DPADNW);
@@ -54,18 +56,22 @@ public class OI {
 		
 		//operatorLoadBoulder.whenPressed(new RunIntakeAndConveyor(true));
 		//operatorUnloadBoulder.whenPressed(new RunIntakeAndConveyor(false));
+		
 		if (Robot.NIVision) {
 			cameraToggle.whenPressed(new CameraToggleNI());
-			trackingOn.whenPressed(new TrackingOnNI(true));
-			trackingOff.whenPressed(new TrackingOnNI(false));
+			//trackingOn.whenPressed(new TrackingOnNI(true));
+			//trackingOff.whenPressed(new TrackingOnNI(false));
 		} else {
 			cameraToggle.whenPressed(new CameraToggle());
-			trackingOn.whenPressed(new TrackingOn(true));
-			trackingOff.whenPressed(new TrackingOn(false));
 		}
+		trackingOn.whenPressed(new TrackingOn(true));
+		trackingOff.whenPressed(new TrackingOn(false));
+		
+		
 		homeTurret.whenPressed(new HomeTurret());
 		shooterOn.whenPressed(new ShooterCommand(true));
 		shooterOff.whenPressed(new ShooterCommand(false));
+		slowShooter.whenPressed(new ShooterCommand(true, true));
 		
 		tankDrive.whenPressed(new ChangeDriveMode(ChangeDriveMode.TANK));
 		arcadeDrive.whenPressed(new ChangeDriveMode(ChangeDriveMode.ARCADE));

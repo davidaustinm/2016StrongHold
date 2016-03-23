@@ -19,6 +19,8 @@ public class TrackingOn extends Command {
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	if (Robot.NIVision) Robot.cameras.setTracking(on);
+    	
     	if (on) {
     		Robot.enableTargetTracking();
     		trackTarget = new TrackTarget();
@@ -29,6 +31,7 @@ public class TrackingOn extends Command {
     		TurretTiltCommand tiltCommand = new TurretTiltCommand();
     		tiltCommand.start();
     	}
+    	
     }
 
     // Called repeatedly when this Command is scheduled to run

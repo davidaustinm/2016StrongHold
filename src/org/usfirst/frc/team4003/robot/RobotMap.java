@@ -57,8 +57,8 @@ public class RobotMap {
 	public static final int TILTPOT = 0;
 	
 	// Cameras
-	public static final String TARGET_CAMERA_STRING = "cam4";
-	public static final String DRIVER_CAMERA_STRING = "cam5";
+	public static final String TARGET_CAMERA_STRING = "cam2";
+	public static final String DRIVER_CAMERA_STRING = "cam4";
 	
 	public static final int TARGET_CAMERA = 1; // This one is stuck in 1280x720 mode
 	public static final int DRIVER_CAMERA = 0; // This one is stuck in 160x120 mode

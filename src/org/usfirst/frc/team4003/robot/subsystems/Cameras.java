@@ -28,24 +28,49 @@ public class Cameras extends Subsystem implements Runnable {
 	private final int SLEEP_TIME = 0;
 	private final int QUALITY = 20;
 	long readyTime;
-	boolean tracking = true;
+	boolean tracking = false;
 	boolean imageProcessed = true;
 	
 	Thread processing;
 	NIVision.ParticleFilterCriteria2 criteria[];
 	NIVision.ParticleFilterOptions2 filterOptions;
 	
+	NIVision.Range hue, sat, val;
+	boolean practiceValues = true;
+	int dx = 5;
+	NIVision.Rect[] rects = new NIVision.Rect[dx];
 	public Cameras() {
+		
 		processing = new Thread(this);
 		criteria = new NIVision.ParticleFilterCriteria2[1];
 		criteria[0] = new NIVision.ParticleFilterCriteria2(NIVision.MeasurementType.MT_AREA, 
-				50, 6000, 0, 0);
+				100, 6000, 0, 0);
 		filterOptions = new NIVision.ParticleFilterOptions2(0,0,1,1);
 		sensors = Sensors.getInstance();
+		
+		for (int i = 1; i <= dx; i++) {
+			rects[i-1] = new NIVision.Rect((int) Sensors.goalY - i, (int) Sensors.goalX - i, 2*i, 2*i);
+		}
+		
+		if (practiceValues) {
+			hue = new NIVision.Range(75, 128);
+			sat = new NIVision.Range(100, 255);
+			val = new NIVision.Range(200, 255);
+		} else {
+			hue = new NIVision.Range(50, 94);
+			sat = new NIVision.Range(20, 255);
+			val = new NIVision.Range(200, 255);
+		}
+		
 	}
 	
 	public void setTracking(boolean b) {
 		tracking = b;
+		if (!tracking) {
+			sensors.setTarget(null);
+			setTargetRectangle(null);
+			centers = new Vector<Center>();
+		}
 	}
 	
 	public void initialize() {
@@ -94,7 +119,7 @@ public class Cameras extends Subsystem implements Runnable {
 	
 	long nextStartTime = 0;
 	Vector<Center> centers = new Vector<Center>();
-	int numCenters = 3;
+	int numCenters = 1;
 	public synchronized void addCenter(Center c) {
 		if (centers.size() >= numCenters) {
 			centers.removeElementAt(0);
@@ -112,13 +137,14 @@ public class Cameras extends Subsystem implements Runnable {
 		return new Center(x/numCenters, y/numCenters);
 	}
 	
+	
 	public void pushImage() {
 		if (System.currentTimeMillis() < readyTime) return;
 		current.setSize(320, 240);
 		current.getImage(image);
-		//tracking = false;
+		
 		if (tracking && getImageProcessed() && processing.isAlive() == false) {
-			SmartDashboard.putNumber("Hello", 0);
+			//SmartDashboard.putNumber("Hello", 0);
 			setTrackingImage(image);
 			setImageProcessed(false);
 			processing = new Thread(this);
@@ -126,15 +152,14 @@ public class Cameras extends Subsystem implements Runnable {
 			nextStartTime = System.currentTimeMillis() + 75;
 			
 		} 
-		int goalX = 173;
-		int goalY = 149;
-		int dx = 5;
-		NIVision.Rect rect = new NIVision.Rect(goalY - dx, goalX - dx, 2*dx, 2*dx);
+		
 		NIVision.GetImageSizeResult size = NIVision.imaqGetImageSize(image);
-		SmartDashboard.putNumber("Image width", size.width);
-		SmartDashboard.putNumber("Image height", size.height);
-		NIVision.imaqDrawShapeOnImage(image, image, rect,
+		//SmartDashboard.putNumber("Image width", size.width);
+		//SmartDashboard.putNumber("Image height", size.height);
+		for (int i = 0; i < rects.length; i++) {
+			NIVision.imaqDrawShapeOnImage(image, image, rects[i],
                 DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 0.5f);	
+		}
 		NIVision.Rect target = getTargetRectangle();
 		if (target != null) {
 			NIVision.imaqDrawShapeOnImage(image, image, target,
@@ -158,15 +183,7 @@ public class Cameras extends Subsystem implements Runnable {
 		targetRectangle = rect;
 	}
 	
-	/*  this worked on practice camera + LED ring
-	NIVision.Range hue = new NIVision.Range(75, 128);
-	NIVision.Range sat = new NIVision.Range(50, 255);
-	NIVision.Range val = new NIVision.Range(200, 255);
-	*/
 	
-	NIVision.Range hue = new NIVision.Range(50, 94);
-	NIVision.Range sat = new NIVision.Range(20, 255);
-	NIVision.Range val = new NIVision.Range(200, 255);
 	
 	// From opencv code
 	//Scalar lowerHSV = new Scalar(50, 20, 200); //50, 127, 200
@@ -181,7 +198,7 @@ public class Cameras extends Subsystem implements Runnable {
 		int imaqError = NIVision.imaqParticleFilter4(mask, mask, criteria, filterOptions, null);
 		int numParticles = NIVision.imaqCountParticles(mask, 1);
 		
-		SmartDashboard.putNumber("Particles", numParticles);
+		//SmartDashboard.putNumber("Particles", numParticles);
 		
 		if(numParticles > 0) {
 			//Measure particles and sort by particle size
@@ -201,8 +218,8 @@ public class Cameras extends Subsystem implements Runnable {
 			for (int index = 0; index < numParticles; index++) {
 				if (particles.get(index).getError() < best.getError()) best = particles.get(index);
 			}
-			SmartDashboard.putNumber("Aspect Ratio", best.getAspectRatio());
-			SmartDashboard.putNumber("Area", best.getArea());		
+			//SmartDashboard.putNumber("Aspect Ratio", best.getAspectRatio());
+			//SmartDashboard.putNumber("Area", best.getArea());		
 			setTargetRectangle(best.getBoundingRect());
 			addCenter(best.getCenter());
 			
@@ -224,7 +241,7 @@ public class Cameras extends Subsystem implements Runnable {
 		}
 		setImageProcessed(true);
 		long time = System.currentTimeMillis() - start;
-		SmartDashboard.putNumber("Time", time);
+		//SmartDashboard.putNumber("Time", time);
 		
 	}
 	

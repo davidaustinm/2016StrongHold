@@ -59,7 +59,7 @@ public class Robot extends IterativeRobot {
     protected static volatile boolean enableTargetTracking = false;
     
     static {
-    	 System.load("/usr/local/lib/opencv310/libopencv_java310.so");
+    	 //System.load("/usr/local/lib/opencv310/libopencv_java310.so");
     	 if (SubsystemLoad.DRIVETRAIN) driveTrain = new DriveTrainSubsystem();
     	 if (SubsystemLoad.STRONGHOLDDRIVE) {
     		 strongHoldDrive = new StrongHoldDrive();
@@ -86,7 +86,7 @@ public class Robot extends IterativeRobot {
      */
 
     public void robotInit() {
-		oi = new OI();
+    	oi = new OI();
 		sensors = Sensors.getInstance();
 		
 		if (NIVision == false) {
@@ -103,6 +103,9 @@ public class Robot extends IterativeRobot {
 			cameraServerThread = new Thread(new TSCameraServer());
 			cameraServerThread.start();
 		}
+		
+		
+		
         
         /*
         Compressor compressor = new Compressor(20);
@@ -218,7 +221,7 @@ public class Robot extends IterativeRobot {
     
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        sensors.displayShooterSpeeds();
+        //sensors.displayShooterSpeeds();
         /*
         SmartDashboard.putNumber("Position", sensors.getPosition());
         SmartDashboard.putNumber("Defense", sensors.getDefense());
@@ -232,6 +235,7 @@ public class Robot extends IterativeRobot {
         sensors.displayTurretEncoders();
         sensors.displayDriveEncoders();
         */
+        //sensors.displayDriveEncoders();
     }
     
     /**

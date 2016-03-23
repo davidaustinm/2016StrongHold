@@ -14,16 +14,22 @@ public class ShooterCommand extends Command {
 	double shooter0Target = 20000;
 	double speed0 = shooter0Target/40000.0;
 	boolean on;
+	boolean slow = false;
     public ShooterCommand(boolean on) {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.shooter);
     	this.on = on;
     }
+    
+    public ShooterCommand(boolean on, boolean slow) {
+    	this(on);
+    	this.slow = slow;
+    }
 
     // Called just before this Command runs the first time
     protected void initialize() {
-    	Robot.shooter.setOn(on);
+    	Robot.shooter.setOn(on, slow);
     }
 
     // Called repeatedly when this Command is scheduled to run

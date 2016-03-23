@@ -15,7 +15,7 @@ public class ChevalDeFrisAuton extends CommandGroup {
     	addSequential(new WaitForTime(1500));
     	
     	CommandGroup group = new CommandGroup();
-    	group.addSequential(new WaitForTime(500)); //was 500
+    	group.addSequential(new WaitForTime(2000)); //was 500
     	group.addSequential(new IntakeRaiseLower(false));
     	
     	//addParallel(group);

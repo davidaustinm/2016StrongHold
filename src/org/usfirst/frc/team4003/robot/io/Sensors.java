@@ -21,7 +21,7 @@ public class Sensors {
 	AnalogInput turretTiltPot;
 	DigitalInput auton0, auton1, auton2, auton3, auton4, auton5;
 	
-	public static final double ENCODERCOUNTSPERINCH = 22;
+	public static final double ENCODERCOUNTSPERINCH = 22.5;
 	
 	protected boolean alignedToGoal = false;
 
@@ -87,8 +87,9 @@ public class Sensors {
 	}
 	
 	public double getFinalDrive() {
-		if (getPosition() == 2) return 30;
-		return 12;
+		if (getPosition() == 2) return 70;
+		if (getPosition() == 5) return 12;
+		return 15;
 	}
 	public int getDefense() {
 		int defense = 0;

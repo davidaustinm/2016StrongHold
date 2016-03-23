@@ -36,7 +36,7 @@ public class PIDHold extends Command {
     	double distance = (left + right - lastLeft - lastRight)/2.0;
     	lastLeft = left;
     	lastRight = right;
-    	x += distance * Math.cos(sensors.getYaw() - yawOffset);
+    	x += distance * Math.cos(Math.toRadians(sensors.getYaw() - yawOffset));
     	double speed = pid.getCorrection(x);
     	if (Math.abs(speed) > 1) {
     		if (speed > 1) speed = 1;

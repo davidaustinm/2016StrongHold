@@ -19,7 +19,9 @@ public class ShooterSubsystem extends Subsystem {
 	CANTalon shooter0 = new CANTalon(RobotMap.SHOOTER0);
 	//CANTalon shooter0 = new CANTalon(16);
 	double shooter0Target = 4300;
-	double shooter1Target = 4300;
+	double shooter1Target = 3800;
+	double slow0 = 3000;
+	double slow1 = 3000;
 	//double shooter0Target = 3500;
 	//double shooter1Target = 3500;
 	CANTalon shooter1 = new CANTalon(RobotMap.SHOOTER1);
@@ -58,10 +60,18 @@ public class ShooterSubsystem extends Subsystem {
         //setDefaultCommand(new ShooterTest());
     }
     
-    public void setOn(boolean on) {
+    public void setOn(boolean on, boolean slow) {
+    	if (slow) {
+    		setOn(on, slow0, slow1);
+    	} else {
+    		setOn(on, shooter0Target, shooter1Target);
+    	}
+    }
+    
+    public void setOn(boolean on, double speed0, double speed1) {
     	if (on) {
-    		shooter0.set(shooter0Target);
-    		shooter1.set(shooter1Target);
+    		shooter0.set(speed0);
+    		shooter1.set(speed1);
     	}
     	else {
     		shooter0.set(0);

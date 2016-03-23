@@ -12,7 +12,7 @@ public class DriveWhileLevel extends Command {
 	double speed;
 	TrisonicsPID angle, coordinate;
 	Sensors sensors;
-	final double ROLLLIMIT = 2;
+	final double ROLLLIMIT = 1;
 	
     public DriveWhileLevel(double speed) {
         // Use requires() here to declare subsystem dependencies
