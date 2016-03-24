@@ -10,7 +10,7 @@ public class FinishShooting extends CommandGroup {
     
     public  FinishShooting() {
     	addSequential(new ShooterCommand(false));
-    	addSequential(new TrackingOn(false));
+    	//addSequential(new TrackingOn(false));
     	addSequential(new HomeTurret());
         // Add Commands here:
         // e.g. addSequential(new Command1());

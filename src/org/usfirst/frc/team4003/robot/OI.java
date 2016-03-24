@@ -68,7 +68,8 @@ public class OI {
 		trackingOff.whenPressed(new TrackingOn(false));
 		
 		
-		homeTurret.whenPressed(new HomeTurret());
+		//homeTurret.whenPressed(new HomeTurret());
+		homeTurret.whenPressed(new FinishShooting());
 		shooterOn.whenPressed(new ShooterCommand(true));
 		shooterOff.whenPressed(new ShooterCommand(false));
 		slowShooter.whenPressed(new ShooterCommand(true, true));

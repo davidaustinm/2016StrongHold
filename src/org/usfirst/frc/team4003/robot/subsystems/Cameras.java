@@ -149,11 +149,11 @@ public class Cameras extends Subsystem implements Runnable {
 			setImageProcessed(false);
 			processing = new Thread(this);
 			processing.start();
-			nextStartTime = System.currentTimeMillis() + 75;
+			//nextStartTime = System.currentTimeMillis() + 75;
 			
 		} 
 		
-		NIVision.GetImageSizeResult size = NIVision.imaqGetImageSize(image);
+		//NIVision.GetImageSizeResult size = NIVision.imaqGetImageSize(image);
 		//SmartDashboard.putNumber("Image width", size.width);
 		//SmartDashboard.putNumber("Image height", size.height);
 		for (int i = 0; i < rects.length; i++) {

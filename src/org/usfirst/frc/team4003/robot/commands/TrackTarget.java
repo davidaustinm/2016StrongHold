@@ -29,6 +29,11 @@ public class TrackTarget extends Command {
 	
 	public static void setTiltHint(int hint) {tiltHint = hint;}
 	public static void setSpinHint(int hint) {spinHint = hint;}
+	boolean finished = false;
+	
+	public void setFinished(boolean b) {
+		finished = b;
+	}
 	
 	static boolean auton = false;
 	public static void setAuton(boolean b) {
@@ -141,6 +146,10 @@ public class TrackTarget extends Command {
     	
     	double hAngle = targetData[0];
     	double spinSpeed = spinPID.getCorrection(hAngle);
+    	if (Math.abs(spinSpeed) > 1) {
+    		if (spinSpeed > 1) spinSpeed = 1;
+    		else spinSpeed = -1;
+    	}
     	/* 
     	 * 
     	 * A positive hAngle means we want to rotate counter-clockwise
@@ -157,7 +166,7 @@ public class TrackTarget extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return false;
+        return finished;
     }
 
     // Called once after isFinished returns true

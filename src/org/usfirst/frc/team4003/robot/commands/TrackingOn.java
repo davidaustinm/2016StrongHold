@@ -14,7 +14,7 @@ public class TrackingOn extends Command {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	this.on = on;
-    	trackTarget = new TrackTarget();
+    	trackTarget = null;
     }
 
     // Called just before this Command runs the first time
@@ -23,11 +23,15 @@ public class TrackingOn extends Command {
     	
     	if (on) {
     		Robot.enableTargetTracking();
-    		trackTarget = new TrackTarget();
-    		trackTarget.start();
+    		if (trackTarget == null) {
+    			trackTarget = new TrackTarget();
+    			trackTarget.start();
+    		}
     	} else {
     		Robot.disableTargetTracking();
+    		trackTarget.setFinished(true);
     		trackTarget.cancel();
+    		trackTarget = null;
     		TurretTiltCommand tiltCommand = new TurretTiltCommand();
     		tiltCommand.start();
     	}
