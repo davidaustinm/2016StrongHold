@@ -47,7 +47,7 @@ public class OI {
 		//shiftHigh.whenPressed(new ShifterCommand(false));
 		//shiftLow.whenPressed(new ShifterCommand(true));
 		
-		pidHold.whileHeld(new PIDHold());
+		//pidHold.whileHeld(new PIDHold());
 		raiseIntake.whileHeld(new IntakeUpDownCommand(false));
 		lowerIntake.whileHeld(new IntakeUpDownCommand(true));
 		//loadBoulder.whenPressed(new RunIntakeAndConveyor(true));
@@ -64,8 +64,9 @@ public class OI {
 		} else {
 			cameraToggle.whenPressed(new CameraToggle());
 		}
-		trackingOn.whenPressed(new TrackingOn(true));
-		trackingOff.whenPressed(new TrackingOn(false));
+		//trackingOn.whenPressed(new TrackingOn(true));
+		trackingOff.toggleWhenPressed(new TrackTarget());
+		//trackingOff.whenPressed(new TrackingOn(false));
 		
 		
 		//homeTurret.whenPressed(new HomeTurret());
@@ -79,7 +80,7 @@ public class OI {
 		slowDrive.whenPressed(new ChangeDriveSpeed(0.6));
 		fastDrive.whenPressed(new ChangeDriveSpeed(0.8));
 		
-		slowTurret.whenPressed(new ChangeTurretSpeed(0.3));
+		slowTurret.whenPressed(new ChangeTurretSpeed(0.15));
 		fastTurret.whenPressed(new ChangeTurretSpeed(1));
 		
 	}

@@ -28,7 +28,8 @@ public class DriveOverDefense extends Command {
     	this.speed = speed;
     	pid.setTarget(0);
     	requires(Robot.strongHoldDrive);
-    	if (sensors.getDefense() == Sensors.RAMPART) PITCHDOWNLIMIT = -8;
+    	if (sensors.getDefense() == Sensors.RAMPART ||
+    			sensors.getDefense() == Sensors.ROUGHTERRAIN) PITCHDOWNLIMIT = -8;
     }
 
     // Called just before this Command runs the first time

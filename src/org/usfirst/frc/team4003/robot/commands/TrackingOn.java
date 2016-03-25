@@ -3,6 +3,7 @@ package org.usfirst.frc.team4003.robot.commands;
 import org.usfirst.frc.team4003.robot.Robot;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  *
@@ -15,11 +16,15 @@ public class TrackingOn extends Command {
         // eg. requires(chassis);
     	this.on = on;
     	trackTarget = null;
+    	
+    	requires(Robot.turretSpin);
+    	requires(Robot.turretTilt);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
     	if (Robot.NIVision) Robot.cameras.setTracking(on);
+    	SmartDashboard.putBoolean("on", on);
     	
     	if (on) {
     		Robot.enableTargetTracking();
@@ -29,11 +34,15 @@ public class TrackingOn extends Command {
     		}
     	} else {
     		Robot.disableTargetTracking();
+    		if (trackTarget == null) return;
     		trackTarget.setFinished(true);
     		trackTarget.cancel();
     		trackTarget = null;
-    		TurretTiltCommand tiltCommand = new TurretTiltCommand();
-    		tiltCommand.start();
+    		//Robot.turretTilt.setPower(0);
+    		//Robot.turretSpin.setPower(0);
+    		TurretTiltCommand cmd = new TurretTiltCommand();
+    		cmd.start();
+    		
     	}
     	
     }

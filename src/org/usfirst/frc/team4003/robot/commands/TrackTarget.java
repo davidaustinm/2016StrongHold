@@ -53,11 +53,13 @@ public class TrackTarget extends Command {
     	double spinKi = 0.01;
     	if (auton) spinKi = 0.01;
     	spinPID = new TrisonicsPID(0.023, spinKi, 0.00);
-    	tiltPID.setTarget(0);
+    	spinPID.setTarget(0);
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	finished = false;
+    	if (Robot.NIVision) Robot.cameras.setTracking(true);
     	targetLastSeen = System.currentTimeMillis();
     }
 
@@ -66,7 +68,7 @@ public class TrackTarget extends Command {
     double vtolerance = 4;
     
     protected void execute() {
-    	SmartDashboard.putNumber("spinHint", spinHint);
+    	SmartDashboard.putNumber("spinHint", System.currentTimeMillis());
     	if (sensors.getTargetReady() == false) return;
     	
     	long currentTime = System.currentTimeMillis();
@@ -112,6 +114,7 @@ public class TrackTarget extends Command {
     		Robot.turretTilt.setPower(0);
     		Robot.turretSpin.setPower(0);
     		if (auton) {
+    			finished = true;
     			(new TrackingOn(false)).start();
     			(new AutoShoot()).start();
     			cancel();
@@ -124,9 +127,10 @@ public class TrackTarget extends Command {
     	
     	double vAngle = targetData[1];
     	double tiltSpeed = tiltPID.getCorrection(-vAngle);
-    	if (Math.abs(tiltSpeed) > 1) {
-    		if (tiltSpeed > 1) tiltSpeed = 1;
-    		else tiltSpeed = -1;
+    	double maxSpeed = 0.4;
+    	if (Math.abs(tiltSpeed) > maxSpeed) {
+    		if (tiltSpeed > maxSpeed) tiltSpeed = maxSpeed;
+    		else tiltSpeed = -maxSpeed;
     	}
     	tiltHint = NONE;
     	spinHint = NONE;
@@ -146,9 +150,9 @@ public class TrackTarget extends Command {
     	
     	double hAngle = targetData[0];
     	double spinSpeed = spinPID.getCorrection(hAngle);
-    	if (Math.abs(spinSpeed) > 1) {
-    		if (spinSpeed > 1) spinSpeed = 1;
-    		else spinSpeed = -1;
+    	if (Math.abs(spinSpeed) > maxSpeed) {
+    		if (spinSpeed > maxSpeed) spinSpeed = maxSpeed;
+    		else spinSpeed = -maxSpeed;
     	}
     	/* 
     	 * 
@@ -171,8 +175,13 @@ public class TrackTarget extends Command {
 
     // Called once after isFinished returns true
     protected void end() {
+    	if (Robot.NIVision) Robot.cameras.setTracking(false);
     	Robot.turretTilt.setPower(0);
-    	Robot.turretSpin.setPower(0); // TODO
+    	Robot.turretSpin.setPower(0); 
+    	
+    	//TurretTiltCommand tiltCommand = new TurretTiltCommand();
+		//tiltCommand.start();
+    	
     	//sensors.setAlignedToGoal(false);
     	tiltHint = NONE;
     	spinHint = NONE;

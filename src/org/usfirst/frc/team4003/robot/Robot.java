@@ -2,6 +2,7 @@ package org.usfirst.frc.team4003.robot;
 
 import edu.wpi.first.wpilibj.IterativeRobot;
 import edu.wpi.first.wpilibj.command.*;
+
 import org.usfirst.frc.team4003.robot.commands.actions.*;
 import org.usfirst.frc.team4003.robot.io.*;
 
@@ -15,7 +16,6 @@ import org.usfirst.frc.team4003.robot.auton.*;
 
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
-
 import edu.wpi.first.wpilibj.*;
 import edu.wpi.first.wpilibj.vision.*;
 /**
@@ -173,7 +173,7 @@ public class Robot extends IterativeRobot {
         }
         */
         if (position == Sensors.SPYBOT) {
-        	autonomousCommand = new SpyBotAuton();
+        	autonomousCommand = new SpybotAuton();
         } else {
         	autonomousCommand = new DefenseAuton(defense);
         }

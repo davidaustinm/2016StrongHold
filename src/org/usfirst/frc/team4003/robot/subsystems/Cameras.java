@@ -53,7 +53,10 @@ public class Cameras extends Subsystem implements Runnable {
 		}
 		
 		if (practiceValues) {
-			hue = new NIVision.Range(75, 128);
+			//hue = new NIVision.Range(75, 128);
+			//sat = new NIVision.Range(100, 255);
+			//val = new NIVision.Range(200, 255);
+			hue = new NIVision.Range(75, 140);
 			sat = new NIVision.Range(100, 255);
 			val = new NIVision.Range(200, 255);
 		} else {
@@ -81,6 +84,7 @@ public class Cameras extends Subsystem implements Runnable {
 		target.setFPS(FPS);
 		driver.setFPS(FPS);
 		target.setSize(320, 240);
+		target.setExposureManual(5);
 		driver.setSize(320, 240);
 		CameraServer.getInstance().setQuality(QUALITY);
 		current = target;
@@ -97,6 +101,7 @@ public class Cameras extends Subsystem implements Runnable {
 	
 	public void restartCamera() {
 		current.setSize(320, 240);
+		if (current == target) current.setExposureManual(5);	
 		//current.openCamera();
 		current.startCapture();
 	}
@@ -216,25 +221,32 @@ public class Cameras extends Subsystem implements Runnable {
 			//particles.sort(null);
 			ParticleReport best = particles.get(0);
 			for (int index = 0; index < numParticles; index++) {
+				if (best.Area > 1000) continue;
 				if (particles.get(index).getError() < best.getError()) best = particles.get(index);
 			}
-			//SmartDashboard.putNumber("Aspect Ratio", best.getAspectRatio());
-			//SmartDashboard.putNumber("Area", best.getArea());		
-			setTargetRectangle(best.getBoundingRect());
-			addCenter(best.getCenter());
+			if (best.Area > 1000) {
+				sensors.setTarget(null);
+				setTargetRectangle(null);
+				
+			} else {
+				//SmartDashboard.putNumber("Aspect Ratio", best.getAspectRatio());
+				//SmartDashboard.putNumber("Area", best.getArea());		
+				setTargetRectangle(best.getBoundingRect());
+				addCenter(best.getCenter());
 			
-			Target t = new Target();
-			t.width = best.BoundingRectRight - best.BoundingRectLeft;
-			t.height = best.BoundingRectBottom - best.BoundingRectTop;
-			t.aspectRatio = t.width / t.height;
-			t.area = t.width * t.height;
-			t.error = best.getError();
-			Center center = best.getCenter();
-			t.centerX = center.x;
-			t.centerY = center.y;
-			t.distance = 20 * 200 / (t.width * Math.tan(0.6));
-			sensors.setTarget(t);
-		
+				Target t = new Target();
+				t.width = best.BoundingRectRight - best.BoundingRectLeft;
+				t.height = best.BoundingRectBottom - best.BoundingRectTop;
+				t.aspectRatio = t.width / t.height;
+				t.area = t.width * t.height;
+				t.error = best.getError();
+				Center center = best.getCenter();
+				t.centerX = center.x;
+				t.centerY = center.y;
+				t.distance = 20 * 200 / (t.width * Math.tan(0.6));
+				sensors.setTarget(t);
+				SmartDashboard.putNumber("area", best.Area);
+			}
 		} else {
 			sensors.setTarget(null);
 			setTargetRectangle(null);
