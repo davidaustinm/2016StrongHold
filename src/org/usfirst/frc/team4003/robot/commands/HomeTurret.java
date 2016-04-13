@@ -11,18 +11,32 @@ public class HomeTurret extends Command {
 	
 	TrisonicsPID spinPID;
 	Sensors sensors;
+	double target;
+	long stopTime;
     public HomeTurret() {
         // Use requires() here to declare subsystem dependencies
         // eg. requires(chassis);
     	requires(Robot.turretSpin);
     	requires(Robot.turretTilt);
-    	spinPID = new TrisonicsPID(0.001, 0, 0);
-    	spinPID.setTarget(TurretSpin.SPINHALFREV);
+    	target = TurretSpin.SPINHALFREV;
+    	spinPID = new TrisonicsPID(0.0005, 0, 0.0001);
+    	spinPID.setTarget(target);
+    	sensors = Sensors.getInstance();
+    }
+    
+    public HomeTurret(double target) {
+    	this.target = target;
+    	requires(Robot.turretSpin);
+    	requires(Robot.turretTilt);
+    	//spinPID = new TrisonicsPID(0.001, 0, 0);
+    	spinPID = new TrisonicsPID(0.0005, 0, 0);
+    	spinPID.setTarget(target);
     	sensors = Sensors.getInstance();
     }
 
     // Called just before this Command runs the first time
     protected void initialize() {
+    	stopTime = System.currentTimeMillis() + 4000;
     	
     }
 
@@ -38,11 +52,11 @@ public class HomeTurret extends Command {
     	}
     	Robot.turretSpin.setPower(spinSpeed);
     }
-    double tolerance = 300;
+    double tolerance = 100;
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return //sensors.getTurretResetSwitch() &&
-        		Math.abs(Robot.turretSpin.getPosition() - TurretSpin.SPINHALFREV) < tolerance;
+        return System.currentTimeMillis() >= stopTime ||
+        		Math.abs(Robot.turretSpin.getPosition() - target) < tolerance;
     }
 
     // Called once after isFinished returns true

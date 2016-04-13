@@ -23,7 +23,8 @@ public class OI {
 	public XboxButton cameraToggle = new XboxButton(operator,XboxButton.BUTTONA);
 	public XboxButton homeTurret = new XboxButton(operator,XboxButton.BUTTONY);
 	public XboxButton trackingOn = new XboxButton(operator,XboxButton.BUTTONX);
-	public XboxButton trackingOff = new XboxButton(operator,XboxButton.BUTTONB);
+	//public XboxButton trackingOff = new XboxButton(operator,XboxButton.BUTTONB);
+	public XboxButton resetTurret = new XboxButton(operator,XboxButton.BUTTONB);
 	public XboxButton shooterOn = new XboxButton(operator,XboxButton.BUTTONRB);
 	public XboxButton shooterOff = new XboxButton(operator,XboxButton.BUTTONLB);
 	
@@ -65,12 +66,13 @@ public class OI {
 			cameraToggle.whenPressed(new CameraToggle());
 		}
 		//trackingOn.whenPressed(new TrackingOn(true));
-		trackingOff.toggleWhenPressed(new TrackTarget());
+		trackingOn.toggleWhenPressed(new TrackTarget());
 		//trackingOff.whenPressed(new TrackingOn(false));
 		
 		
 		//homeTurret.whenPressed(new HomeTurret());
 		homeTurret.whenPressed(new FinishShooting());
+		resetTurret.whenPressed(new HomeTurret(0));
 		shooterOn.whenPressed(new ShooterCommand(true));
 		shooterOff.whenPressed(new ShooterCommand(false));
 		slowShooter.whenPressed(new ShooterCommand(true, true));

@@ -10,10 +10,12 @@ import edu.wpi.first.wpilibj.command.CommandGroup;
  */
 public class DefenseAuton extends CommandGroup {
     public DefenseAuton(int defense) {
+    	/*
     	if (defense == Sensors.RAMPART) {
     		addSequential(new RampartAuton()); 
     		return;
     	}
+    	*/
     	if (defense == Sensors.CHEVAL) {
     		addSequential(new ChevalDeFrisAuton());
     		return;
@@ -28,6 +30,9 @@ public class DefenseAuton extends CommandGroup {
     		break;
     	case Sensors.ROUGHTERRAIN:
     		addSequential(new DriveOverDefense(0.6));
+    		break;
+    	case Sensors.RAMPART:
+    		addSequential(new DriveOverDefense(0.75));
     		break;
     	}
     	addSequential(new DriveToPoint(Sensors.getInstance().getFinalDrive(), 0, 0.65, 0, true, false));

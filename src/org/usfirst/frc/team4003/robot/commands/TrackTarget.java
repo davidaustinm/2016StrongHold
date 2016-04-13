@@ -29,6 +29,7 @@ public class TrackTarget extends Command {
 	
 	public static void setTiltHint(int hint) {tiltHint = hint;}
 	public static void setSpinHint(int hint) {spinHint = hint;}
+	int count;
 	boolean finished = false;
 	
 	public void setFinished(boolean b) {
@@ -46,13 +47,24 @@ public class TrackTarget extends Command {
     	requires(Robot.turretTilt);
     	requires(Robot.turretSpin);
     	sensors = Sensors.getInstance();
+    	
+    	double tiltKp = 0.03; // was 0.038
     	double tiltKi = 0.01;
     	if (auton) tiltKi = 0.01;
-    	tiltPID = new TrisonicsPID(0.038, tiltKi, 0.00);
+    	
+    	double spinKp = 0.006;  // was 0.023;
+    	double spinKi = 0.006; //wa 0.01
+    	if (auton) spinKi = 0.0068; //was 0.0035
+    	
+    	// for state
+    	tiltKp = 0.015;
+    	spinKp = 0.003;
+    	
+    	tiltPID = new TrisonicsPID(tiltKp, tiltKi, 0.00);
     	tiltPID.setTarget(0);
-    	double spinKi = 0.01;
-    	if (auton) spinKi = 0.01;
-    	spinPID = new TrisonicsPID(0.023, spinKi, 0.00);
+    	
+    	
+    	spinPID = new TrisonicsPID(spinKp, spinKi, 0.00);
     	spinPID.setTarget(0);
     }
 
@@ -61,6 +73,7 @@ public class TrackTarget extends Command {
     	finished = false;
     	if (Robot.NIVision) Robot.cameras.setTracking(true);
     	targetLastSeen = System.currentTimeMillis();
+    	count = 0;
     }
 
     // Called repeatedly when this Command is scheduled to run
@@ -108,12 +121,14 @@ public class TrackTarget extends Command {
     	//vPixelError = 0;
     	//SmartDashboard.putNumber("TrackTarget Sensor ID:", System.identityHashCode(sensors));
     	if ((Math.abs(hPixelError) < htolerance) && (Math.abs(vPixelError) < vtolerance)) {
-    		SmartDashboard.putString("On goal?", "YES!");
+    		//SmartDashboard.putString("On goal?", "YES!");
+    		count ++;
     		sensors.setAlignedToGoal(true);
     		WaitUntilAligned.setAligned(true);
     		Robot.turretTilt.setPower(0);
     		Robot.turretSpin.setPower(0);
     		if (auton) {
+    			if (count < 10) return;
     			finished = true;
     			(new TrackingOn(false)).start();
     			(new AutoShoot()).start();
@@ -121,7 +136,7 @@ public class TrackTarget extends Command {
     		}
     		return;
     	} else {
-    		SmartDashboard.putString("On goal?", "No!");
+    		//SmartDashboard.putString("On goal?", "No!");
     		//sensors.setAlignedToGoal(false);
     	}
     	

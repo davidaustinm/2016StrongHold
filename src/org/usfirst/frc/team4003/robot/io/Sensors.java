@@ -52,6 +52,7 @@ public class Sensors {
 	public static final double goalY = 149; // 140, was 128 before elimns, we want 123
 	
 	static Sensors sensors = null;
+	double yawOffset = 0;
 	public Sensors(){
 		try {
 			ahrs = new AHRS(SPI.Port.kMXP);
@@ -78,16 +79,22 @@ public class Sensors {
 		
 	}
 	
+	public void setYawOffset() {
+		yawOffset = getYaw();
+	}
+	
 	public int getPosition() {
 		int position = 0;
 		if (!auton2.get()) position += 4;
 		if (!auton1.get()) position += 2;
 		if (!auton0.get()) position += 1;
+		//return 4;
 		return position;
 	}
 	
 	public double getFinalDrive() {
-		if (getPosition() == 2) return 70;
+		if (getPosition() == 2) return 70; //70
+		if (getDefense() == CHEVAL) return 20;
 		if (getPosition() == 5) return 12;
 		return 15;
 	}
@@ -96,6 +103,7 @@ public class Sensors {
 		if (!auton5.get()) defense += 4;
 		if (!auton4.get()) defense += 2;
 		if (!auton3.get()) defense += 1;
+		//return RAMPART;
 		return defense;
 	}
 	
@@ -106,7 +114,7 @@ public class Sensors {
 	}
 	
 	public double getYaw(){
-		return -ahrs.getYaw();
+		return (-ahrs.getYaw()) - yawOffset;
 	}
 	
 	public double getRoll(){

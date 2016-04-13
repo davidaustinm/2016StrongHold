@@ -14,13 +14,19 @@ public class TrisonicsPID {
 	public void setTarget(double t) {
 		target = t;
 	}
+	public void setKi(double ki) {
+		this.ki = ki;
+	}
 	public double getCorrection(double current) {
 		double error = target-current;
 		if (error*lastError<=0) totalError = 0;
 		else totalError = alpha*totalError+error;
 		double changeInError = error-lastError;
-		double correction = kp*error+ki*totalError+kd*changeInError;
+		double correction = kp*error+ ki*totalError +kd*changeInError;
 		lastError = error;
 		return correction;
+	}
+	public double integralCorrection() {
+		return ki*totalError;
 	}
 }

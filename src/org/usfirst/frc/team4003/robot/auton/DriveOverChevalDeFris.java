@@ -15,12 +15,12 @@ public class DriveOverChevalDeFris extends DriveOverDefense {
 	// Called just before this Command runs the first time
     protected void initialize() {
     	slowTime = System.currentTimeMillis() + 1000;
-    	stopTime = System.currentTimeMillis() + 6000;
+    	stopTime = System.currentTimeMillis() + 5000;
     }
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
-    	if (System.currentTimeMillis() > slowTime) speed = 0.6;
+    	if (System.currentTimeMillis() > slowTime) speed = 0.75;
     	if (System.currentTimeMillis() > stopTime) speed = 0;
     	super.execute();
     }

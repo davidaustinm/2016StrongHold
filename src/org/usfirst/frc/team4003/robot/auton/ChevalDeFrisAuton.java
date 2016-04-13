@@ -12,15 +12,19 @@ public class ChevalDeFrisAuton extends CommandGroup {
     public  ChevalDeFrisAuton() {
     	addSequential(new DriveWhileLevel(.5));
     	addSequential(new IntakeRaiseLower(true));
-    	addSequential(new WaitForTime(1500));
+    	addSequential(new WaitForTime(750));
+    	addSequential(new DriveForTime(750));
     	
     	CommandGroup group = new CommandGroup();
+    	group.addParallel(new DriveForTime(2000));
     	group.addSequential(new WaitForTime(2000)); //was 500
-    	group.addSequential(new IntakeRaiseLower(false));
+    	//group.addSequential(new IntakeRaiseLower(false));
+    	
     	
     	//addParallel(group);
-    	addParallel(new DriveOverChevalDeFris(0.6));
-    	addSequential(group);
+    	//addParallel(new DriveOverChevalDeFris(0.6));
+    	addParallel(new DriveForTime(4000, 0.7));
+    	//addSequential(group);
     	addSequential(new DriveToPoint(Sensors.getInstance().getFinalDrive(), 0, 0.65, 0, true, false));
     	addSequential(new AlignAndShoot());
         // Add Commands here:

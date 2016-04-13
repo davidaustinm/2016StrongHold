@@ -57,7 +57,7 @@ public class Cameras extends Subsystem implements Runnable {
 			//sat = new NIVision.Range(100, 255);
 			//val = new NIVision.Range(200, 255);
 			hue = new NIVision.Range(75, 140);
-			sat = new NIVision.Range(100, 255);
+			sat = new NIVision.Range(150, 255);
 			val = new NIVision.Range(200, 255);
 		} else {
 			hue = new NIVision.Range(50, 94);
@@ -78,6 +78,7 @@ public class Cameras extends Subsystem implements Runnable {
 	
 	public void initialize() {
 		image = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
+		trackingImage = NIVision.imaqCreateImage(NIVision.ImageType.IMAGE_RGB, 0);
 		target = new USBCamera(RobotMap.TARGET_CAMERA_STRING);
 		driver = new USBCamera(RobotMap.DRIVER_CAMERA_STRING);
 		//driver = target;
@@ -85,6 +86,7 @@ public class Cameras extends Subsystem implements Runnable {
 		driver.setFPS(FPS);
 		target.setSize(320, 240);
 		target.setExposureManual(5);
+		target.setWhiteBalanceHoldCurrent();
 		driver.setSize(320, 240);
 		CameraServer.getInstance().setQuality(QUALITY);
 		current = target;
@@ -101,7 +103,10 @@ public class Cameras extends Subsystem implements Runnable {
 	
 	public void restartCamera() {
 		current.setSize(320, 240);
-		if (current == target) current.setExposureManual(5);	
+		if (current == target) {
+			current.setExposureManual(5);	
+			current.setWhiteBalanceHoldCurrent();
+		}
 		//current.openCamera();
 		current.startCapture();
 	}
@@ -115,7 +120,8 @@ public class Cameras extends Subsystem implements Runnable {
 	}
 	
 	public synchronized void setTrackingImage(Image image) {
-		trackingImage = image;
+		//trackingImage = image;
+		NIVision.imaqDuplicate(trackingImage, image);
 	}
 	
 	public synchronized Image getTrackingImage() {
@@ -144,7 +150,7 @@ public class Cameras extends Subsystem implements Runnable {
 	
 	
 	public void pushImage() {
-		if (System.currentTimeMillis() < readyTime) return;
+		//if (tracking && !getImageProcessed()) return;
 		current.setSize(320, 240);
 		current.getImage(image);
 		
@@ -166,12 +172,12 @@ public class Cameras extends Subsystem implements Runnable {
                 DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 0.5f);	
 		}
 		NIVision.Rect target = getTargetRectangle();
-		if (target != null) {
+		if (target != null && tracking) {
 			NIVision.imaqDrawShapeOnImage(image, image, target,
 	                DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 0.5f);	
 		}
 		Center avgCenter = getAverageCenter();
-		if (avgCenter != null) {
+		if (avgCenter != null && tracking) {
 			NIVision.Rect center = new NIVision.Rect((int)avgCenter.y - dx, (int)avgCenter.x-dx, 2*dx, 2*dx);
 			NIVision.imaqDrawShapeOnImage(image, image, center,
                 DrawMode.DRAW_VALUE, ShapeMode.SHAPE_OVAL, 0.5f);	

@@ -154,14 +154,18 @@ public class Robot extends IterativeRobot {
     	
     	TrackTarget.setAuton(true);
     	
+    	
+    	
     	Robot.turretTilt.resetPosition();
         Robot.turretSpin.resetPosition();
-        sensors.resetYaw();
+        //sensors.resetYaw();
         sensors.resetEncoders();
         sensors.setBaseLines();
+        sensors.setYawOffset();
         
         int defense = sensors.getDefense();
         int position = sensors.getPosition();
+       
         
         //position = 4;
         /*
@@ -205,6 +209,7 @@ public class Robot extends IterativeRobot {
      */
     public void autonomousPeriodic() {
     	sensors.updatePosition();
+    	sensors.displayOrientation();
         Scheduler.getInstance().run();
     }
 
@@ -221,6 +226,7 @@ public class Robot extends IterativeRobot {
     
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
+        sensors.displayOrientation();
         //sensors.displayShooterSpeeds();
         /*
         SmartDashboard.putNumber("Position", sensors.getPosition());
@@ -236,6 +242,9 @@ public class Robot extends IterativeRobot {
         sensors.displayDriveEncoders();
         */
         //sensors.displayDriveEncoders();
+        //sensors.displayAutonSwitches();
+        SmartDashboard.putNumber("Position", sensors.getPosition());
+        SmartDashboard.putNumber("Defense", sensors.getDefense());
     }
     
     /**
