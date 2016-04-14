@@ -217,6 +217,7 @@ public class Cameras extends Subsystem implements Runnable {
 			for(int particleIndex = 0; particleIndex < numParticles; particleIndex++) {
 				ParticleReport par = new ParticleReport();
 				par.Area = NIVision.imaqMeasureParticle(mask, particleIndex, 0, NIVision.MeasurementType.MT_AREA);
+				par.ImageArea = NIVision.imaqMeasureParticle(mask, particleIndex, 0, NIVision.MeasurementType.MT_AREA_BY_IMAGE_AREA);
 				par.BoundingRectTop = NIVision.imaqMeasureParticle(mask, particleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_TOP);
 				par.BoundingRectLeft = NIVision.imaqMeasureParticle(mask, particleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_LEFT);
 				par.BoundingRectBottom = NIVision.imaqMeasureParticle(mask, particleIndex, 0, NIVision.MeasurementType.MT_BOUNDING_RECT_BOTTOM);
@@ -227,10 +228,13 @@ public class Cameras extends Subsystem implements Runnable {
 			//particles.sort(null);
 			ParticleReport best = particles.get(0);
 			for (int index = 0; index < numParticles; index++) {
-				if (best.Area > 1000) continue;
-				if (particles.get(index).getError() < best.getError()) best = particles.get(index);
+				ParticleReport next = particles.get(index);
+				
+				//SmartDashboard.putNumber("percent fill", next.getPercentFill());
+				if (next.Area > 1000 || next.getPercentFill() > 0.6) continue;
+				if (next.getError() < best.getError()) best = particles.get(index);
 			}
-			if (best.Area > 1000) {
+			if (best.Area > 1000 || best.getPercentFill() > 0.6) {
 				sensors.setTarget(null);
 				setTargetRectangle(null);
 				
@@ -251,6 +255,7 @@ public class Cameras extends Subsystem implements Runnable {
 				t.centerY = center.y;
 				t.distance = 20 * 200 / (t.width * Math.tan(0.6));
 				sensors.setTarget(t);
+				SmartDashboard.putNumber("percent fill", best.Area/ (t.area));
 				SmartDashboard.putNumber("area", best.Area);
 			}
 		} else {
@@ -296,6 +301,7 @@ public class Cameras extends Subsystem implements Runnable {
     
     public class ParticleReport implements Comparator<ParticleReport>, Comparable<ParticleReport>{
 		double PercentAreaToImageArea;
+		double ImageArea;
 		double Area;
 		double BoundingRectLeft;
 		double BoundingRectTop;
@@ -317,6 +323,12 @@ public class Cameras extends Subsystem implements Runnable {
 		
 		public double getArea() {
 			return Area;
+		}
+		
+		public double getPercentFill() {
+			double width = Math.abs(BoundingRectRight - BoundingRectLeft);
+			double height = Math.abs(BoundingRectBottom - BoundingRectTop);
+			return Area/ (width * height);
 		}
 		public double getError() {
 			return Math.abs(2.0 - getAspectRatio());

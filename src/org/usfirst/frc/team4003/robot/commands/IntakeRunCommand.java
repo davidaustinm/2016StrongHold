@@ -27,8 +27,8 @@ public class IntakeRunCommand extends Command {
     	double power = -Robot.oi.driver.getLeftTrigger();
     	if(Math.abs(power)<.1)power = 0;
     	
-    	double operatorTriggerPower = Robot.oi.operator.getRightTrigger();
-    	if (Math.abs(operatorTriggerPower) > 0.2) power = operatorTriggerPower;
+    	//double operatorTriggerPower = Robot.oi.operator.getRightTrigger();
+    	//if (Math.abs(operatorTriggerPower) > 0.2) power = operatorTriggerPower;
     	
     	if (power > 0 && sensors.getIntakeSwitch()) power = 0;
     	

@@ -1,6 +1,7 @@
 package org.usfirst.frc.team4003.robot;
 
 import edu.wpi.first.wpilibj.buttons.Button;
+import org.usfirst.frc.team4003.robot.triggers.*;
 
 import org.usfirst.frc.team4003.robot.commands.*;
 import org.usfirst.frc.team4003.robot.io.*;
@@ -49,8 +50,14 @@ public class OI {
 		//shiftLow.whenPressed(new ShifterCommand(true));
 		
 		//pidHold.whileHeld(new PIDHold());
-		raiseIntake.whileHeld(new IntakeUpDownCommand(false));
-		lowerIntake.whileHeld(new IntakeUpDownCommand(true));
+		
+		
+		//raiseIntake.whileHeld(new IntakeUpDownCommand(false));
+		//lowerIntake.whileHeld(new IntakeUpDownCommand(true));
+		
+		(new IntakeTrigger(true)).whileActive(new IntakeUpDownCommand(false));;
+		(new IntakeTrigger(false)).whileActive(new IntakeUpDownCommand(true));
+		
 		//loadBoulder.whenPressed(new RunIntakeAndConveyor(true));
 		//unloadBoulder.whenPressed(new RunIntakeAndConveyor(false));
 		interrupt.whenPressed(new InterruptCommand());

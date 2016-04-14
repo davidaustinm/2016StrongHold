@@ -49,7 +49,7 @@ public class Sensors {
 	public static final int SPYBOT = 0;
 	
 	public static final double goalX = 173; // 180
-	public static final double goalY = 149; // 140, was 128 before elimns, we want 123
+	public static final double goalY = 153; // 149
 	
 	static Sensors sensors = null;
 	double yawOffset = 0;

@@ -54,11 +54,13 @@ public class TrackTarget extends Command {
     	
     	double spinKp = 0.006;  // was 0.023;
     	double spinKi = 0.006; //wa 0.01
-    	if (auton) spinKi = 0.0068; //was 0.0035
+    	if (auton) spinKi = 0.008; //was 0.0068
     	
     	// for state
-    	tiltKp = 0.015;
-    	spinKp = 0.003;
+    	tiltKp = 0.01;
+    	//spinKp = 0.005;
+    	//tiltKi = 0.05;
+    	//spinKi = 0.01;
     	
     	tiltPID = new TrisonicsPID(tiltKp, tiltKi, 0.00);
     	tiltPID.setTarget(0);
@@ -142,7 +144,7 @@ public class TrackTarget extends Command {
     	
     	double vAngle = targetData[1];
     	double tiltSpeed = tiltPID.getCorrection(-vAngle);
-    	double maxSpeed = 0.4;
+    	double maxSpeed = 0.3; // was 0.4
     	if (Math.abs(tiltSpeed) > maxSpeed) {
     		if (tiltSpeed > maxSpeed) tiltSpeed = maxSpeed;
     		else tiltSpeed = -maxSpeed;
