@@ -36,7 +36,7 @@ public class StrongHoldArcade extends Command {
 	}
     protected void execute() {
     	double tmpThrottle = -deadBand(Robot.oi.driver.getLeftJoyY());
-    	double tmpWheel = deadBand(Robot.oi.driver.getRightJoyX());
+    	double tmpWheel = 0.8*deadBand(Robot.oi.driver.getRightJoyX());
     	//SmartDashboard.putNumber("throttle", tmpThrottle);
     	//SmartDashboard.putNumber("wheel", tmpWheel);
     	

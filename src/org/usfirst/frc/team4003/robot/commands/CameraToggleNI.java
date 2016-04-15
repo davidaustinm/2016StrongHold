@@ -15,7 +15,7 @@ public class CameraToggleNI extends Command {
 	long timeOut;
     public CameraToggleNI() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.cameras);
+        //requires(Robot.cameras);
     }
 
     // Called just before this Command runs the first time

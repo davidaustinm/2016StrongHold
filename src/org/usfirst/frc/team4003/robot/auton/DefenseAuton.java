@@ -36,8 +36,10 @@ public class DefenseAuton extends CommandGroup {
     		break;
     	}
     	addSequential(new DriveToPoint(Sensors.getInstance().getFinalDrive(), 0, 0.65, 0, true, false));
+    	
     	addSequential(new AlignAndShoot());
-        // Add Commands here:
+        
+    	// Add Commands here:
         // e.g. addSequential(new Command1());
         //      addSequential(new Command2());
         // these will run in order.

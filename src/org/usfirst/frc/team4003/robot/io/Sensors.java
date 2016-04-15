@@ -49,7 +49,7 @@ public class Sensors {
 	public static final int SPYBOT = 0;
 	
 	public static final double goalX = 173; // 180
-	public static final double goalY = 153; // 149
+	public static final double goalY = 159; // 149, 153
 	
 	static Sensors sensors = null;
 	double yawOffset = 0;
@@ -94,7 +94,7 @@ public class Sensors {
 	
 	public double getFinalDrive() {
 		if (getPosition() == 2) return 70; //70
-		if (getDefense() == CHEVAL) return 20;
+		if (getDefense() == MOAT) return 25;
 		if (getPosition() == 5) return 12;
 		return 15;
 	}

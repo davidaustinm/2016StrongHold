@@ -57,6 +57,7 @@ public class Robot extends IterativeRobot {
     
     // Making this volatile is good enough, no need to sync.  A single dirty read isn't worth the overhead of synch.
     protected static volatile boolean enableTargetTracking = false;
+    static CamerasCommand cameraCommand;
     
     static {
     	 //System.load("/usr/local/lib/opencv310/libopencv_java310.so");
@@ -78,6 +79,7 @@ public class Robot extends IterativeRobot {
     	 
     	 if (NIVision) cameras = new Cameras();
     	 
+    	 
     }
     
     /**
@@ -85,6 +87,7 @@ public class Robot extends IterativeRobot {
      * used for any initialization code.
      */
 
+    
     public void robotInit() {
     	oi = new OI();
 		sensors = Sensors.getInstance();
@@ -105,7 +108,8 @@ public class Robot extends IterativeRobot {
 		}
 		
 		
-		
+		cameraCommand = new CamerasCommand();
+	
         
         /*
         Compressor compressor = new Compressor(20);
@@ -135,8 +139,26 @@ public class Robot extends IterativeRobot {
 
     }
 	
+    boolean first = true;
+    boolean cameraStarted = false;
+    long startCameraTime;
 	public void disabledPeriodic() {
+		if (cameraStarted) {
+			cameraCommand.exec();
+		}
+		if (first) {
+			startCameraTime = System.currentTimeMillis() + 2000;
+			first = false;
+		} else {
+			if (!cameraStarted && System.currentTimeMillis() > startCameraTime) {
+				cameraCommand.init();
+				cameras.restartCamera();
+				cameraStarted = true;
+			}
+		}
+		
 		Scheduler.getInstance().run();
+		
 	}
 
 	/**
@@ -211,6 +233,7 @@ public class Robot extends IterativeRobot {
     	sensors.updatePosition();
     	sensors.displayOrientation();
         Scheduler.getInstance().run();
+        cameraCommand.exec();
     }
 
     public void teleopInit() {
@@ -226,8 +249,9 @@ public class Robot extends IterativeRobot {
     
     public void teleopPeriodic() {
         Scheduler.getInstance().run();
-        sensors.displayOrientation();
-        //sensors.displayShooterSpeeds();
+        //sensors.displayOrientation();
+        cameraCommand.exec();
+        sensors.displayShooterSpeeds();
         /*
         SmartDashboard.putNumber("Position", sensors.getPosition());
         SmartDashboard.putNumber("Defense", sensors.getDefense());

@@ -1,17 +1,28 @@
 package org.usfirst.frc.team4003.robot.commands;
 
 import edu.wpi.first.wpilibj.command.Command;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+
 import org.usfirst.frc.team4003.robot.*;
 
 /**
  *
  */
-public class CamerasCommand extends Command {
+//public class CamerasCommand extends Command {
+public class CamerasCommand {
 
     public CamerasCommand() {
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.cameras);
-        Robot.cameras.initialize();
+        //requires(Robot.cameras);
+        //Robot.cameras.initialize();
+    }
+    
+    public void init() {
+    	Robot.cameras.initialize();
+    }
+    
+    public void exec() {
+    	execute();
     }
 
     // Called just before this Command runs the first time
@@ -21,6 +32,7 @@ public class CamerasCommand extends Command {
 
     // Called repeatedly when this Command is scheduled to run
     protected void execute() {
+    	
     	Robot.cameras.pushImage();
     }
 

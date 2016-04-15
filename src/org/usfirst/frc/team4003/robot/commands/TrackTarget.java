@@ -122,7 +122,7 @@ public class TrackTarget extends Command {
     	//hPixelError = 0;
     	//vPixelError = 0;
     	//SmartDashboard.putNumber("TrackTarget Sensor ID:", System.identityHashCode(sensors));
-    	if ((Math.abs(hPixelError) < htolerance) && (Math.abs(vPixelError) < vtolerance)) {
+    	if ((Math.abs(hPixelError) <= htolerance) && (Math.abs(vPixelError) <= vtolerance)) {
     		//SmartDashboard.putString("On goal?", "YES!");
     		count ++;
     		sensors.setAlignedToGoal(true);

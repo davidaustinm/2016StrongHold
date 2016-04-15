@@ -20,7 +20,8 @@ import org.usfirst.frc.team4003.robot.io.Target;
 /**
  *
  */
-public class Cameras extends Subsystem implements Runnable {
+//public class Cameras extends Subsystem implements Runnable {
+public class Cameras implements Runnable {
 	Sensors sensors;
 	USBCamera driver, target, current;
 	Image image, trackingImage;
@@ -30,6 +31,7 @@ public class Cameras extends Subsystem implements Runnable {
 	long readyTime;
 	boolean tracking = false;
 	boolean imageProcessed = true;
+	int exposure = 3;
 	
 	Thread processing;
 	NIVision.ParticleFilterCriteria2 criteria[];
@@ -53,11 +55,11 @@ public class Cameras extends Subsystem implements Runnable {
 		}
 		
 		if (practiceValues) {
-			//hue = new NIVision.Range(75, 128);
-			//sat = new NIVision.Range(100, 255);
+			//hue = new NIVision.Range(75, 140);
+			//sat = new NIVision.Range(150, 255);
 			//val = new NIVision.Range(200, 255);
-			hue = new NIVision.Range(75, 140);
-			sat = new NIVision.Range(150, 255);
+			hue = new NIVision.Range(90, 130);
+			sat = new NIVision.Range(175, 255);
 			val = new NIVision.Range(200, 255);
 		} else {
 			hue = new NIVision.Range(50, 94);
@@ -85,7 +87,7 @@ public class Cameras extends Subsystem implements Runnable {
 		target.setFPS(FPS);
 		driver.setFPS(FPS);
 		target.setSize(320, 240);
-		target.setExposureManual(5);
+		target.setExposureManual(exposure);
 		target.setWhiteBalanceHoldCurrent();
 		driver.setSize(320, 240);
 		CameraServer.getInstance().setQuality(QUALITY);
@@ -104,7 +106,7 @@ public class Cameras extends Subsystem implements Runnable {
 	public void restartCamera() {
 		current.setSize(320, 240);
 		if (current == target) {
-			current.setExposureManual(5);	
+			current.setExposureManual(exposure);	
 			current.setWhiteBalanceHoldCurrent();
 		}
 		//current.openCamera();
@@ -148,11 +150,14 @@ public class Cameras extends Subsystem implements Runnable {
 		return new Center(x/numCenters, y/numCenters);
 	}
 	
-	
+	int count = 0;
 	public void pushImage() {
 		//if (tracking && !getImageProcessed()) return;
+		if (current == null) return;
 		current.setSize(320, 240);
 		current.getImage(image);
+		//SmartDashboard.putNumber("count", count);
+    	//count ++;
 		
 		if (tracking && getImageProcessed() && processing.isAlive() == false) {
 			//SmartDashboard.putNumber("Hello", 0);
@@ -285,12 +290,12 @@ public class Cameras extends Subsystem implements Runnable {
     
     // Put methods for controlling this subsystem
     // here. Call these from Commands.
-
+/*
     public void initDefaultCommand() {
         // Set the default command for a subsystem here.
         setDefaultCommand(new CamerasCommand());
     }
-    
+*/ 
     public class Center {
     	public double x,y;
     	public Center(double x, double y) {

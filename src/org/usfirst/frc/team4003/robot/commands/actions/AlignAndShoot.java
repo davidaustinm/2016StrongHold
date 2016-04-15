@@ -22,7 +22,9 @@ public class AlignAndShoot extends CommandGroup {
     		//addSequential(new RunTurretSpinForTime(450, RobotMap.CLOCKWISE));
     		addSequential(new RotateTurretByAngle(Math.atan(0.7), RobotMap.CLOCKWISE));
     	}
-    	addSequential(new TrackingOn(true));
+    	
+    	// reenable this on 4/15
+    	//addSequential(new TrackingOn(true));
     	
     	/*
     	addSequential(new WaitUntilAligned());

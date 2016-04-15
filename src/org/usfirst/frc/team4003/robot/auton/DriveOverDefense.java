@@ -74,7 +74,7 @@ public class DriveOverDefense extends Command {
 
     // Make this return true when this Command no longer needs to run execute()
     protected boolean isFinished() {
-        return state == STOP || sensors.getPositionX() > 120;
+        return state == STOP || sensors.getPositionX() > 140;
     }
 
     // Called once after isFinished returns true
