@@ -65,6 +65,7 @@ public class OI {
 		//operatorLoadBoulder.whenPressed(new RunIntakeAndConveyor(true));
 		//operatorUnloadBoulder.whenPressed(new RunIntakeAndConveyor(false));
 		
+		/*
 		if (Robot.NIVision) {
 			cameraToggle.whenPressed(new CameraToggleNI());
 			//trackingOn.whenPressed(new TrackingOnNI(true));
@@ -72,6 +73,8 @@ public class OI {
 		} else {
 			cameraToggle.whenPressed(new CameraToggle());
 		}
+		*/
+		
 		//trackingOn.whenPressed(new TrackingOn(true));
 		trackingOn.toggleWhenPressed(new TrackTarget());
 		//trackingOff.whenPressed(new TrackingOn(false));
