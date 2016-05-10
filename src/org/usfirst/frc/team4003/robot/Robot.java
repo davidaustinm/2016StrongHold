@@ -234,13 +234,14 @@ public class Robot extends IterativeRobot {
     	sensors.displayOrientation();
         Scheduler.getInstance().run();
         cameraCommand.exec();
+        sensors.checkLight();
     }
 
     public void teleopInit() {
         if (autonomousCommand != null) autonomousCommand.cancel();
         TrackTarget.setAuton(false);
         arcadeDrive.start();
-        SmartDashboard.putNumber(delayString, 0);
+        //SmartDashboard.putNumber(delayString, 0);
     }
 
     /**
@@ -251,24 +252,31 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         //sensors.displayOrientation();
         cameraCommand.exec();
-        sensors.displayShooterSpeeds();
+       
+        sensors.checkLight();
         /*
+        sensors.displayShooterSpeeds();   
         SmartDashboard.putNumber("Position", sensors.getPosition());
         SmartDashboard.putNumber("Defense", sensors.getDefense());
+        sensors.displayTurretEncoders();
+        sensors.displayDriveEncoders();
+        sensors.displayOrientation();
+        SmartDashboard.putBoolean("Turret switch", sensors.getTurretResetSwitch());
+        */
+        
         //sensors.displaySwitches();
         
         //sensors.displayShooterSpeeds();
         
         
-        sensors.displaySwitches();
-        sensors.displayAutonSwitches();
-        sensors.displayTurretEncoders();
-        sensors.displayDriveEncoders();
-        */
+        //sensors.displaySwitches();
+        //sensors.displayAutonSwitches();
+        
+        
         //sensors.displayDriveEncoders();
         //sensors.displayAutonSwitches();
-        SmartDashboard.putNumber("Position", sensors.getPosition());
-        SmartDashboard.putNumber("Defense", sensors.getDefense());
+        //SmartDashboard.putNumber("Position", sensors.getPosition());
+        //SmartDashboard.putNumber("Defense", sensors.getDefense());
     }
     
     /**

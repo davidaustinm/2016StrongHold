@@ -58,9 +58,9 @@ public class Cameras implements Runnable {
 			//hue = new NIVision.Range(75, 140);
 			//sat = new NIVision.Range(150, 255);
 			//val = new NIVision.Range(200, 255);
-			hue = new NIVision.Range(90, 130);
-			sat = new NIVision.Range(175, 255);
-			val = new NIVision.Range(200, 255);
+			hue = new NIVision.Range(90, 130); // 90, 130
+			sat = new NIVision.Range(175, 255); // 175, 255
+			val = new NIVision.Range(200, 255); // 200, 255
 		} else {
 			hue = new NIVision.Range(50, 94);
 			sat = new NIVision.Range(20, 255);
@@ -248,7 +248,7 @@ public class Cameras implements Runnable {
 				//SmartDashboard.putNumber("Area", best.getArea());		
 				setTargetRectangle(best.getBoundingRect());
 				addCenter(best.getCenter());
-			
+				
 				Target t = new Target();
 				t.width = best.BoundingRectRight - best.BoundingRectLeft;
 				t.height = best.BoundingRectBottom - best.BoundingRectTop;
@@ -260,8 +260,9 @@ public class Cameras implements Runnable {
 				t.centerY = center.y;
 				t.distance = 20 * 200 / (t.width * Math.tan(0.6));
 				sensors.setTarget(t);
-				SmartDashboard.putNumber("percent fill", best.Area/ (t.area));
-				SmartDashboard.putNumber("area", best.Area);
+				//SmartDashboard.putNumber("area", t.area);
+				//SmartDashboard.putNumber("percent fill", best.Area/ (t.area));
+				//SmartDashboard.putNumber("area", best.Area);
 			}
 		} else {
 			sensors.setTarget(null);

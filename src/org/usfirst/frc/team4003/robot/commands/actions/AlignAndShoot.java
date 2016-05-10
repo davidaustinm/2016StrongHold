@@ -16,7 +16,7 @@ public class AlignAndShoot extends CommandGroup {
     	addSequential(new RunTurretTilt());
     	if (sensors.getPosition() == 5) {
     		//addSequential(new RunTurretSpinForTime(450, RobotMap.COUNTERCLOCKWISE));
-    		addSequential(new RotateTurretByAngle(Math.atan(0.4), RobotMap.COUNTERCLOCKWISE));
+    		addSequential(new RotateTurretByAngle(Math.atan(0.4), RobotMap.COUNTERCLOCKWISE)); // was 0.4 with 12"
     	}
     	if (sensors.getPosition() == 2) {
     		//addSequential(new RunTurretSpinForTime(450, RobotMap.CLOCKWISE));
@@ -24,7 +24,7 @@ public class AlignAndShoot extends CommandGroup {
     	}
     	
     	// reenable this on 4/15
-    	//addSequential(new TrackingOn(true));
+    	addSequential(new TrackingOn(true));
     	
     	/*
     	addSequential(new WaitUntilAligned());

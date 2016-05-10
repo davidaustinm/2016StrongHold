@@ -48,8 +48,10 @@ public class Sensors {
 	
 	public static final int SPYBOT = 0;
 	
-	public static final double goalX = 173; // 180
-	public static final double goalY = 159; // 149, 153
+	public static final double goalX = 173; // 173
+	public static final double goalY = 170; // 159
+	
+	Solenoid light;
 	
 	static Sensors sensors = null;
 	double yawOffset = 0;
@@ -77,6 +79,24 @@ public class Sensors {
 		auton4 = new DigitalInput(RobotMap.DEFENSEAUTON1);
 		auton5 = new DigitalInput(RobotMap.DEFENSEAUTON2);
 		
+		light = new Solenoid(0);
+		
+	}
+	
+	public void checkLight() {
+		if (Robot.shooter == null) return;
+		double speed = Math.abs(Robot.shooter.getShooter0Speed());
+		if (speed > 3500) {
+			light.set(true);
+			return;
+		}
+		/*
+		if (speed > 200 && speed < 1500) {
+			light.set(true);
+			return;
+		}
+		*/
+		light.set(false);
 	}
 	
 	public void setYawOffset() {
@@ -93,9 +113,10 @@ public class Sensors {
 	}
 	
 	public double getFinalDrive() {
-		if (getPosition() == 2) return 70; //70
+		if (getPosition() == 2) return 60; //70
+		//if (getPosition() == 3) return 30;
 		if (getDefense() == MOAT) return 25;
-		if (getPosition() == 5) return 12;
+		if (getPosition() == 5) return 12; // was 12
 		return 15;
 	}
 	public int getDefense() {

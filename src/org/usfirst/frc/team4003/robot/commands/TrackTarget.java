@@ -79,8 +79,8 @@ public class TrackTarget extends Command {
     }
 
     // Called repeatedly when this Command is scheduled to run
-    double htolerance = 4;
-    double vtolerance = 4;
+    double htolerance = 5;  // was 4, then 5
+    double vtolerance = 5;
     
     protected void execute() {
     	SmartDashboard.putNumber("spinHint", System.currentTimeMillis());
