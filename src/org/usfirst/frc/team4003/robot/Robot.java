@@ -252,12 +252,14 @@ public class Robot extends IterativeRobot {
         Scheduler.getInstance().run();
         //sensors.displayOrientation();
         cameraCommand.exec();
-       
         sensors.checkLight();
         /*
-        sensors.displayShooterSpeeds();   
         SmartDashboard.putNumber("Position", sensors.getPosition());
         SmartDashboard.putNumber("Defense", sensors.getDefense());
+        
+        
+        sensors.displayShooterSpeeds();   
+        
         sensors.displayTurretEncoders();
         sensors.displayDriveEncoders();
         sensors.displayOrientation();
