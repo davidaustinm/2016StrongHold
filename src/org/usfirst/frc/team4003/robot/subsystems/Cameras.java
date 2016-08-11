@@ -31,7 +31,7 @@ public class Cameras implements Runnable {
 	long readyTime;
 	boolean tracking = false;
 	boolean imageProcessed = true;
-	int exposure = 3;
+	int exposure = 2; // was 3 at worlds
 	
 	Thread processing;
 	NIVision.ParticleFilterCriteria2 criteria[];
@@ -41,6 +41,7 @@ public class Cameras implements Runnable {
 	boolean practiceValues = true;
 	int dx = 5;
 	NIVision.Rect[] rects = new NIVision.Rect[dx];
+	NIVision.Rect goal;
 	public Cameras() {
 		
 		processing = new Thread(this);
@@ -53,14 +54,15 @@ public class Cameras implements Runnable {
 		for (int i = 1; i <= dx; i++) {
 			rects[i-1] = new NIVision.Rect((int) Sensors.goalY - i, (int) Sensors.goalX - i, 2*i, 2*i);
 		}
+		goal = new NIVision.Rect((int) Sensors.goalY - 5, (int) Sensors.goalX - 5, 10, 10);
 		
 		if (practiceValues) {
 			//hue = new NIVision.Range(75, 140);
 			//sat = new NIVision.Range(150, 255);
 			//val = new NIVision.Range(200, 255);
-			hue = new NIVision.Range(90, 130); // 90, 130
-			sat = new NIVision.Range(175, 255); // 175, 255
-			val = new NIVision.Range(200, 255); // 200, 255
+			hue = new NIVision.Range(120, 125); // 90, 130 at worlds
+			sat = new NIVision.Range(175, 255); // 175, 255 at worlds
+			val = new NIVision.Range(200, 255); // 200, 255 at worlds
 		} else {
 			hue = new NIVision.Range(50, 94);
 			sat = new NIVision.Range(20, 255);
@@ -108,6 +110,7 @@ public class Cameras implements Runnable {
 		if (current == target) {
 			current.setExposureManual(exposure);	
 			current.setWhiteBalanceHoldCurrent();
+			//current.setWhiteBalanceManual(3); // didn't have this at worlds
 		}
 		//current.openCamera();
 		current.startCapture();
@@ -172,20 +175,35 @@ public class Cameras implements Runnable {
 		//NIVision.GetImageSizeResult size = NIVision.imaqGetImageSize(image);
 		//SmartDashboard.putNumber("Image width", size.width);
 		//SmartDashboard.putNumber("Image height", size.height);
-		for (int i = 0; i < rects.length; i++) {
-			NIVision.imaqDrawShapeOnImage(image, image, rects[i],
-                DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 0.5f);	
-		}
-		NIVision.Rect target = getTargetRectangle();
-		if (target != null && tracking) {
-			NIVision.imaqDrawShapeOnImage(image, image, target,
-	                DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 0.5f);	
-		}
-		Center avgCenter = getAverageCenter();
-		if (avgCenter != null && tracking) {
-			NIVision.Rect center = new NIVision.Rect((int)avgCenter.y - dx, (int)avgCenter.x-dx, 2*dx, 2*dx);
-			NIVision.imaqDrawShapeOnImage(image, image, center,
-                DrawMode.DRAW_VALUE, ShapeMode.SHAPE_OVAL, 0.5f);	
+		boolean worlds = true;
+		if (worlds) {
+			for (int i = 0; i < rects.length; i++) {
+				NIVision.imaqDrawShapeOnImage(image, image, rects[i],
+						DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 0.5f);	
+			}
+			NIVision.Rect target = getTargetRectangle();
+			if (target != null && tracking) {
+				NIVision.imaqDrawShapeOnImage(image, image, target,
+						DrawMode.DRAW_VALUE, ShapeMode.SHAPE_RECT, 0.5f);	
+			}
+			Center avgCenter = getAverageCenter();
+			if (avgCenter != null && tracking) {
+				NIVision.Rect center = new NIVision.Rect((int)avgCenter.y - dx, (int)avgCenter.x-dx, 2*dx, 2*dx);
+				NIVision.imaqDrawShapeOnImage(image, image, center,
+						DrawMode.DRAW_VALUE, ShapeMode.SHAPE_OVAL, 0.5f);	
+			}
+		} else {
+			NIVision.imaqOverlayRect(image, goal, NIVision.RGB_GREEN, DrawMode.DRAW_VALUE, null);
+			
+			NIVision.Rect target = getTargetRectangle();
+			if (target != null && tracking) {
+				NIVision.imaqOverlayRect(image, target, NIVision.RGB_RED, DrawMode.DRAW_VALUE, null);
+			}
+			Center avgCenter = getAverageCenter();
+			if (avgCenter != null && tracking) {
+				NIVision.Rect center = new NIVision.Rect((int)avgCenter.y - dx, (int)avgCenter.x-dx, 2*dx, 2*dx);
+				NIVision.imaqOverlayRect(image, center, NIVision.RGB_RED, DrawMode.DRAW_VALUE, null);
+			}
 		}
 		
 		CameraServer.getInstance().setImage(image);
